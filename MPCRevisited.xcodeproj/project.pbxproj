@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		41015C3B1AB1E530001ED80E /* GradeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41015C3A1AB1E530001ED80E /* GradeView.swift */; };
 		C043655F1A626BA0000E0F15 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C043655E1A626BA0000E0F15 /* AppDelegate.swift */; };
 		C04365611A626BA0000E0F15 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04365601A626BA0000E0F15 /* ViewController.swift */; };
 		C04365641A626BA0000E0F15 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C04365621A626BA0000E0F15 /* Main.storyboard */; };
@@ -28,6 +29,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		41015C3A1AB1E530001ED80E /* GradeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradeView.swift; sourceTree = "<group>"; };
 		C04365591A626BA0000E0F15 /* MPCRevisited.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MPCRevisited.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C043655D1A626BA0000E0F15 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C043655E1A626BA0000E0F15 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -86,6 +88,7 @@
 				C04365801A626D11000E0F15 /* ChatViewController.swift */,
 				C04365821A627A8C000E0F15 /* MPCManager.swift */,
 				C04365621A626BA0000E0F15 /* Main.storyboard */,
+				41015C3A1AB1E530001ED80E /* GradeView.swift */,
 				C04365651A626BA0000E0F15 /* Images.xcassets */,
 				C04365671A626BA0000E0F15 /* LaunchScreen.xib */,
 				C043655C1A626BA0000E0F15 /* Supporting Files */,
@@ -221,6 +224,7 @@
 			files = (
 				C04365611A626BA0000E0F15 /* ViewController.swift in Sources */,
 				C04365811A626D11000E0F15 /* ChatViewController.swift in Sources */,
+				41015C3B1AB1E530001ED80E /* GradeView.swift in Sources */,
 				C04365831A627A8C000E0F15 /* MPCManager.swift in Sources */,
 				C043655F1A626BA0000E0F15 /* AppDelegate.swift in Sources */,
 			);
