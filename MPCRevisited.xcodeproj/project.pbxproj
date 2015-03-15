@@ -86,6 +86,7 @@
 		5ADE166D1AB62F0300D5392E /* model */ = {
 			isa = PBXGroup;
 			children = (
+				5ADE16671AB62EDE00D5392E /* Time.swift */,
 			);
 			name = model;
 			sourceTree = "<group>";
@@ -116,7 +117,6 @@
 				5ADE166B1AB62EF100D5392E /* dao */,
 				C043655E1A626BA0000E0F15 /* AppDelegate.swift */,
 				4F0E5B861AB3789700CB22A9 /* MatchViewController.swift */,
-				5ADE16671AB62EDE00D5392E /* Time.swift */,
 				C04365821A627A8C000E0F15 /* MPCManager.swift */,
 				C04365621A626BA0000E0F15 /* Main.storyboard */,
 				C043655C1A626BA0000E0F15 /* Supporting Files */,
