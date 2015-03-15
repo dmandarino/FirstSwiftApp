@@ -12,16 +12,19 @@ import MultipeerConnectivity
 class MatchViewController: UIViewController, MCBrowserViewControllerDelegate, UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate {
     
     //MARK: private variables
+    
     private var connectedDevices: [String] = []
-    let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+    private let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
 
     //MARK: public variables
+    
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var visibleSwitch: UISwitch!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var disconnectButton: UIButton!
     
     //MARK: ViewController Methods
+    
     override func viewDidLoad() {
         
         //TableView configuration
@@ -46,9 +49,24 @@ class MatchViewController: UIViewController, MCBrowserViewControllerDelegate, UI
             
             self.peerDidChangeStateWithNotification(notification!)
         }
+        
+        //TESTE DE TRANSFERENCIA DE DADOS DO MPC
+        NSNotificationCenter.defaultCenter().addObserverForName("receivedAllData",
+            object: nil,
+            queue: NSOperationQueue.mainQueue())
+            { (notification: NSNotification?) -> Void in
+
+                //println(notification!.object as Array<String>)
+                let dataArray = notification!.object as Array<String>
+                
+                for data in dataArray{
+                    println(data)
+                }
+            }
     }
 
     //MARK: IBAction Methods
+    
     @IBAction func toggleVisibility(sender: UISwitch) {
         appDelegate.mpcManager.advertiseSelf(sender.on)
         nameTextField.enabled = !sender.on
@@ -72,6 +90,7 @@ class MatchViewController: UIViewController, MCBrowserViewControllerDelegate, UI
     }
     
     //MARK: TextFieldDelegate Methods
+    
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         
         //some com o teclado
@@ -127,17 +146,18 @@ class MatchViewController: UIViewController, MCBrowserViewControllerDelegate, UI
         return cell!
     }
 
-    
     //MARK: TableView Delegate Methods
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 60.0
     }
     
-    
     //MARK: MCBrowserViewControllerMethods
+    
     func browserViewControllerDidFinish(browserViewController: MCBrowserViewController!) {
         self.dismissViewControllerAnimated(true, completion: nil)
+        appDelegate.mpcManager.requestMatchDataFromConnectedPeers()
+        
     }
     
     func browserViewControllerWasCancelled(browserViewController: MCBrowserViewController!) {
