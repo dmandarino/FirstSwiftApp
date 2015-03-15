@@ -9,6 +9,7 @@
 import Foundation
 
 class ScheduleService {
+    
     let scheduleDao = ScheduleDao()
     let jSONService = JSONService()
     var timeList = [Time]()

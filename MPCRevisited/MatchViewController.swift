@@ -27,6 +27,8 @@ class MatchViewController: UIViewController, MCBrowserViewControllerDelegate, UI
     
     override func viewDidLoad() {
         
+        self.title = "Match Options"
+        
         //TableView configuration
         tableView.delegate = self
         tableView.dataSource = self
@@ -56,12 +58,16 @@ class MatchViewController: UIViewController, MCBrowserViewControllerDelegate, UI
             queue: NSOperationQueue.mainQueue())
             { (notification: NSNotification?) -> Void in
 
-                //println(notification!.object as Array<String>)
-                let dataArray = notification!.object as Array<String>
+//                let navigationController = self.parentViewController as UINavigationController
+//                navigationController.pushViewController(/*resultViewController*/, animated: true)
                 
-                for data in dataArray{
-                    println(data)
-                }
+                
+//                //println(notification!.object as Array<String>)
+//                let dataArray = notification!.object as Array<String>
+//                
+//                for data in dataArray{
+//                    println(data)
+//                }
             }
     }
 
@@ -82,11 +88,16 @@ class MatchViewController: UIViewController, MCBrowserViewControllerDelegate, UI
         tableView.reloadData()
     }
     
-    @IBAction func browsePeers(sender: UIButton) {
-    
+    @IBAction func searchForPeers(sender: UIBarButtonItem){
+
         appDelegate.mpcManager.setupMCBrowser()
         appDelegate.mpcManager.browser!.delegate = self
-        self.presentViewController(appDelegate.mpcManager.browser!, animated: true, completion: nil)
+        
+        let navigationController = self.parentViewController as UINavigationController
+        
+        navigationController.pushViewController(appDelegate.mpcManager.browser!,
+                                                animated: true)
+        
     }
     
     //MARK: TextFieldDelegate Methods
@@ -155,13 +166,15 @@ class MatchViewController: UIViewController, MCBrowserViewControllerDelegate, UI
     //MARK: MCBrowserViewControllerMethods
     
     func browserViewControllerDidFinish(browserViewController: MCBrowserViewController!) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+        
         appDelegate.mpcManager.requestMatchDataFromConnectedPeers()
         
     }
     
     func browserViewControllerWasCancelled(browserViewController: MCBrowserViewController!) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+        
+        let navigationController = self.parentViewController as UINavigationController
+        navigationController.popViewControllerAnimated(true)
     }
 
     //MARK: Private Functions
