@@ -120,7 +120,6 @@
 				C043655E1A626BA0000E0F15 /* AppDelegate.swift */,
 				4F5A49F31AB63CC00052EBF4 /* MatchNavigationController.swift */,
 				4F0E5B861AB3789700CB22A9 /* MatchViewController.swift */,
-				5ADE16671AB62EDE00D5392E /* Time.swift */,
 				C04365821A627A8C000E0F15 /* MPCManager.swift */,
 				C04365621A626BA0000E0F15 /* Main.storyboard */,
 				C043655C1A626BA0000E0F15 /* Supporting Files */,
