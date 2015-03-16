@@ -122,7 +122,7 @@ class MatchViewController: UIViewController, MCBrowserViewControllerDelegate, UI
         
         //if the textField is empty, use default display name
         if nameTextField.text != ""{
-            appDelegate.mpcManager.setupPeerAndSessionWithDisplayName(nameTextField.text)
+           // appDelegatempcManager.setupPeerAndSessionWithDisplayName(nameTextField.text)
         }
         else{
             appDelegate.mpcManager.setupPeerAndSessionWithDisplayName(UIDevice.currentDevice().name)
@@ -152,7 +152,7 @@ class MatchViewController: UIViewController, MCBrowserViewControllerDelegate, UI
             cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "CellIdentifier")
         }
         
-        cell!.textLabel?.text = connectedDevices[indexPath.row]
+        cell!.textLabel.text = connectedDevices[indexPath.row]
         
         return cell!
     }
