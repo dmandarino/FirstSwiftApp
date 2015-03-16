@@ -10,6 +10,7 @@ import Foundation
 
 class Time : NSObject{
     
+    var timeId:Int = 0
     var day:String = ""
     var hour:NSInteger = 0
     var busy:Bool = false
