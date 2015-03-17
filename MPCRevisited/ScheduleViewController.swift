@@ -56,6 +56,7 @@ class ScheduleViewController: UIViewController, UICollectionViewDelegate, UIColl
         /* Desliga a exibição da barra de rolagem lateral na collection de horas */
         timeCollectionView.showsVerticalScrollIndicator = false
         
+        
         for( x ; x<75 ; x++ )
         {
             grade.append(0)
@@ -68,7 +69,6 @@ class ScheduleViewController: UIViewController, UICollectionViewDelegate, UIColl
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
     
     /* Função de ação de toque no botão Editar */
     @IBAction func editTouched(sender: UIButton)
@@ -113,13 +113,17 @@ class ScheduleViewController: UIViewController, UICollectionViewDelegate, UIColl
         if( collectionView == mainCollectionView)
         {
             /* Se o horário estiver livre */
-            if(grade[indexPath.item] == 0)
+            if( grade[indexPath.item] == 0 )
             {
                 cell.backgroundColor = UIColor(red: 0.0, green: 204.0/255.0, blue: 51.0/255.0, alpha: 1.0)
             }
-            else
+            else if( grade[indexPath.item] == 1 )
             {
                 cell.backgroundColor = UIColor.redColor()
+            }
+            else
+            {
+                cell.backgroundColor = UIColor.orangeColor()
             }
         }
         else
@@ -149,8 +153,25 @@ class ScheduleViewController: UIViewController, UICollectionViewDelegate, UIColl
         {
             /* Célula selecionada */
             var cell = collectionView.cellForItemAtIndexPath(indexPath)
-            grade[indexPath.item] = 1
-            cell?.backgroundColor = UIColor.redColor()
+            grade[indexPath.item]++
+            
+            if( grade[indexPath.item] > 2 )
+            {
+                grade[indexPath.item] = 0
+            }
+            
+            if( grade[indexPath.item] == 0 )
+            {
+                cell?.backgroundColor = UIColor(red: 0.0, green: 204.0/255.0, blue: 51.0/255.0, alpha: 1.0)
+            }
+            else if( grade[indexPath.item] == 1 )
+            {
+                cell?.backgroundColor = UIColor.redColor()
+            }
+            else
+            {
+                cell?.backgroundColor = UIColor.orangeColor()
+            }
         }
         
     }
@@ -162,9 +183,25 @@ class ScheduleViewController: UIViewController, UICollectionViewDelegate, UIColl
         {
             /* Célula selecionada */
             var cell = collectionView.cellForItemAtIndexPath(indexPath)
-            grade[indexPath.item] = 0;
+            grade[indexPath.item]++
             
-            cell?.backgroundColor = UIColor(red: 0.0, green: 204.0/255.0, blue: 51.0/255.0, alpha: 1.0)
+            if( grade[indexPath.item] > 2 )
+            {
+                grade[indexPath.item] = 0
+            }
+            
+            if( grade[indexPath.item] == 0 )
+            {
+                cell?.backgroundColor = UIColor(red: 0.0, green: 204.0/255.0, blue: 51.0/255.0, alpha: 1.0)
+            }
+            else if( grade[indexPath.item] == 1 )
+            {
+                cell?.backgroundColor = UIColor.redColor()
+            }
+            else
+            {
+                cell?.backgroundColor = UIColor.orangeColor()
+            }
         }
     }
     
