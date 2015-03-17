@@ -9,16 +9,13 @@
 /* Begin PBXBuildFile section */
 		4187C4E21AB7020B00251A62 /* ScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4187C4E11AB7020B00251A62 /* ScheduleViewController.swift */; };
 		4F0E5B871AB3789700CB22A9 /* MatchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0E5B861AB3789700CB22A9 /* MatchViewController.swift */; };
-		4F5A49F41AB63CC00052EBF4 /* MatchNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5A49F31AB63CC00052EBF4 /* MatchNavigationController.swift */; };
 		5A6CDC191AB78FDE00D7F8F7 /* Schedule.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5A6CDC181AB78FDE00D7F8F7 /* Schedule.plist */; };
 		5ADE16661AB62ED300D5392E /* ScheduleDao.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ADE16651AB62ED300D5392E /* ScheduleDao.swift */; };
 		5ADE16681AB62EDE00D5392E /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ADE16671AB62EDE00D5392E /* Time.swift */; };
 		5ADE166A1AB62EE900D5392E /* JSONService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ADE16691AB62EE900D5392E /* JSONService.swift */; };
 		5ADE166F1AB62F8300D5392E /* ScheduleService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ADE166E1AB62F8300D5392E /* ScheduleService.swift */; };
 		C043655F1A626BA0000E0F15 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C043655E1A626BA0000E0F15 /* AppDelegate.swift */; };
-		C04365641A626BA0000E0F15 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C04365621A626BA0000E0F15 /* Main.storyboard */; };
 		C04365661A626BA0000E0F15 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C04365651A626BA0000E0F15 /* Images.xcassets */; };
-		C04365691A626BA0000E0F15 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = C04365671A626BA0000E0F15 /* LaunchScreen.xib */; };
 		C04365751A626BA1000E0F15 /* MPCRevisitedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04365741A626BA1000E0F15 /* MPCRevisitedTests.swift */; };
 		C04365831A627A8C000E0F15 /* MPCManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04365821A627A8C000E0F15 /* MPCManager.swift */; };
 /* End PBXBuildFile section */
@@ -36,7 +33,6 @@
 /* Begin PBXFileReference section */
 		4187C4E11AB7020B00251A62 /* ScheduleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleViewController.swift; sourceTree = "<group>"; };
 		4F0E5B861AB3789700CB22A9 /* MatchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatchViewController.swift; sourceTree = "<group>"; };
-		4F5A49F31AB63CC00052EBF4 /* MatchNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatchNavigationController.swift; sourceTree = "<group>"; };
 		5A6CDC181AB78FDE00D7F8F7 /* Schedule.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Schedule.plist; sourceTree = "<group>"; };
 		5ADE16651AB62ED300D5392E /* ScheduleDao.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ScheduleDao.swift; path = dao/ScheduleDao.swift; sourceTree = "<group>"; };
 		5ADE16671AB62EDE00D5392E /* Time.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Time.swift; path = model/Time.swift; sourceTree = "<group>"; };
@@ -241,9 +237,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C04365641A626BA0000E0F15 /* Main.storyboard in Resources */,
 				5A6CDC191AB78FDE00D7F8F7 /* Schedule.plist in Resources */,
-				C04365691A626BA0000E0F15 /* LaunchScreen.xib in Resources */,
 				C04365661A626BA0000E0F15 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -266,7 +260,6 @@
 				5ADE16661AB62ED300D5392E /* ScheduleDao.swift in Sources */,
 				5ADE16681AB62EDE00D5392E /* Time.swift in Sources */,
 				4187C4E21AB7020B00251A62 /* ScheduleViewController.swift in Sources */,
-				4F5A49F41AB63CC00052EBF4 /* MatchNavigationController.swift in Sources */,
 				5ADE166A1AB62EE900D5392E /* JSONService.swift in Sources */,
 				5ADE166F1AB62F8300D5392E /* ScheduleService.swift in Sources */,
 				C043655F1A626BA0000E0F15 /* AppDelegate.swift in Sources */,

@@ -129,6 +129,7 @@ class ScheduleViewController: UIViewController, UICollectionViewDelegate, UIColl
             
             leftCell = collectionView.dequeueReusableCellWithReuseIdentifier(reusableIdentifier, forIndexPath: indexPath) as TimeViewCell
             
+            leftCell.frame.size.width = 50
             leftCell.textLabel.text = String(indexPath.item + 7) + ":00"
             
             return leftCell
