@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		4187C4E21AB7020B00251A62 /* ScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4187C4E11AB7020B00251A62 /* ScheduleViewController.swift */; };
 		4F0E5B871AB3789700CB22A9 /* MatchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0E5B861AB3789700CB22A9 /* MatchViewController.swift */; };
+		5A5A860D1AB8A35C00ED3BF2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5A5A860B1AB8A35C00ED3BF2 /* Main.storyboard */; };
 		5AA8888E1AB870AA00BD56AF /* freetime.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5AA8888D1AB870AA00BD56AF /* freetime.plist */; };
 		5AA888901AB89CF200BD56AF /* schedule.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5AA8888F1AB89CF200BD56AF /* schedule.plist */; };
 		5ADE16661AB62ED300D5392E /* ScheduleDao.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ADE16651AB62ED300D5392E /* ScheduleDao.swift */; };
@@ -34,6 +35,7 @@
 /* Begin PBXFileReference section */
 		4187C4E11AB7020B00251A62 /* ScheduleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleViewController.swift; sourceTree = "<group>"; };
 		4F0E5B861AB3789700CB22A9 /* MatchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatchViewController.swift; sourceTree = "<group>"; };
+		5A5A860C1AB8A35C00ED3BF2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		5AA8888D1AB870AA00BD56AF /* freetime.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = freetime.plist; sourceTree = "<group>"; };
 		5AA8888F1AB89CF200BD56AF /* schedule.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = schedule.plist; sourceTree = "<group>"; };
 		5ADE16651AB62ED300D5392E /* ScheduleDao.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ScheduleDao.swift; path = dao/ScheduleDao.swift; sourceTree = "<group>"; };
@@ -43,7 +45,6 @@
 		C04365591A626BA0000E0F15 /* MPCRevisited.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MPCRevisited.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C043655D1A626BA0000E0F15 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C043655E1A626BA0000E0F15 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		C04365631A626BA0000E0F15 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		C04365651A626BA0000E0F15 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		C04365681A626BA0000E0F15 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		C043656E1A626BA1000E0F15 /* MPCRevisitedTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MPCRevisitedTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -125,7 +126,7 @@
 				4F0E5B861AB3789700CB22A9 /* MatchViewController.swift */,
 				C04365821A627A8C000E0F15 /* MPCManager.swift */,
 				4187C4E11AB7020B00251A62 /* ScheduleViewController.swift */,
-				C04365621A626BA0000E0F15 /* Main.storyboard */,
+				5A5A860B1AB8A35C00ED3BF2 /* Main.storyboard */,
 				C043655C1A626BA0000E0F15 /* Supporting Files */,
 			);
 			path = MPCRevisited;
@@ -243,6 +244,7 @@
 				C04365661A626BA0000E0F15 /* Images.xcassets in Resources */,
 				5AA888901AB89CF200BD56AF /* schedule.plist in Resources */,
 				5AA8888E1AB870AA00BD56AF /* freetime.plist in Resources */,
+				5A5A860D1AB8A35C00ED3BF2 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -290,10 +292,10 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		C04365621A626BA0000E0F15 /* Main.storyboard */ = {
+		5A5A860B1AB8A35C00ED3BF2 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				C04365631A626BA0000E0F15 /* Base */,
+				5A5A860C1AB8A35C00ED3BF2 /* Base */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
