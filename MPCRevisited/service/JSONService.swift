@@ -17,7 +17,7 @@ class JSONService {
         var jsonObject: [AnyObject] = []
     
         for time in timeList {
-            let schedule:AnyObject = ["timeId" : (time.timeId), "day" : (time.day), "hour": (time.hour), "optional": (time.optional), "busy": (time.busy)]
+            let schedule:AnyObject = ["day": (time.day), "hour": (time.hour), "optional": (time.optional), "busy": (time.busy), "timeId": (time.timeId)]
         
             jsonObject.append(schedule)
         }
@@ -58,11 +58,11 @@ class JSONService {
         let array = JSONParseArray(jsonString)
     
         for schedule:AnyObject in array {
-            time.timeId = schedule["id"] as Int
             time.day = schedule["day"] as String
             time.busy = schedule["busy"] as Bool
             time.hour = schedule["hour"] as Int
             time.optional = schedule["optional"] as Bool
+//            time.timeId = schedule["id"] as Int
             
             timeList.append(time)
         }

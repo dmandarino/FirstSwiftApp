@@ -66,6 +66,9 @@ class MatchViewController: UIViewController, MCBrowserViewControllerDelegate, UI
                     println(data)
                 }
             }
+        
+        let s = ScheduleService()
+        s.createDefaultSchedule()
     }
 
     //MARK: IBAction Methods

@@ -11,38 +11,32 @@ import Foundation
 class ScheduleDao{
 
     func saveGameData(jsonString:String, key:String) {
-        let path = getPath()
+        let path = getPath(key)
         var dict: NSMutableDictionary = [key: jsonString]
         //saving values
-//        dict.setObject(jsonString, forKey: key)
+        dict.setObject(jsonString, forKey: key)
         dict.writeToFile(path, atomically: true)
     }
 
-    func loadGameData() -> String{
+    func loadScheduleData(key:String) -> String{
         // getting path to GameData.plist
-        let path = getPath()
+        let path = getPath(key)
         let fileManager = NSFileManager.defaultManager()
         //check if file exists
         if(!fileManager.fileExistsAtPath(path)) {
             // If it doesn't, copy it from the default file in the Bundle
-            if let bundlePath = NSBundle.mainBundle().pathForResource("Schedule", ofType: "plist") {
+            if let bundlePath = NSBundle.mainBundle().pathForResource(key, ofType: "plist") {
                 let resultDictionary = NSMutableDictionary(contentsOfFile: bundlePath)
                 fileManager.copyItemAtPath(bundlePath, toPath: path, error: nil)
-            } else {
-                println("Schedule.plist not found. Please, make sure it is part of the bundle.")
             }
-        } else {
-            println("GameData.plist already exits at path.")
-            // use this to delete file from documents directory
-            //fileManager.removeItemAtPath(path, error: nil)
         }
         let resultDictionary = NSMutableDictionary(contentsOfFile: path)
 //        println("Loaded GameData.plist file is --> \(resultDictionary?.description)")
         
        var myDict = NSDictionary(contentsOfFile: path)
         if let dict = myDict {
-            var schedules: AnyObject? = dict["schedule"]
-            println(schedules!.description)
+            var schedules: AnyObject? = dict[key]
+//            println(schedules!.description)
             return schedules!.description
             
         } else {
@@ -51,10 +45,10 @@ class ScheduleDao{
         return ""
     }
 
-    private func getPath() -> String{
+    private func getPath(key:String) -> String{
         let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true) as NSArray
         let documentsDirectory = paths.objectAtIndex(0) as NSString
-        let path = documentsDirectory.stringByAppendingPathComponent("Schedule.plist")
+        let path = documentsDirectory.stringByAppendingPathComponent(key+".plist")
         return path
     }
 }
