@@ -15,7 +15,7 @@ class MatchViewController: UIViewController, MCBrowserViewControllerDelegate, UI
     
     private var connectedDevices: [String] = []
     private let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
-
+    
     //MARK: public variables
     
     @IBOutlet weak var nameTextField: UITextField!
@@ -58,16 +58,13 @@ class MatchViewController: UIViewController, MCBrowserViewControllerDelegate, UI
             queue: NSOperationQueue.mainQueue())
             { (notification: NSNotification?) -> Void in
 
-//                let navigationController = self.parentViewController as UINavigationController
-//                navigationController.pushViewController(/*resultViewController*/, animated: true)
+//              navigationController!.pushViewController(/*resultViewController*/, animated: true)
                 
+                let dataArray = notification!.object as Array<String>
                 
-//                //println(notification!.object as Array<String>)
-//                let dataArray = notification!.object as Array<String>
-//                
-//                for data in dataArray{
-//                    println(data)
-//                }
+                for data in dataArray{
+                    println(data)
+                }
             }
     }
 
@@ -93,11 +90,9 @@ class MatchViewController: UIViewController, MCBrowserViewControllerDelegate, UI
         appDelegate.mpcManager.setupMCBrowser()
         appDelegate.mpcManager.browser!.delegate = self
         
-        let navigationController = self.parentViewController as UINavigationController
         
-        navigationController.pushViewController(appDelegate.mpcManager.browser!,
-                                                animated: true)
-        
+        navigationController!.pushViewController(appDelegate.mpcManager.browser!,
+                                                    animated: true)
     }
     
     //MARK: TextFieldDelegate Methods
@@ -167,14 +162,15 @@ class MatchViewController: UIViewController, MCBrowserViewControllerDelegate, UI
     
     func browserViewControllerDidFinish(browserViewController: MCBrowserViewController!) {
         
+        //talvez essa chamada seja melhor no ViewDidLoad do ResultViewController
         appDelegate.mpcManager.requestMatchDataFromConnectedPeers()
         
+//        navigationController!.pushViewController(/*ResultViewController*/, animated: true)
     }
     
     func browserViewControllerWasCancelled(browserViewController: MCBrowserViewController!) {
         
-        let navigationController = self.parentViewController as UINavigationController
-        navigationController.popViewControllerAnimated(true)
+        navigationController!.popViewControllerAnimated(true)
     }
 
     //MARK: Private Functions

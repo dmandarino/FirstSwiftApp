@@ -29,6 +29,7 @@ class MPCManager: NSObject, MCSessionDelegate{
     
     var invitationHandler: ((Bool, MCSession!)->Void)!
     
+    
     //MARK: Initialzer method
     
     func setupPeerAndSessionWithDisplayName(displayName: String){
@@ -134,7 +135,7 @@ class MPCManager: NSObject, MCSessionDelegate{
     private func sendMatchData(toPeer peer: MCPeerID) -> Bool{
         
         let data: [String:String] = [   "request":"SendMatchDataRequest",
-                                        "data":"teste"]
+                                        "data":"Teste"]
         
         //Aqui que vem a string do JSON
         let dataToSend = NSKeyedArchiver.archivedDataWithRootObject(data)
