@@ -27,14 +27,17 @@ class ScheduleService {
             
             let dataArray = notification!.object as Array<String>
             
-            for data in dataArray{
-                println(data)
-            }
+//            for data in dataArray{
+//                println(data)
+//            }
             
             let resultData = self.compareSchedules(dataArray)
             //metodo do luan
             let result = self.getAllFreeTime(resultData)
-            println(result)
+//            println(result[0].hora)
+//                        println(result[0].dia)
+//            println(result[1].hora)
+//            println(result[1].dia)
         }
     }
     func createDefaultSchedule(){
@@ -48,7 +51,6 @@ class ScheduleService {
     
     func saveMySchedule(grid:[Int]){
         var timeList = getScheduleFromPlist()
-        var i = 0
         
         if timeList.count == 0 {
             createAllFree()
@@ -58,23 +60,23 @@ class ScheduleService {
             timeList = schedule
         }
         
-        for time in timeList {
+        for var i=0 ; i<timeList.count ; i++  {
             if grid[i] == 0 {
-                time.busy = false
-                time.optional = false
+                timeList[i].busy = false
+                timeList[i].optional = false
             } else if grid[i] == 1 {
-                time.busy = true
-                time.optional = false
-            } else {
-                time.busy = false
-                time.optional = true
+                timeList[i].busy = true
+                timeList[i].optional = false
+            } else if grid[i] == 2{
+                timeList[i].busy = false
+                timeList[i].optional = true
             }
-            i++
         }
         
         let jsonString = jService.createJSON(timeList)
         scheduleDao.saveGameData(jsonString, key: mySchedule)
-        saveFreeTime(timeList)
+        
+        saveFreeTime(getScheduleFromPlist())
     }
     
     func getMySchedule() ->[Int]{
@@ -87,7 +89,7 @@ class ScheduleService {
                 arrayIndex.append(0)
             }
         } else {
-             println(jService.createJSON(timeList))
+//             println(jService.createJSON(timeList))
             for time in timeList{
                 if time.busy == true{
                    arrayIndex.append(1)
@@ -108,14 +110,23 @@ class ScheduleService {
     func compareSchedules(stringoes:[String]) -> [Time]{
         let myFreeString = sendMyFreeTime()
         var myFree = jService.convertToJSON(myFreeString)
+        
         var received:[Time]
         for stringao in stringoes{
-            println(stringao)
             received = jService.convertToJSON(stringao)
             var aux = myFree
             
+            for m in myFree {
+                println(m.day)
+                println(m.hour)
+            }
+            println("===============")
+            for m in received {
+                println(m.day)
+                println(m.hour)
+            }
+            
             myFree.removeAll(keepCapacity: false)
-            println(myFree.count)
             for a in aux{
                 for r in received {
                     if a.timeIndex == r.timeIndex {
@@ -125,6 +136,10 @@ class ScheduleService {
                 }
             }
         }
+//        for m in myFree {
+//            println(m.day)
+//            println(m.hour)
+//        }
         return myFree
     }
     
@@ -132,8 +147,14 @@ class ScheduleService {
         var freeTimeArray = [Time]()
         
         for time in timeList{
-            if time.busy == false || time.optional == true{
+            if time.busy == false {
                 freeTimeArray.append(time)
+                println(time.day)
+                println(time.hour)
+            } else if time.optional == true{
+                freeTimeArray.append(time)
+                println(time.day)
+                println(time.hour)
             }
         }
         

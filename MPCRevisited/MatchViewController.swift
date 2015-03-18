@@ -62,9 +62,9 @@ class MatchViewController: UIViewController, MCBrowserViewControllerDelegate, UI
                 
                 let dataArray = notification!.object as Array<String>
                 
-                for data in dataArray{
-                    println(data)
-                }
+//                for data in dataArray{
+//                    println(data)
+//                }
             }
     }
 
