@@ -17,7 +17,6 @@
 		4FA7843D1AB8BF2A00E0CC44 /* HelpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA7843C1AB8BF2A00E0CC44 /* HelpViewController.swift */; };
 		4FA784411AB8C12000E0CC44 /* icone_pronto.png in Resources */ = {isa = PBXBuildFile; fileRef = 4FA784401AB8C12000E0CC44 /* icone_pronto.png */; };
 		4FA784431AB8C4E800E0CC44 /* ResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA784421AB8C4E800E0CC44 /* ResultViewController.swift */; };
-		4FA784491AB9FA9400E0CC44 /* ResultTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA784481AB9FA9400E0CC44 /* ResultTableViewCell.swift */; };
 		5A5A860D1AB8A35C00ED3BF2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5A5A860B1AB8A35C00ED3BF2 /* Main.storyboard */; };
 		5AA8888E1AB870AA00BD56AF /* freetime.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5AA8888D1AB870AA00BD56AF /* freetime.plist */; };
 		5AA888901AB89CF200BD56AF /* schedule.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5AA8888F1AB89CF200BD56AF /* schedule.plist */; };
@@ -52,10 +51,9 @@
 		4FA7843C1AB8BF2A00E0CC44 /* HelpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelpViewController.swift; sourceTree = "<group>"; };
 		4FA784401AB8C12000E0CC44 /* icone_pronto.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icone_pronto.png; sourceTree = "<group>"; };
 		4FA784421AB8C4E800E0CC44 /* ResultViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultViewController.swift; sourceTree = "<group>"; };
-		4FA784481AB9FA9400E0CC44 /* ResultTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultTableViewCell.swift; sourceTree = "<group>"; };
 		5A5A860C1AB8A35C00ED3BF2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		5AA8888D1AB870AA00BD56AF /* freetime.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = freetime.plist; sourceTree = "<group>"; };
-		5AA8888F1AB89CF200BD56AF /* schedule.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = schedule.plist; sourceTree = "<group>"; };
+		5AA8888D1AB870AA00BD56AF /* freetime.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = freetime.plist; path = ../freetime.plist; sourceTree = "<group>"; };
+		5AA8888F1AB89CF200BD56AF /* schedule.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = schedule.plist; path = ../schedule.plist; sourceTree = "<group>"; };
 		5ADE16651AB62ED300D5392E /* ScheduleDao.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ScheduleDao.swift; path = dao/ScheduleDao.swift; sourceTree = "<group>"; };
 		5ADE16671AB62EDE00D5392E /* Time.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Time.swift; path = model/Time.swift; sourceTree = "<group>"; };
 		5ADE16691AB62EE900D5392E /* JSONService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = JSONService.swift; path = service/JSONService.swift; sourceTree = "<group>"; };
@@ -88,6 +86,28 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4FB7BCBB1ABA328000106098 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				246598431AB9ADC800FC40AC /* help1.png */,
+				2465983F1AB9ACD800FC40AC /* help.png */,
+				2465983D1AB9AC6800FC40AC /* find.png */,
+				2465983B1AB9AC5B00FC40AC /* calendar.png */,
+				4FA784401AB8C12000E0CC44 /* icone_pronto.png */,
+			);
+			name = Images;
+			sourceTree = "<group>";
+		};
+		4FB7BCBC1ABA329500106098 /* PLists */ = {
+			isa = PBXGroup;
+			children = (
+				5AA8888F1AB89CF200BD56AF /* schedule.plist */,
+				5AA8888D1AB870AA00BD56AF /* freetime.plist */,
+				C043655D1A626BA0000E0F15 /* Info.plist */,
+			);
+			name = PLists;
+			sourceTree = "<group>";
+		};
 		5ADE166B1AB62EF100D5392E /* dao */ = {
 			isa = PBXGroup;
 			children = (
@@ -99,6 +119,7 @@
 		5ADE166C1AB62EF900D5392E /* service */ = {
 			isa = PBXGroup;
 			children = (
+				C04365821A627A8C000E0F15 /* MPCManager.swift */,
 				5ADE166E1AB62F8300D5392E /* ScheduleService.swift */,
 				5ADE16691AB62EE900D5392E /* JSONService.swift */,
 			);
@@ -116,8 +137,6 @@
 		C04365501A626BA0000E0F15 = {
 			isa = PBXGroup;
 			children = (
-				5AA8888F1AB89CF200BD56AF /* schedule.plist */,
-				5AA8888D1AB870AA00BD56AF /* freetime.plist */,
 				C043655B1A626BA0000E0F15 /* MPCRevisited */,
 				C04365711A626BA1000E0F15 /* MPCRevisitedTests */,
 				C043655A1A626BA0000E0F15 /* Products */,
@@ -136,18 +155,12 @@
 		C043655B1A626BA0000E0F15 /* MPCRevisited */ = {
 			isa = PBXGroup;
 			children = (
-				246598431AB9ADC800FC40AC /* help1.png */,
-				2465983F1AB9ACD800FC40AC /* help.png */,
-				2465983D1AB9AC6800FC40AC /* find.png */,
-				2465983B1AB9AC5B00FC40AC /* calendar.png */,
 				5ADE166D1AB62F0300D5392E /* model */,
 				5ADE166C1AB62EF900D5392E /* service */,
 				5ADE166B1AB62EF100D5392E /* dao */,
-				C04365821A627A8C000E0F15 /* MPCManager.swift */,
 				4F0E5B861AB3789700CB22A9 /* MatchViewController.swift */,
 				4187C4E11AB7020B00251A62 /* ScheduleViewController.swift */,
 				4FA784421AB8C4E800E0CC44 /* ResultViewController.swift */,
-				4FA784481AB9FA9400E0CC44 /* ResultTableViewCell.swift */,
 				4FA7843C1AB8BF2A00E0CC44 /* HelpViewController.swift */,
 				C043655C1A626BA0000E0F15 /* Supporting Files */,
 			);
@@ -157,12 +170,12 @@
 		C043655C1A626BA0000E0F15 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				4FB7BCBC1ABA329500106098 /* PLists */,
+				4FB7BCBB1ABA328000106098 /* Images */,
 				C043655E1A626BA0000E0F15 /* AppDelegate.swift */,
 				5A5A860B1AB8A35C00ED3BF2 /* Main.storyboard */,
 				4FA7843A1AB8BA5C00E0CC44 /* LaunchScreen.xib */,
 				C04365651A626BA0000E0F15 /* Images.xcassets */,
-				4FA784401AB8C12000E0CC44 /* icone_pronto.png */,
-				C043655D1A626BA0000E0F15 /* Info.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -293,7 +306,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4FA784491AB9FA9400E0CC44 /* ResultTableViewCell.swift in Sources */,
 				C04365831A627A8C000E0F15 /* MPCManager.swift in Sources */,
 				5ADE16661AB62ED300D5392E /* ScheduleDao.swift in Sources */,
 				5ADE16681AB62EDE00D5392E /* Time.swift in Sources */,
