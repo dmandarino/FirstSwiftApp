@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2465983C1AB9AC5B00FC40AC /* calendar.png in Resources */ = {isa = PBXBuildFile; fileRef = 2465983B1AB9AC5B00FC40AC /* calendar.png */; };
+		2465983E1AB9AC6800FC40AC /* find.png in Resources */ = {isa = PBXBuildFile; fileRef = 2465983D1AB9AC6800FC40AC /* find.png */; };
+		246598401AB9ACD800FC40AC /* help.png in Resources */ = {isa = PBXBuildFile; fileRef = 2465983F1AB9ACD800FC40AC /* help.png */; };
+		246598441AB9ADC800FC40AC /* help1.png in Resources */ = {isa = PBXBuildFile; fileRef = 246598431AB9ADC800FC40AC /* help1.png */; };
 		4187C4E21AB7020B00251A62 /* ScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4187C4E11AB7020B00251A62 /* ScheduleViewController.swift */; };
 		4F0E5B871AB3789700CB22A9 /* MatchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0E5B861AB3789700CB22A9 /* MatchViewController.swift */; };
 		4FA7843B1AB8BA5C00E0CC44 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FA7843A1AB8BA5C00E0CC44 /* LaunchScreen.xib */; };
@@ -38,6 +42,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2465983B1AB9AC5B00FC40AC /* calendar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = calendar.png; sourceTree = "<group>"; };
+		2465983D1AB9AC6800FC40AC /* find.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = find.png; sourceTree = "<group>"; };
+		2465983F1AB9ACD800FC40AC /* help.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = help.png; sourceTree = "<group>"; };
+		246598431AB9ADC800FC40AC /* help1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = help1.png; sourceTree = "<group>"; };
 		4187C4E11AB7020B00251A62 /* ScheduleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleViewController.swift; sourceTree = "<group>"; };
 		4F0E5B861AB3789700CB22A9 /* MatchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatchViewController.swift; sourceTree = "<group>"; };
 		4FA7843A1AB8BA5C00E0CC44 /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
@@ -128,6 +136,10 @@
 		C043655B1A626BA0000E0F15 /* MPCRevisited */ = {
 			isa = PBXGroup;
 			children = (
+				246598431AB9ADC800FC40AC /* help1.png */,
+				2465983F1AB9ACD800FC40AC /* help.png */,
+				2465983D1AB9AC6800FC40AC /* find.png */,
+				2465983B1AB9AC5B00FC40AC /* calendar.png */,
 				5ADE166D1AB62F0300D5392E /* model */,
 				5ADE166C1AB62EF900D5392E /* service */,
 				5ADE166B1AB62EF100D5392E /* dao */,
@@ -257,7 +269,11 @@
 				4FA7843B1AB8BA5C00E0CC44 /* LaunchScreen.xib in Resources */,
 				C04365661A626BA0000E0F15 /* Images.xcassets in Resources */,
 				4FA784451AB8CEE200E0CC44 /* ResultViewController.xib in Resources */,
+				246598441AB9ADC800FC40AC /* help1.png in Resources */,
+				2465983E1AB9AC6800FC40AC /* find.png in Resources */,
+				246598401AB9ACD800FC40AC /* help.png in Resources */,
 				5AA888901AB89CF200BD56AF /* schedule.plist in Resources */,
+				2465983C1AB9AC5B00FC40AC /* calendar.png in Resources */,
 				5AA8888E1AB870AA00BD56AF /* freetime.plist in Resources */,
 				4FA784411AB8C12000E0CC44 /* icone_pronto.png in Resources */,
 				5A5A860D1AB8A35C00ED3BF2 /* Main.storyboard in Resources */,
