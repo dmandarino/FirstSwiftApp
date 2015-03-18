@@ -23,7 +23,7 @@ class ScheduleService {
         queue: NSOperationQueue.mainQueue())
         { (notification: NSNotification?) -> Void in
         
-            //              navigationController!.pushViewController(/*resultViewController*/, animated: true)
+           // navigationController!.pushViewController(/*resultViewController*/, animated: true)
             
             let dataArray = notification!.object as Array<String>
             
@@ -34,6 +34,10 @@ class ScheduleService {
             let resultData = self.compareSchedules(dataArray)
             //metodo do luan
             let result = self.getAllFreeTime(resultData)
+            
+            NSNotificationCenter.defaultCenter().postNotificationName("ResultDataProcessed",
+                object: result)
+            
 //            println(result[0].hora)
 //                        println(result[0].dia)
 //            println(result[1].hora)
@@ -213,7 +217,7 @@ class ScheduleService {
                 novaResp.dia = horas[x].day
                 
                 /* Adiciona o horário inicial na resposta */
-                novaResp.hora = "Horário Inicial: \(horas[x].hour):00 "
+                novaResp.hora = "\(horas[x].hour):00 "
                 
                 /* Olha os próximos elementos em busca de continuidade de horas livres até o final do dia
                     ou até achar um horario não livre
@@ -224,7 +228,7 @@ class ScheduleService {
                     if( horas[y].busy || horas[y].optional || horas[y].hour == 21)
                     {
                         /* Adiciona esse horário como final */
-                        novaResp.hora += "Horário Final: \(horas[y].hour):00"
+                        novaResp.hora += "\(horas[y].hour):00"
                         /* muda o valor do x para y e sai desse loop interno */
                         x = y
                         break;
@@ -245,7 +249,7 @@ class ScheduleService {
                 novaOpcional.dia = horas[x].day + "(Opcional)"
                 
                 /* Adiciona o horário inicial na resposta */
-                novaOpcional.hora = "Horário Inicial: \(horas[x].hour):00 "
+                novaOpcional.hora = "\(horas[x].hour):00 "
                 
                 /* Olha os próximos elementos em busca de continuidade de horas opcionais até o final do dia
                     ou até achar um horario não opcional
@@ -256,7 +260,7 @@ class ScheduleService {
                     if( horas[y].busy || horas[y].optional || horas[y].hour == 21)
                     {
                         /* Adiciona esse horário como final */
-                        novaOpcional.hora += "Horário Final: \(horas[y].hour):00"
+                        novaOpcional.hora += "\(horas[y].hour):00"
                         /* muda o valor do x para y e sai desse loop interno */
                         x = y
                         break;
