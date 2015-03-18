@@ -14,6 +14,8 @@ var reusableIdentifier = "cell"
 /* Array da agenda do usuário */
 var grade = [Int]()
 
+let scheduleService = ScheduleService()
+
 /* Subclasse de uma célula que é usada na collection lateral
 existe apenas para poder relacionar o seu label com o código
 */
@@ -56,11 +58,11 @@ class ScheduleViewController: UIViewController, UICollectionViewDelegate, UIColl
         /* Desliga a exibição da barra de rolagem lateral na collection de horas */
         timeCollectionView.showsVerticalScrollIndicator = false
         
-        
-        for( x ; x<75 ; x++ )
-        {
-            grade.append(0)
+        var mySchedules = scheduleService.getMySchedule()
+        for schedule in mySchedules{
+            grade.append(schedule)
         }
+        
         
     }
 
@@ -83,6 +85,7 @@ class ScheduleViewController: UIViewController, UICollectionViewDelegate, UIColl
         {
             editButton.setTitle("Editar", forState: nil)
             mainCollectionView.allowsSelection = false
+            scheduleService.saveMySchedule(grade)
         }
         
     }

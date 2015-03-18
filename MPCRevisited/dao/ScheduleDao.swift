@@ -37,8 +37,9 @@ class ScheduleDao{
         if let dict = myDict {
             var schedules: AnyObject? = dict[key]
 //            println(schedules!.description)
-            return schedules!.description
-            
+            if schedules?.description != nil{
+                return schedules!.description
+            }
         } else {
             println("WARNING: Couldn't create dictionary from GameData.plist! Default values will be used!")
         }

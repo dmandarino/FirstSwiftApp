@@ -19,26 +19,8 @@ class ScheduleService {
     func createDefaultSchedule(){
         var day:String
         
-        for (var i = 0; i<=4; i++ ){
-            var list = createDailyDefaultSchedule()
-            
-            if(i==0) {
-                  day = "segunda"
-            } else if (i==1){
-                day = "terca"
-            } else if (i==2){
-                day = "quarta"
-            } else if (i==3){
-                day = "quinta"
-            } else {
-                day = "sexta"
-            }
+        createAllFree()
         
-            for time in list{
-                time.day = day
-                schedule.append(time)
-            }
-        }
         let jsonString = jService.createJSON(schedule)
         scheduleDao.saveGameData(jsonString, key: mySchedule)
     }
@@ -46,6 +28,14 @@ class ScheduleService {
     func saveMySchedule(grid:[Int]){
         var timeList = getScheduleFromPlist()
         var i = 0
+        
+        if timeList.count == 0 {
+            createAllFree()
+        }
+        
+        if schedule.count > 0 {
+            timeList = schedule
+        }
         
         for time in timeList {
             if grid[i] == 0 {
@@ -72,7 +62,7 @@ class ScheduleService {
         
         if timeList.count == 0{
             createDailyDefaultSchedule()
-            for (var i=0; i<74; i++) {
+            for (var i=0; i<75; i++) {
                 arrayIndex.append(0)
             }
         } else {
@@ -133,7 +123,7 @@ class ScheduleService {
     private func getScheduleFromPlist() ->[Time]{
         let string = scheduleDao.loadScheduleData(mySchedule)
         var savedArray = [Time]()
-        if string != "" {
+        if string != "[]" {
             var savedArray = jService.convertToJSON(string)
             return savedArray
         }
@@ -241,7 +231,29 @@ class ScheduleService {
         return resultados
     }
     
-    
+     private func createAllFree(){
+        for (var i = 0; i<=4; i++ ){
+            var day = ""
+            var list = createDailyDefaultSchedule()
+            
+            if(i==0) {
+                day = "segunda"
+            } else if (i==1){
+                day = "terca"
+            } else if (i==2){
+                day = "quarta"
+            } else if (i==3){
+                day = "quinta"
+            } else {
+                day = "sexta"
+            }
+            
+            for time in list{
+                time.day = day
+                schedule.append(time)
+            }
+        }
+    }
 }
 
 class resposta
@@ -249,3 +261,5 @@ class resposta
     var dia: String = ""
     var hora: String = ""
 }
+
+
