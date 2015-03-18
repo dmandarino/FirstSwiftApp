@@ -16,6 +16,25 @@ class ScheduleService {
     var schedule = [Time]()
     var id = 0
     
+    init() {
+        //TESTE DE TRANSFERENCIA DE DADOS DO MPC
+        NSNotificationCenter.defaultCenter().addObserverForName("receivedAllData",
+        object: nil,
+        queue: NSOperationQueue.mainQueue())
+        { (notification: NSNotification?) -> Void in
+        
+            //              navigationController!.pushViewController(/*resultViewController*/, animated: true)
+            
+            let dataArray = notification!.object as Array<String>
+            
+            for data in dataArray{
+                println(data)
+            }
+            
+            let resultData = self.compareSchedules(dataArray)
+            //metodo do luan 
+        }
+    }
     func createDefaultSchedule(){
         var day:String
         
