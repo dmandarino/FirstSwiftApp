@@ -32,7 +32,9 @@ class ScheduleService {
             }
             
             let resultData = self.compareSchedules(dataArray)
-            //metodo do luan 
+            //metodo do luan
+            let result = self.getAllFreeTime(resultData)
+            println(result)
         }
     }
     func createDefaultSchedule(){
