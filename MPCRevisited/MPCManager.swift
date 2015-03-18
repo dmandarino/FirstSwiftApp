@@ -15,6 +15,7 @@ class MPCManager: NSObject, MCSessionDelegate{
     //MARK: Private attributes
     private var matchDataArray = [String]()
     private var receivedDataCount = 0
+    let scheduleService = ScheduleService()
     
     //MARK: Public attributes
     var session: MCSession?
@@ -45,6 +46,13 @@ class MPCManager: NSObject, MCSessionDelegate{
     
     func setupMCBrowser(){
         browser = MCBrowserViewController(serviceType: "teste", session: session)
+        browser?.title = "Group Finder"
+
+//        OBS: loucura pra tentar editar o viewController programaticamente
+//        let a = browser?.view.subviews[1] as UINavigationBar
+//        a.delegate = self
+//        
+//        println("\(browser?.view.subviews[1].description!)")
     }
     
     //MARK: MCAdvertiserAssistant methods
@@ -135,7 +143,8 @@ class MPCManager: NSObject, MCSessionDelegate{
     private func sendMatchData(toPeer peer: MCPeerID) -> Bool{
         
         let data: [String:String] = [   "request":"SendMatchDataRequest",
-                                        "data":"Teste"]
+                                        "data":scheduleService.sendMyFreeTime()
+                                    ]
         
         //Aqui que vem a string do JSON
         let dataToSend = NSKeyedArchiver.archivedDataWithRootObject(data)

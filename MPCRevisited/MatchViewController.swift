@@ -66,9 +66,6 @@ class MatchViewController: UIViewController, MCBrowserViewControllerDelegate, UI
                     println(data)
                 }
             }
-        
-        let s = ScheduleService()
-        s.createDefaultSchedule()
     }
 
     //MARK: IBAction Methods
@@ -120,7 +117,7 @@ class MatchViewController: UIViewController, MCBrowserViewControllerDelegate, UI
         
         //if the textField is empty, use default display name
         if nameTextField.text != ""{
-           // appDelegatempcManager.setupPeerAndSessionWithDisplayName(nameTextField.text)
+            appDelegate.mpcManager.setupPeerAndSessionWithDisplayName(nameTextField.text)
         }
         else{
             appDelegate.mpcManager.setupPeerAndSessionWithDisplayName(UIDevice.currentDevice().name)
@@ -165,10 +162,11 @@ class MatchViewController: UIViewController, MCBrowserViewControllerDelegate, UI
     
     func browserViewControllerDidFinish(browserViewController: MCBrowserViewController!) {
         
-        //talvez essa chamada seja melhor no ViewDidLoad do ResultViewController
         appDelegate.mpcManager.requestMatchDataFromConnectedPeers()
         
-//        navigationController!.pushViewController(/*ResultViewController*/, animated: true)
+        navigationController!.pushViewController(
+            ResultViewController.init(nibName: "ResultViewController", bundle: NSBundle.mainBundle()),
+            animated: true)
     }
     
     func browserViewControllerWasCancelled(browserViewController: MCBrowserViewController!) {
