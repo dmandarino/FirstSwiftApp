@@ -14,7 +14,7 @@ class ScheduleService {
     let scheduleDao = ScheduleDao()
     let jService = JSONService()
     var schedule = [Time]()
-    var id = 1
+    var id = 0
     
     func createDefaultSchedule(){
         var day:String
@@ -43,18 +43,27 @@ class ScheduleService {
         scheduleDao.saveGameData(jsonString, key: mySchedule)
     }
     
-    func saveMySchedule(busy:[Int], optionals:[Int]){
+    func saveMySchedule(grid:[Int]){
         var timeList = getScheduleFromPlist()
-        timeList = setAllFreeDay(timeList)
+        var i = 0
         
-        for day in busy{
-            timeList[day].busy = true
+        for time in timeList {
+            if grid[i] == 0 {
+                time.busy = false
+                time.optional = false
+            } else if grid[i] == 1 {
+                time.busy = true
+                time.optional = false
+            } else {
+                time.busy = false
+                time.optional = true
+            }
+            i++
         }
-            
+        
         let jsonString = jService.createJSON(timeList)
         scheduleDao.saveGameData(jsonString, key: mySchedule)
-        
-        saveFreeTime(timeList, optionals: optionals)
+        saveFreeTime(timeList)
     }
     
     func getMySchedule() ->[Int]{
@@ -67,10 +76,11 @@ class ScheduleService {
                 arrayIndex.append(0)
             }
         } else {
+             println(jService.createJSON(timeList))
             for time in timeList{
-                if time.busy{
+                if time.busy == true{
                    arrayIndex.append(1)
-                } else if time.optional {
+                } else if time.optional == true{
                     arrayIndex.append(2)
                 } else {
                     arrayIndex.append(0)
@@ -84,30 +94,40 @@ class ScheduleService {
         return scheduleDao.loadScheduleData(freeTime)
     }
     
-    private func saveFreeTime(timeList:[Time], optionals:[Int]){
+    func compareSchedules(stringoes:[String]) -> [Time]{
+        let myFreeString = sendMyFreeTime()
+        var myFree = jService.convertToJSON(myFreeString)
+        var received:[Time]
+        for stringao in stringoes{
+            println(stringao)
+            received = jService.convertToJSON(stringao)
+            var aux = myFree
+            
+            myFree.removeAll(keepCapacity: false)
+            println(myFree.count)
+            for a in aux{
+                for r in received {
+                    if a.timeIndex == r.timeIndex {
+                        myFree.append(r)
+                        break
+                    }
+                }
+            }
+        }
+        return myFree
+    }
+    
+    private func saveFreeTime(timeList:[Time]){
         var freeTimeArray = [Time]()
         
         for time in timeList{
-            if !time.busy{
+            if time.busy == false || time.optional == true{
                 freeTimeArray.append(time)
             }
         }
         
-        for op in optionals{
-            timeList[op].optional = true
-            freeTimeArray.append(timeList[op])
-        }
-        
         let jsonString = jService.createJSON(freeTimeArray)
         scheduleDao.saveGameData(jsonString, key: freeTime)
-    }
-    
-    private func setAllFreeDay(timeList:[Time]) ->[Time]{
-        for day in timeList{
-            day.optional = false
-            day.busy = false
-        }
-        return timeList
     }
     
     private func getScheduleFromPlist() ->[Time]{
@@ -126,17 +146,17 @@ class ScheduleService {
         for (var i = 7 ; i<=21 ; i++){
             time = createTime(i)
             timeList.append(time)
+            id++
         }
         return timeList
     }
     
     private func createTime(hour:Int) -> Time{
         let time = Time();
-        time.timeId = id
+        time.timeIndex = id
         time.hour = hour
         time.optional = false
         time.busy = false
-        id++
         return time
     }
 }

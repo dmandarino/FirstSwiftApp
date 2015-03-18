@@ -17,7 +17,7 @@ class JSONService {
         var jsonObject: [AnyObject] = []
     
         for time in timeList {
-            let schedule:AnyObject = ["day": (time.day), "hour": (time.hour), "optional": (time.optional), "busy": (time.busy), "timeId": (time.timeId)]
+            let schedule:AnyObject = ["day": (time.day), "hour": (time.hour), "optional": (time.optional), "busy": (time.busy), "timeIndex": (time.timeIndex)]
         
             jsonObject.append(schedule)
         }
@@ -44,7 +44,6 @@ class JSONService {
     func convertToJSON(jsonString:String) -> [Time]{
 
         var timeList = [Time]()
-        var time = Time()
         
         func JSONParseArray(jsonString: String) -> [AnyObject] {
             if let data = jsonString.dataUsingEncoding(NSUTF8StringEncoding) {
@@ -56,13 +55,13 @@ class JSONService {
         }
     
         let array = JSONParseArray(jsonString)
-    
         for schedule:AnyObject in array {
+            var time = Time()
             time.day = schedule["day"] as String
             time.busy = schedule["busy"] as Bool
             time.hour = schedule["hour"] as Int
             time.optional = schedule["optional"] as Bool
-//            time.timeId = schedule["id"] as Int
+            time.timeIndex = schedule["timeIndex"] as Int
             
             timeList.append(time)
         }
