@@ -17,6 +17,7 @@
 		4FA7843D1AB8BF2A00E0CC44 /* HelpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA7843C1AB8BF2A00E0CC44 /* HelpViewController.swift */; };
 		4FA784411AB8C12000E0CC44 /* icone_pronto.png in Resources */ = {isa = PBXBuildFile; fileRef = 4FA784401AB8C12000E0CC44 /* icone_pronto.png */; };
 		4FA784431AB8C4E800E0CC44 /* ResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA784421AB8C4E800E0CC44 /* ResultViewController.swift */; };
+		4FB7BCBE1ABA343A00106098 /* ResultTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB7BCBD1ABA343A00106098 /* ResultTableViewCell.swift */; };
 		5A5A860D1AB8A35C00ED3BF2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5A5A860B1AB8A35C00ED3BF2 /* Main.storyboard */; };
 		5AA8888E1AB870AA00BD56AF /* freetime.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5AA8888D1AB870AA00BD56AF /* freetime.plist */; };
 		5AA888901AB89CF200BD56AF /* schedule.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5AA8888F1AB89CF200BD56AF /* schedule.plist */; };
@@ -51,6 +52,7 @@
 		4FA7843C1AB8BF2A00E0CC44 /* HelpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelpViewController.swift; sourceTree = "<group>"; };
 		4FA784401AB8C12000E0CC44 /* icone_pronto.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icone_pronto.png; sourceTree = "<group>"; };
 		4FA784421AB8C4E800E0CC44 /* ResultViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultViewController.swift; sourceTree = "<group>"; };
+		4FB7BCBD1ABA343A00106098 /* ResultTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultTableViewCell.swift; sourceTree = "<group>"; };
 		5A5A860C1AB8A35C00ED3BF2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		5AA8888D1AB870AA00BD56AF /* freetime.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = freetime.plist; path = ../freetime.plist; sourceTree = "<group>"; };
 		5AA8888F1AB89CF200BD56AF /* schedule.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = schedule.plist; path = ../schedule.plist; sourceTree = "<group>"; };
@@ -160,6 +162,7 @@
 				5ADE166B1AB62EF100D5392E /* dao */,
 				4F0E5B861AB3789700CB22A9 /* MatchViewController.swift */,
 				4187C4E11AB7020B00251A62 /* ScheduleViewController.swift */,
+				4FB7BCBD1ABA343A00106098 /* ResultTableViewCell.swift */,
 				4FA784421AB8C4E800E0CC44 /* ResultViewController.swift */,
 				4FA7843C1AB8BF2A00E0CC44 /* HelpViewController.swift */,
 				C043655C1A626BA0000E0F15 /* Supporting Files */,
@@ -306,6 +309,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4FB7BCBE1ABA343A00106098 /* ResultTableViewCell.swift in Sources */,
 				C04365831A627A8C000E0F15 /* MPCManager.swift in Sources */,
 				5ADE16661AB62ED300D5392E /* ScheduleDao.swift in Sources */,
 				5ADE16681AB62EDE00D5392E /* Time.swift in Sources */,

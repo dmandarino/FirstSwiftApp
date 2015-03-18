@@ -59,8 +59,6 @@ class ResultViewController: UITableViewController{
         
         cell?.weekDay.text = resultData[indexPath.row].dia
         cell?.timeSpan.text = resultData[indexPath.row].hora
-        cell!.autoresizingMask = UIViewAutoresizing.FlexibleWidth |
-                                UIViewAutoresizing.FlexibleRightMargin
         
         return cell!
     }
