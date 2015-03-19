@@ -164,9 +164,10 @@ class MatchViewController: UIViewController, MCBrowserViewControllerDelegate, UI
         
         appDelegate.mpcManager.requestMatchDataFromConnectedPeers()
         
-        navigationController!.pushViewController(
-            ResultViewController.init(nibName: "ResultViewController", bundle: NSBundle.mainBundle()),
-            animated: true)
+        let resultViewController = self.storyboard!.instantiateViewControllerWithIdentifier(
+                                                    "ResultViewController") as UIViewController
+        
+        navigationController!.pushViewController(resultViewController, animated: true)
     }
     
     func browserViewControllerWasCancelled(browserViewController: MCBrowserViewController!) {

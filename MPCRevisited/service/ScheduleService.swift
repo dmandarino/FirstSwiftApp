@@ -23,7 +23,7 @@ class ScheduleService {
         queue: NSOperationQueue.mainQueue())
         { (notification: NSNotification?) -> Void in
         
-            //              navigationController!.pushViewController(/*resultViewController*/, animated: true)
+           // navigationController!.pushViewController(/*resultViewController*/, animated: true)
             
             let dataArray = notification!.object as Array<String>
             
@@ -40,12 +40,15 @@ class ScheduleService {
                 resp.dia = "Nenhum Horario Em Comum"
                 result.append(resposta())
             }
-            println(result.count)
-//            println(result.description)
-            for r in result {
-                println(r.dia)
-                println(r.hora)
-            }
+//            println(result.count)
+////            println(result.description)
+//            for r in result {
+//                println(r.dia)
+//                println(r.hora)
+//            }
+            
+            NSNotificationCenter.defaultCenter().postNotificationName("ResultDataProcessed",
+                object: result)
         }
     }
     func createDefaultSchedule(){
@@ -355,11 +358,6 @@ class ScheduleService {
     
     func getAllFreeTime( horas:[Time] ) -> [resposta]
     {
-        
-        for t in horas {
-            println(t.day)
-            println(t.hour)
-        }
         /* Cria o vetor com os resultados */
         var resultados = [resposta]()
        
