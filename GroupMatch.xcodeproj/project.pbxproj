@@ -110,6 +110,17 @@
 			name = PLists;
 			sourceTree = "<group>";
 		};
+		5A3ADEB81ABB6FFF00853E40 /* controller */ = {
+			isa = PBXGroup;
+			children = (
+				4F0E5B861AB3789700CB22A9 /* MatchViewController.swift */,
+				4187C4E11AB7020B00251A62 /* ScheduleViewController.swift */,
+				4FA784421AB8C4E800E0CC44 /* ResultViewController.swift */,
+				4FA7843C1AB8BF2A00E0CC44 /* HelpViewController.swift */,
+			);
+			name = controller;
+			sourceTree = "<group>";
+		};
 		5ADE166B1AB62EF100D5392E /* dao */ = {
 			isa = PBXGroup;
 			children = (
@@ -160,11 +171,8 @@
 				5ADE166D1AB62F0300D5392E /* model */,
 				5ADE166C1AB62EF900D5392E /* service */,
 				5ADE166B1AB62EF100D5392E /* dao */,
-				4F0E5B861AB3789700CB22A9 /* MatchViewController.swift */,
-				4187C4E11AB7020B00251A62 /* ScheduleViewController.swift */,
+				5A3ADEB81ABB6FFF00853E40 /* controller */,
 				4FB7BCBD1ABA343A00106098 /* ResultTableViewCell.swift */,
-				4FA784421AB8C4E800E0CC44 /* ResultViewController.swift */,
-				4FA7843C1AB8BF2A00E0CC44 /* HelpViewController.swift */,
 				C043655C1A626BA0000E0F15 /* Supporting Files */,
 			);
 			path = MPCRevisited;
