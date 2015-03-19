@@ -362,6 +362,8 @@ class ScheduleService {
         var resultados = [resposta]()
        
         var flag:Bool = false
+        
+        var optional:Bool = false
        
         var respAux = resposta()
         
@@ -385,6 +387,7 @@ class ScheduleService {
                     if( horas[j].optional == true )
                     {
                         respAux.dia += " (Opcional)"
+                        optional = true
                     }
         
                 }
@@ -400,6 +403,23 @@ class ScheduleService {
                         novoResp.hora = respAux.hora
                         
                         flag = false
+                        resultados.append(novoResp)
+                        respAux.hora = ""
+                    }
+                }
+                else if( (optional == true && ( horas[j].optional == false ) && flag == true) || ( j+5 >= 75 ))
+                {
+                    if respAux.hora != ""
+                    {
+                        respAux.hora += "\(horas[j].hour):00"
+                        
+                        var novoResp = resposta()
+                        
+                        novoResp.dia = respAux.dia
+                        novoResp.hora = respAux.hora
+                        
+                        flag = false
+                        optional = false
                         resultados.append(novoResp)
                         respAux.hora = ""
                     }
