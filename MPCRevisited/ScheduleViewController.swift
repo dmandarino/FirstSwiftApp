@@ -26,7 +26,7 @@ class TimeViewCell: UICollectionViewCell
     
 }
 
-class ScheduleViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource
+class ScheduleViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
 {
     /* Salva qual collection view está sendo arrastada */
     var scrollingView: UIScrollView!
@@ -52,24 +52,28 @@ class ScheduleViewController: UIViewController, UICollectionViewDelegate, UIColl
         
         /* Permite multiplas seleções na collection view */
         mainCollectionView.allowsMultipleSelection = true
-        /* Desliga a permição de seleção na collection view */
         mainCollectionView.allowsSelection = false
         
         /* Desliga a exibição da barra de rolagem lateral na collection de horas */
         timeCollectionView.showsVerticalScrollIndicator = false
         
         var mySchedules = scheduleService.getMySchedule()
-        for schedule in mySchedules{
+        for schedule in mySchedules
+        {
             grade.append(schedule)
         }
         
+        /* Define o tamanho da janela com as horas, usando como base o tamanho da tela do device */
+        timeCollectionView.bounds = CGRectMake(0, 0, UIScreen.mainScreen().bounds.width*0.1875, timeCollectionView.bounds.height)
+        mainCollectionView.bounds = CGRectMake(0, 0, UIScreen.mainScreen().bounds.width*1.8125, timeCollectionView.bounds.height)
         
+//        println("JanelaT: \(timeCollectionView.bounds.width)\nJanelaG: \(mainCollectionView.bounds.width)\nTotal: \(UIScreen.mainScreen().bounds.width) = \(UIScreen.mainScreen().bounds.width*2)")
+
     }
 
     override func didReceiveMemoryWarning()
     {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     /* Função de ação de toque no botão Editar */
@@ -91,7 +95,7 @@ class ScheduleViewController: UIViewController, UICollectionViewDelegate, UIColl
     }
     
     
-// MARK: FUNÇÕES OBRIGATÓRIAS DO PROTOCOLO DATASOURCE
+// MARK: Funções obrigatórias do protocolo datasource
     
     /* Retorna o número de células exibidas nas collections views */
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
@@ -105,12 +109,19 @@ class ScheduleViewController: UIViewController, UICollectionViewDelegate, UIColl
             return 15
         }
     }
-
+    
+    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int
+    {
+        return 1
+    }
+    
     /* Função que cria as células nas collection views */
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell
     {
         /* Pega uma célula reutiluzável */
         var cell = collectionView.dequeueReusableCellWithReuseIdentifier(reusableIdentifier, forIndexPath: indexPath) as UICollectionViewCell
+        
+//        println(cell.bounds)
         
         /* Caso for uma célula da collection de seleção */
         if( collectionView == mainCollectionView)
@@ -136,8 +147,9 @@ class ScheduleViewController: UIViewController, UICollectionViewDelegate, UIColl
             
             leftCell = collectionView.dequeueReusableCellWithReuseIdentifier(reusableIdentifier, forIndexPath: indexPath) as TimeViewCell
             
-            leftCell.frame.size.width = 50
             leftCell.textLabel.text = String(indexPath.item + 7) + ":00"
+            
+//            leftCell.backgroundColor = UIColor.whiteColor()
             
             return leftCell
     
@@ -147,7 +159,7 @@ class ScheduleViewController: UIViewController, UICollectionViewDelegate, UIColl
     }
     
     
-// MARK: FUNÇÕES OPCIONAIS DO PROTOCOLO COLLECTION VIEW DELEGATE
+// MARK: Funções opcionais do protocolo collection view delegate
     
     /* Muda a cor da célula selecionada para vermelho se for da main collection */
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath)
@@ -208,7 +220,7 @@ class ScheduleViewController: UIViewController, UICollectionViewDelegate, UIColl
         }
     }
     
-// MARK: FUNÇÕES DO DELEGATE DE SCROLL DAS DUAS COLLECTIONS
+// MARK: Funções do delegate de scroll das duas collection views
     
     /* Faz as duas collections moverem em conjunto */
     func scrollViewDidScroll(scrollView: UIScrollView)
@@ -232,5 +244,47 @@ class ScheduleViewController: UIViewController, UICollectionViewDelegate, UIColl
         scrollingView = scrollView
     }
 
-
+// MARK: Funões do collection view delegate flow layout
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets
+    {
+        if(collectionView == mainCollectionView)
+        {
+            return UIEdgeInsetsMake(10, 5, 10, 10)
+        }
+        else
+        {
+            return UIEdgeInsetsMake(10, 5, 0, 0)
+        }
+        
+    }
+    
+    /* Retorna o tamanho das células para a collection view */
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize
+    {
+        if(collectionView == mainCollectionView)
+        {
+            var lado:CGFloat = (mainCollectionView.bounds.width - 60)/5
+            var size:CGSize = CGSizeMake(lado, lado)
+            
+            return size
+        }
+        else
+        {
+            var lado:CGFloat = (mainCollectionView.bounds.width - 60)/5
+            var size:CGSize = CGSizeMake(lado + 4, lado)
+            
+            return size
+        }
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAtIndex section: Int) -> CGFloat
+    {
+        return 5.0
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat
+    {
+        return 10.0
+    }
+    
 }
