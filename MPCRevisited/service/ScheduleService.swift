@@ -9,12 +9,17 @@
 import Foundation
 
 class ScheduleService {
-    let mySchedule = "schedule"
-    let freeTime = "freetime"
-    let scheduleDao = ScheduleDao()
-    let jService = JSONService()
-    var schedule = [Time]()
-    var id = 0
+    
+    let numberOfSchedule = 75
+    let daysOfWeek = 5
+    let firstHour = 7
+    let lastHour = 21
+    private let mySchedule = "schedule"
+    private let freeTime = "freetime"
+    private let scheduleDao = ScheduleDao()
+    private let jService = JSONService()
+    private var schedule = [Time]()
+    private var id = 0
     
     init() {
         //TESTE DE TRANSFERENCIA DE DADOS DO MPC
@@ -43,12 +48,12 @@ class ScheduleService {
     }
     
     //Cria uma grade padrão e livre em todos os horários
-    func createDefaultSchedule(){
-        for var i = 0; i<5; i++ {
+    func createDefaultSchedule() ->[Time]{
+        schedule.removeAll(keepCapacity: false)
+        for var i = 0; i<numberOfSchedule; i++ {
             var day = ""
-            var list = createDailyDefaultSchedule()
-            
-            switch (i) {
+                
+            switch (i%daysOfWeek) {
             case (0):
                 day = "Segunda"
             case (1):
@@ -60,15 +65,12 @@ class ScheduleService {
             default:
                 day = "Sexta"
             }
-            
-            for time in list{
-                time.day = day
-                schedule.append(time)
-            }
+            var hour = (i/(lastHour-firstHour))+firstHour
+            schedule.append(createTime(hour, day: day))
         }
-        
         let jsonString = jService.strinfyTimeArray(schedule)
         scheduleDao.saveScheduleData(jsonString, key: mySchedule)
+        return schedule
     }
     
     //Salva a minha grade de horário. Recebe um array de Int com o índice com o 
@@ -77,8 +79,7 @@ class ScheduleService {
         var timeList = getScheduleFromPlist(mySchedule)
         
         if timeList.count == 0 {
-            createDefaultSchedule()
-            timeList = schedule
+            timeList = createDefaultSchedule()
         }
         
         var i = 0
@@ -106,8 +107,8 @@ class ScheduleService {
         var arrayIndex = [Int]()
         
         if timeList.count == 0{
-            createDailyDefaultSchedule()
-            for (var i=0; i<75; i++) {
+            var list = createDefaultSchedule()
+            for l in list {
                 arrayIndex.append(0)
             }
         } else {
@@ -126,6 +127,8 @@ class ScheduleService {
     
     //Envia meus horários para quem pediu.
     func sendMySchedule()->String{
+        var loadedSchedule = scheduleDao.loadScheduleData(mySchedule)
+        println(loadedSchedule)
         return jService.stringfyIntArray(getMySchedule())
     }
     
@@ -151,19 +154,20 @@ class ScheduleService {
         }
         
         var timeList = [Time]()
-        for (var i = 0; i<75; i++ ){
+        for (var i = 0; i<numberOfSchedule; i++ ){
             var day = ""
-            var hour:Int = (i/5) + 7
+            var hour:Int = (i/daysOfWeek) + firstHour
             
-            if i%5 == 0 {
+            var div = daysOfWeek
+            if i%div == 0 {
                 day = "Segunda"
-            } else if i%5 == 1 {
+            } else if i%div == 1 {
                 day = "Terça"
-            } else if i%5 == 2 {
+            } else if i%div == 2 {
                 day = "Quarta"
-            } else if i%5 == 3 {
+            } else if i%div == 3 {
                 day = "Quinta"
-            } else if i%5 == 4 {
+            } else if i%div == 4 {
                 day = "Sexta"
             }
             
@@ -204,10 +208,10 @@ class ScheduleService {
         var respAux = Response()
         
         /* Varre as colunas */
-        for( var i:Int = 0 ; i<5 ; i++)
+        for( var i:Int = 0 ; i<daysOfWeek ; i++)
         {
             /* Varre as linhas */
-            for( var j:Int = i ; j<75 ; j += 5 )
+            for( var j:Int = i ; j<horas.count ; j += daysOfWeek )
             {
                 /* Se achar um horario livre */
                 if( horas[j].busy == false && flag == false )
@@ -227,7 +231,7 @@ class ScheduleService {
                     }
         
                 }
-                else if( (horas[j].busy == true  && flag == true) || ( j+5 >= 75 ))
+                else if( (horas[j].busy == true  && flag == true) || ( j+daysOfWeek >= horas.count ))
                 {
                     if respAux.hora != ""
                     {
@@ -243,7 +247,7 @@ class ScheduleService {
                         respAux.hora = ""
                     }
                 }
-                else if( (optional == true && ( horas[j].optional == false ) && flag == true) || ( j+5 >= 75 ))
+                else if( (optional == true && ( horas[j].optional == false ) && flag == true) || ( j+daysOfWeek >= horas.count ))
                 {
                     if respAux.hora != ""
                     {
@@ -267,18 +271,6 @@ class ScheduleService {
         return resultados
     }
     
-    //Cria pra cada um dia só de horários livres
-    private func createDailyDefaultSchedule() ->[Time]{
-        var time = Time();
-        var timeList = [Time]()
-        for (var i = 7 ; i<=21 ; i++){
-            time = createTime(i)
-            timeList.append(time)
-            id++
-        }
-        return timeList
-    }
-    
     //Pega o hor;ario do usuário salvo na plist
     private func getScheduleFromPlist(key:String) ->[Time]{
         let string = scheduleDao.loadScheduleData(key)
@@ -291,12 +283,14 @@ class ScheduleService {
     }
     
     //Cria uma entidade Time
-    private func createTime(hour:Int) -> Time{
-        let time = Time();
+    private func createTime(hour:Int, day:String) -> Time{
+        var time = Time();
         time.timeIndex = id
         time.hour = hour
         time.optional = false
         time.busy = false
+        time.day = day
+        id++
         return time
     }
 }
