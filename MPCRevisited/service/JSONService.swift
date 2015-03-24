@@ -10,10 +10,8 @@ import Foundation
 
 class JSONService {
     
-    var scheduleDao = ScheduleDao()
-    
-    func createIntJson(timeList:[Int]) -> String{
-        
+    //Converter array de Int para um String em formato Json
+    func stringfyIntArray(timeList:[Int]) -> String{
         var jsonObject: [AnyObject] = []
         
         for time in timeList {
@@ -23,36 +21,13 @@ class JSONService {
         }
         
         let schedule: AnyObject = [ "schedule" : jsonObject]
-        
-        func JSONStringify(value: AnyObject, prettyPrinted: Bool = false) -> String {
-            var options = prettyPrinted ? NSJSONWritingOptions.PrettyPrinted : nil
-            if NSJSONSerialization.isValidJSONObject(value) {
-                if let data = NSJSONSerialization.dataWithJSONObject(value, options: options, error: nil) {
-                    if let string = NSString(data: data, encoding: NSUTF8StringEncoding) {
-                        return string
-                    }
-                }
-            }
-            return ""
-        }
-        
         let jsonString = JSONStringify(jsonObject)
-        
         return jsonString
     }
     
-    func convertIntToJSON(jsonString:String) -> [Int]{
-        
+    //Converter String em formato Json par um array de Int
+    func convertStringToIntArray(jsonString:String) -> [Int]{
         var timeList = [Int]()
-        
-        func JSONParseArray(jsonString: String) -> [AnyObject] {
-            if let data = jsonString.dataUsingEncoding(NSUTF8StringEncoding) {
-                if let array = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions(0), error: nil)  as? [AnyObject] {
-                    return array
-                }
-            }
-            return [AnyObject]()
-        }
         
         let array = JSONParseArray(jsonString)
         for schedule:AnyObject in array {
@@ -64,8 +39,8 @@ class JSONService {
         return timeList
     }
     
-    func createJSON(timeList:[Time]) -> String{
-    
+    //Converter array de Time para um String em formato Json
+    func strinfyTimeArray(timeList:[Time]) -> String{
         var jsonObject: [AnyObject] = []
     
         for time in timeList {
@@ -75,37 +50,14 @@ class JSONService {
         }
         
         let schedule: AnyObject = [ "schedule" : jsonObject]
-
-        func JSONStringify(value: AnyObject, prettyPrinted: Bool = false) -> String {
-            var options = prettyPrinted ? NSJSONWritingOptions.PrettyPrinted : nil
-            if NSJSONSerialization.isValidJSONObject(value) {
-                if let data = NSJSONSerialization.dataWithJSONObject(value, options: options, error: nil) {
-                    if let string = NSString(data: data, encoding: NSUTF8StringEncoding) {
-                        return string
-                    }
-                }
-            }
-            return ""
-        } 
-
         let jsonString = JSONStringify(jsonObject)
-        
         return jsonString
     }
     
-    func convertToJSON(jsonString:String) -> [Time]{
-
+    //Converter String em formato Json par um array de Time
+    func convertStringToTimeArray(jsonString:String) -> [Time]{
         var timeList = [Time]()
         
-        func JSONParseArray(jsonString: String) -> [AnyObject] {
-            if let data = jsonString.dataUsingEncoding(NSUTF8StringEncoding) {
-                if let array = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions(0), error: nil)  as? [AnyObject] {
-                    return array
-                }
-            }
-            return [AnyObject]()
-        }
-    
         let array = JSONParseArray(jsonString)
         for schedule:AnyObject in array {
             var time = Time()
@@ -118,5 +70,26 @@ class JSONService {
             timeList.append(time)
         }
         return timeList
+    }
+    
+    private func JSONStringify(value: AnyObject, prettyPrinted: Bool = false) -> String {
+        var options = prettyPrinted ? NSJSONWritingOptions.PrettyPrinted : nil
+        if NSJSONSerialization.isValidJSONObject(value) {
+            if let data = NSJSONSerialization.dataWithJSONObject(value, options: options, error: nil) {
+                if let string = NSString(data: data, encoding: NSUTF8StringEncoding) {
+                    return string
+                }
+            }
+        }
+        return ""
+    }
+    
+    private func JSONParseArray(jsonString: String) -> [AnyObject] {
+        if let data = jsonString.dataUsingEncoding(NSUTF8StringEncoding) {
+            if let array = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions(0), error: nil)  as? [AnyObject] {
+                return array
+            }
+        }
+        return [AnyObject]()
     }
 }

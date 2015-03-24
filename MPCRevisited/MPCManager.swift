@@ -143,7 +143,7 @@ class MPCManager: NSObject, MCSessionDelegate{
     private func sendMatchData(toPeer peer: MCPeerID) -> Bool{
         
         let data: [String:String] = [   "request":"SendMatchDataRequest",
-                                        "data":scheduleService.sendMyFreeTime()
+                                        "data":scheduleService.sendMySchedule()
                                     ]
         
         //Aqui que vem a string do JSON

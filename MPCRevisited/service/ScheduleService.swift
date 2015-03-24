@@ -20,76 +20,87 @@ class ScheduleService {
         //TESTE DE TRANSFERENCIA DE DADOS DO MPC
         NSNotificationCenter.defaultCenter().addObserverForName("receivedAllData",
         object: nil,
-        queue: NSOperationQueue.mainQueue())
-        { (notification: NSNotification?) -> Void in
+        queue: NSOperationQueue.mainQueue()){
+            (notification: NSNotification?) -> Void in
         
            // navigationController!.pushViewController(/*resultViewController*/, animated: true)
             
             let dataArray = notification!.object as Array<String>
-            
-//            for data in dataArray{
-//                println(data)
-//            }
             
             let resultData = self.compareSchedules(dataArray)
             
             //metodo do luan
             var result = self.getAllFreeTime(resultData)
             if result.count == 0{
-                var resp = resposta()
+                var resp = Response()
                 resp.dia = "Nenhum Horario Em Comum"
-                result.append(resposta())
+                result.append(Response())
             }
-//            println(result.count)
-////            println(result.description)
-//            for r in result {
-//                println(r.dia)
-//                println(r.hora)
-//            }
             
             NSNotificationCenter.defaultCenter().postNotificationName("ResultDataProcessed",
                 object: result)
         }
     }
+    
+    //Cria uma grade padrão e livre em todos os horários
     func createDefaultSchedule(){
-        var day:String
+        for var i = 0; i<5; i++ {
+            var day = ""
+            var list = createDailyDefaultSchedule()
+            
+            switch (i) {
+            case (0):
+                day = "Segunda"
+            case (1):
+                day = "Terça"
+            case (2):
+                day = "Quarta"
+            case (3):
+                day = "Quinta"
+            default:
+                day = "Sexta"
+            }
+            
+            for time in list{
+                time.day = day
+                schedule.append(time)
+            }
+        }
         
-        createAllFree()
-        
-        let jsonString = jService.createJSON(schedule)
-        scheduleDao.saveGameData(jsonString, key: mySchedule)
+        let jsonString = jService.strinfyTimeArray(schedule)
+        scheduleDao.saveScheduleData(jsonString, key: mySchedule)
     }
     
+    //Salva a minha grade de horário. Recebe um array de Int com o índice com o 
+    //estado do horário. 0 == livre, 1==ocupado, 2==opcional
     func saveMySchedule(grid:[Int]){
         var timeList = getScheduleFromPlist(mySchedule)
         
         if timeList.count == 0 {
-            createAllFree()
-        }
-        
-        if schedule.count > 0 {
+            createDefaultSchedule()
             timeList = schedule
         }
         
-        for var i=0 ; i<timeList.count ; i++  {
+        var i = 0
+        for time in timeList {
             if grid[i] == 0 {
-                timeList[i].busy = false
-                timeList[i].optional = false
+                time.busy = false
+                time.optional = false
             } else if grid[i] == 1 {
-                timeList[i].busy = true
-                timeList[i].optional = false
+                time.busy = true
+                time.optional = false
             } else if grid[i] == 2{
-                timeList[i].busy = false
-                timeList[i].optional = true
+                time.busy = false
+                time.optional = true
             }
+            i++
         }
         
-        let jsonString = jService.createJSON(timeList)
-        scheduleDao.saveGameData(jsonString, key: mySchedule)
-        
-        saveFreeTime()
+        let jsonString = jService.strinfyTimeArray(timeList)
+        scheduleDao.saveScheduleData(jsonString, key: mySchedule)
     }
     
+    //Pega os horarios salvos e retorna o indice de cada estado em um array de Int
     func getMySchedule() ->[Int]{
         let timeList = getScheduleFromPlist(mySchedule)
         var arrayIndex = [Int]()
@@ -100,7 +111,6 @@ class ScheduleService {
                 arrayIndex.append(0)
             }
         } else {
-//             println(jService.createJSON(timeList))
             for time in timeList{
                 if time.busy == true{
                    arrayIndex.append(1)
@@ -114,22 +124,19 @@ class ScheduleService {
         return arrayIndex
     }
     
-    func sendMyFreeTime()->String{
-        return jService.createIntJson(getMySchedule())
+    //Envia meus horários para quem pediu.
+    func sendMySchedule()->String{
+        return jService.stringfyIntArray(getMySchedule())
     }
     
-    func compareSchedules(stringoes:[String]) -> [Time]{
-        var myFreeString = sendMyFreeTime()
-        var myFree = jService.convertIntToJSON(myFreeString)
+    //compara os horários de todos e retorna um array de Time com o horário em seu estado comum a todos
+    func compareSchedules(receivedDatas:[String]) -> [Time]{
+        var myFree = getMySchedule()
         
         var received:[Int]
-        for stringao in stringoes{
-            received = jService.convertIntToJSON(stringao)
+        for r in receivedDatas{
+            received = jService.convertStringToIntArray(r)
             var aux = myFree
-            println(aux)
-            println("==========")
-            println(received)
-            
             myFree.removeAll(keepCapacity: false)
             
             for var i=0 ; i<received.count ; i++ {
@@ -140,31 +147,13 @@ class ScheduleService {
                 } else {
                     myFree.append(2)
                 }
-
             }
-            
-//            for a in aux{
-//                for r in received {
-//                    if (a==0 && r==0){
-//                        myFree.append(0)
-//                        break
-//                    } else if (a==1 || r==1){
-//                        myFree.append(1)
-//                        break
-//                    } else {
-//                        myFree.append(2)
-//                    }
-//                }
-//            }
         }
-        
-        println(myFree.description)
         
         var timeList = [Time]()
         for (var i = 0; i<75; i++ ){
             var day = ""
             var hour:Int = (i/5) + 7
-            
             
             if i%5 == 0 {
                 day = "Segunda"
@@ -200,172 +189,19 @@ class ScheduleService {
         return timeList
     }
     
-    private func saveFreeTime(){
-        var timeList = getScheduleFromPlist(freeTime)
-        
-        if timeList.count == 0 {
-            createAllFree()
-        }
-        
-        if schedule.count > 0 {
-            timeList = schedule
-        }
-        
-        var freeTimeArray = [Time]()
-        
-        for time in timeList{
-            if time.busy == false {
-                freeTimeArray.append(time)
-                println(time.day)
-                println(time.hour)
-            } else if time.optional == true{
-                freeTimeArray.append(time)
-                println(time.day)
-                println(time.hour)
-            }
-        }
-        
-        let jsonString = jService.createJSON(freeTimeArray)
-        scheduleDao.saveGameData(jsonString, key: freeTime)
-    }
-    
-    private func getScheduleFromPlist(key:String) ->[Time]{
-        let string = scheduleDao.loadScheduleData(key)
-        var savedArray = [Time]()
-        if string != "[]" {
-            var savedArray = jService.convertToJSON(string)
-            return savedArray
-        }
-        return savedArray
-    }
-    
-    private func createDailyDefaultSchedule() ->[Time]{
-        var time = Time();
-        var timeList = [Time]()
-        for (var i = 7 ; i<=21 ; i++){
-            time = createTime(i)
-            timeList.append(time)
-            id++
-        }
-        return timeList
-    }
-    
-    private func createTime(hour:Int) -> Time{
-        let time = Time();
-        time.timeIndex = id
-        time.hour = hour
-        time.optional = false
-        time.busy = false
-        return time
-    }
-    
     /* Recebe um vetor com os horarios livres e opcionais dos usuarios
         retornando outro array com dias e horas livres para exibição
-    */
-//    func getAllFreeTime( horas:[Time] ) -> [resposta]
-//    {
-//        /* Cria o vetor com os resultados */
-//        var resultados = [resposta]()
-//        
-//        /* Cria um novo vetor organizado dos horarios  */
-//        var horaOrganizada = [Time]()
-//        
-//        /* Guarda a hora atual */
-//        var horaAtual = 0
-//        
-//        /* Varre as colunas */
-//        for( var i:Int = 0 ; i<5 ; i++)
-//        {
-//            /* Pega o indice do inicio do dia */
-//            horaAtual = i;
-//            /* Varre as linhas */
-//            for( var j:Int = 0 ; j < 15 ; j++ )
-//            {
-//                /* Se achar um horario livre */
-//                if( horas[horaAtual].busy == false && horas[horaAtual].optional == false)
-//                {
-//                    /* Cria uma nova entrada para ser introduzida no array */
-//                    var novaResp = resposta()
-//                    
-//                    /* Adiciona o dia na resposta */
-//                    novaResp.dia = horas[horaAtual].day
-//                    
-//                    /* Adiciona o horário inicial na resposta */
-//                    novaResp.hora = "Horário Inicial: \(horas[horaAtual].hour):00 "
-//                    
-//                    /* Olha os próximos elementos em busca de continuidade de horas livres até o final do dia
-//                    ou até achar um horario não livre
-//                    */
-//                    for( var y:Int = horaAtual + 5 ; 15 - j ; y += 5 )
-//                    {
-//                        /* Achando um horário não livre ou o "fim" do dia */
-//                        if( horas[y].busy || horas[y].optional || horas[y].hour == 21)
-//                        {
-//                            /* Adiciona esse horário como final */
-//                            novaResp.hora += "Horário Final: \(horas[y].hour):00"
-//                            /* muda o valor do x para y e sai desse loop interno */
-//                            x = y
-//                            break;
-//                        }
-//                    }
-//                    
-//                    /* Adiciona essa resposta nos resultados */
-//                    resultados.append(novaResp)
-//                    
-//                }
-//                else if( horas[horaAtual].optional == true )
-//                {
-//                    /* Achando um opcional faz a mesma coisa, mas como opcional */
-//                    /* Cria uma nova entrada para ser introduzida no array */
-//                    var novaOpcional = resposta()
-//                    
-//                    /* Adiciona o dia na resposta com tag de opcional */
-//                    novaOpcional.dia = horas[horaAtual].day + "(Opcional)"
-//                    
-//                    /* Adiciona o horário inicial na resposta */
-//                    novaOpcional.hora = "Horário Inicial: \(horas[horaAtual].hour):00 "
-//                    
-//                    /* Olha os próximos elementos em busca de continuidade de horas opcionais até o final do dia
-//                    ou até achar um horario não opcional
-//                    */
-//                    for( var y:Int = x + 1 ; horas[y].hour != 7 || y == 75 ; y++ )
-//                    {
-//                        /* Achando um horário não opcional ou o "fim" do dia */
-//                        if( horas[y].busy || horas[y].optional || horas[y].hour == 21)
-//                        {
-//                            /* Adiciona esse horário como final */
-//                            novaOpcional.hora += "Horário Final: \(horas[y].hour):00"
-//                            /* muda o valor do x para y e sai desse loop interno */
-//                            x = y
-//                            break;
-//                        }
-//                    }
-//                    
-//                    /* Adiciona essa resposta nos resultados */
-//                    resultados.append(novaOpcional)
-//                }
-//                
-//                /* Adiciona 5 no indice da hora atual */
-//                horaAtual += 5
-//            }
-//            
-//        }
-//        
-//    
-//        /* Retorna o vetor de resultados */
-//        return resultados
-//    }
-    
-    func getAllFreeTime( horas:[Time] ) -> [resposta]
+    */    
+    func getAllFreeTime( horas:[Time] ) -> [Response]
     {
         /* Cria o vetor com os resultados */
-        var resultados = [resposta]()
+        var resultados = [Response]()
        
         var flag:Bool = false
         
         var optional:Bool = false
        
-        var respAux = resposta()
+        var respAux = Response()
         
         /* Varre as colunas */
         for( var i:Int = 0 ; i<5 ; i++)
@@ -397,7 +233,7 @@ class ScheduleService {
                     {
                         respAux.hora += "\(horas[j].hour):00"
                         
-                        var novoResp = resposta()
+                        var novoResp = Response()
                         
                         novoResp.dia = respAux.dia
                         novoResp.hora = respAux.hora
@@ -413,7 +249,7 @@ class ScheduleService {
                     {
                         respAux.hora += "\(horas[j].hour):00"
                         
-                        var novoResp = resposta()
+                        var novoResp = Response()
                         
                         novoResp.dia = respAux.dia
                         novoResp.hora = respAux.hora
@@ -430,37 +266,37 @@ class ScheduleService {
         /* Retorna o vetor de resultados */
         return resultados
     }
-
     
-     private func createAllFree(){
-        for (var i = 0; i<=4; i++ ){
-            var day = ""
-            var list = createDailyDefaultSchedule()
-            
-            if(i==0) {
-                day = "Segunda"
-            } else if (i==1){
-                day = "Terça"
-            } else if (i==2){
-                day = "Quarta"
-            } else if (i==3){
-                day = "Quinta"
-            } else {
-                day = "Sexta"
-            }
-            
-            for time in list{
-                time.day = day
-                schedule.append(time)
-            }
+    //Cria pra cada um dia só de horários livres
+    private func createDailyDefaultSchedule() ->[Time]{
+        var time = Time();
+        var timeList = [Time]()
+        for (var i = 7 ; i<=21 ; i++){
+            time = createTime(i)
+            timeList.append(time)
+            id++
         }
+        return timeList
+    }
+    
+    //Pega o hor;ario do usuário salvo na plist
+    private func getScheduleFromPlist(key:String) ->[Time]{
+        let string = scheduleDao.loadScheduleData(key)
+        var savedArray = [Time]()
+        if string != "[]" {
+            var savedArray = jService.convertStringToTimeArray(string)
+            return savedArray
+        }
+        return savedArray
+    }
+    
+    //Cria uma entidade Time
+    private func createTime(hour:Int) -> Time{
+        let time = Time();
+        time.timeIndex = id
+        time.hour = hour
+        time.optional = false
+        time.busy = false
+        return time
     }
 }
-
-class resposta
-{
-    var dia: String = ""
-    var hora: String = ""
-}
-
-

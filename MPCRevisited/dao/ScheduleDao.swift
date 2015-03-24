@@ -10,7 +10,7 @@ import Foundation
 
 class ScheduleDao{
 
-    func saveGameData(jsonString:String, key:String) {
+    func saveScheduleData(jsonString:String, key:String) {
         let path = getPath(key)
         var dict: NSMutableDictionary = [key: jsonString]
         //saving values
