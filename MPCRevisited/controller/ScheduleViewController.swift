@@ -43,16 +43,15 @@ class ScheduleViewController: UIViewController, UICollectionViewDelegate, UIColl
         daysCollectionView.dataSource = self
         daysCollectionView.scrollEnabled = false
         
+        /* Define o tamanho da janela com as horas, usando como base o tamanho da tela do device */
+        timeCollectionView.bounds = CGRectMake(0, 0, UIScreen.mainScreen().bounds.width*0.1875, timeCollectionView.bounds.height)
+        mainCollectionView.bounds = CGRectMake(0, 0, UIScreen.mainScreen().bounds.width*1.8125, timeCollectionView.bounds.height)
+        
         var mySchedules = scheduleService.getMySchedule()
         for schedule in mySchedules
         {
             grade.append(schedule)
         }
-        
-        /* Define o tamanho da janela com as horas, usando como base o tamanho da tela do device */
-        timeCollectionView.bounds = CGRectMake(0, 0, UIScreen.mainScreen().bounds.width*0.1875, timeCollectionView.bounds.height)
-        mainCollectionView.bounds = CGRectMake(0, 0, UIScreen.mainScreen().bounds.width*1.8125, timeCollectionView.bounds.height)
-        
     }
 
     override func didReceiveMemoryWarning()
@@ -188,7 +187,6 @@ class ScheduleViewController: UIViewController, UICollectionViewDelegate, UIColl
     {
         if( collectionView == mainCollectionView)
         {
-            /* Célula selecionada */
             var cell = collectionView.cellForItemAtIndexPath(indexPath)
             
             grade[indexPath.item]++
