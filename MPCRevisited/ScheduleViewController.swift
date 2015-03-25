@@ -8,23 +8,10 @@
 
 import UIKit
 
-/* Identificador da célula protótipo */
 var reusableIdentifier = "cell"
-
-/* Array da agenda do usuário */
 var grade = [Int]()
-
 let scheduleService = ScheduleService()
 
-/* Subclasse de uma célula que é usada na collection lateral
-existe apenas para poder relacionar o seu label com o código
-*/
-class TimeViewCell: UICollectionViewCell
-{
-    /* Label da célula */
-    @IBOutlet weak var textLabel: UILabel!
-    
-}
 
 class ScheduleViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
 {
@@ -36,26 +23,25 @@ class ScheduleViewController: UIViewController, UICollectionViewDelegate, UIColl
     
     /* Referência às collection views da tela */
     @IBOutlet weak var mainCollectionView: UICollectionView!
-    
     @IBOutlet weak var timeCollectionView: UICollectionView!
+    @IBOutlet weak var daysCollectionView: UICollectionView!
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        var x = 0;
         
-        /* Define essa view como o delegate das collection views */
-        mainCollectionView.dataSource = self
         mainCollectionView.delegate = self
-        timeCollectionView.delegate = self
-        timeCollectionView.dataSource = self
-        
-        /* Permite multiplas seleções na collection view */
+        mainCollectionView.dataSource = self
         mainCollectionView.allowsMultipleSelection = true
         mainCollectionView.allowsSelection = false
         
-        /* Desliga a exibição da barra de rolagem lateral na collection de horas */
+        timeCollectionView.delegate = self
+        timeCollectionView.dataSource = self
         timeCollectionView.showsVerticalScrollIndicator = false
+        
+        daysCollectionView.delegate = self
+        daysCollectionView.dataSource = self
+        daysCollectionView.scrollEnabled = false
         
         var mySchedules = scheduleService.getMySchedule()
         for schedule in mySchedules
@@ -67,8 +53,6 @@ class ScheduleViewController: UIViewController, UICollectionViewDelegate, UIColl
         timeCollectionView.bounds = CGRectMake(0, 0, UIScreen.mainScreen().bounds.width*0.1875, timeCollectionView.bounds.height)
         mainCollectionView.bounds = CGRectMake(0, 0, UIScreen.mainScreen().bounds.width*1.8125, timeCollectionView.bounds.height)
         
-//        println("JanelaT: \(timeCollectionView.bounds.width)\nJanelaG: \(mainCollectionView.bounds.width)\nTotal: \(UIScreen.mainScreen().bounds.width) = \(UIScreen.mainScreen().bounds.width*2)")
-
     }
 
     override func didReceiveMemoryWarning()
@@ -76,7 +60,6 @@ class ScheduleViewController: UIViewController, UICollectionViewDelegate, UIColl
         super.didReceiveMemoryWarning()
     }
     
-    /* Função de ação de toque no botão Editar */
     @IBAction func editTouched(sender: UIButton)
     {
         /* Apenas alterna entre editar ou não, trocando o texto do botão no processo */
@@ -100,13 +83,16 @@ class ScheduleViewController: UIViewController, UICollectionViewDelegate, UIColl
     /* Retorna o número de células exibidas nas collections views */
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
     {
-        if( collectionView == mainCollectionView)
+        switch collectionView
         {
+        case mainCollectionView:
             return 75
-        }
-        else
-        {
+        case timeCollectionView:
             return 15
+        case daysCollectionView:
+            return 5
+        default:
+            return 0
         }
     }
     
@@ -118,110 +104,114 @@ class ScheduleViewController: UIViewController, UICollectionViewDelegate, UIColl
     /* Função que cria as células nas collection views */
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell
     {
-        /* Pega uma célula reutiluzável */
-        var cell = collectionView.dequeueReusableCellWithReuseIdentifier(reusableIdentifier, forIndexPath: indexPath) as UICollectionViewCell
-        
-//        println(cell.bounds)
-        
-        /* Caso for uma célula da collection de seleção */
         if( collectionView == mainCollectionView)
         {
-            /* Se o horário estiver livre */
-            if( grade[indexPath.item] == 0 )
+            var mainCell = collectionView.dequeueReusableCellWithReuseIdentifier(reusableIdentifier, forIndexPath: indexPath) as UICollectionViewCell
+            
+            switch grade[indexPath.item]
             {
-                cell.backgroundColor = UIColor(red: 0.0, green: 204.0/255.0, blue: 51.0/255.0, alpha: 1.0)
+            case 0:
+                mainCell.backgroundColor = UIColor(red: 0.0, green: 204.0/255.0, blue: 51.0/255.0, alpha: 1.0)
+            case 1:
+                mainCell.backgroundColor = UIColor.redColor()
+            case 2:
+                mainCell.backgroundColor = UIColor.orangeColor()
+            default:
+                mainCell.backgroundColor = UIColor.blackColor()
             }
-            else if( grade[indexPath.item] == 1 )
-            {
-                cell.backgroundColor = UIColor.redColor()
-            }
-            else
-            {
-                cell.backgroundColor = UIColor.orangeColor()
-            }
+            
+            return mainCell
         }
-        else
+        else if( collectionView == timeCollectionView )
         {
-            /* Caso for uma célula da collection de horários */
             var leftCell: TimeViewCell
             
             leftCell = collectionView.dequeueReusableCellWithReuseIdentifier(reusableIdentifier, forIndexPath: indexPath) as TimeViewCell
-            
             leftCell.textLabel.text = String(indexPath.item + 7) + ":00"
-            
-//            leftCell.backgroundColor = UIColor.whiteColor()
-            
+           
             return leftCell
     
         }
-        
-        return cell
+        else
+        {
+            var dayCell: TimeViewCell
+            
+            dayCell = collectionView.dequeueReusableCellWithReuseIdentifier(reusableIdentifier, forIndexPath: indexPath) as TimeViewCell
+            
+//            dayCell.backgroundColor = UIColor.whiteColor()
+            
+            switch indexPath.item
+            {
+            case 0,4:
+                dayCell.textLabel.text = "S"
+            case 1:
+                dayCell.textLabel.text = "T"
+            case 2,3:
+                dayCell.textLabel.text = "Q"
+            default:
+                dayCell.textLabel.text = "Erro"
+            }
+            
+            return dayCell
+        }
     }
     
     
 // MARK: Funções opcionais do protocolo collection view delegate
-    
-    /* Muda a cor da célula selecionada para vermelho se for da main collection */
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath)
     {
         if( collectionView == mainCollectionView)
         {
-            /* Célula selecionada */
             var cell = collectionView.cellForItemAtIndexPath(indexPath)
-            grade[indexPath.item]++
             
+            grade[indexPath.item]++
             if( grade[indexPath.item] > 2 )
             {
                 grade[indexPath.item] = 0
             }
             
-            if( grade[indexPath.item] == 0 )
+            switch grade[indexPath.item]
             {
+            case 0:
                 cell?.backgroundColor = UIColor(red: 0.0, green: 204.0/255.0, blue: 51.0/255.0, alpha: 1.0)
-            }
-            else if( grade[indexPath.item] == 1 )
-            {
+            case 1:
                 cell?.backgroundColor = UIColor.redColor()
-            }
-            else
-            {
+            case 2:
                 cell?.backgroundColor = UIColor.orangeColor()
+            default:
+                cell?.backgroundColor = UIColor.blackColor()
             }
         }
-        
     }
     
-    /* Muda a cor da célula descelecionada para verde se for da main collection */
     func collectionView(collectionView: UICollectionView, didDeselectItemAtIndexPath indexPath: NSIndexPath)
     {
         if( collectionView == mainCollectionView)
         {
             /* Célula selecionada */
             var cell = collectionView.cellForItemAtIndexPath(indexPath)
-            grade[indexPath.item]++
             
+            grade[indexPath.item]++
             if( grade[indexPath.item] > 2 )
             {
                 grade[indexPath.item] = 0
             }
             
-            if( grade[indexPath.item] == 0 )
+            switch grade[indexPath.item]
             {
+            case 0:
                 cell?.backgroundColor = UIColor(red: 0.0, green: 204.0/255.0, blue: 51.0/255.0, alpha: 1.0)
-            }
-            else if( grade[indexPath.item] == 1 )
-            {
+            case 1:
                 cell?.backgroundColor = UIColor.redColor()
-            }
-            else
-            {
+            case 2:
                 cell?.backgroundColor = UIColor.orangeColor()
+            default:
+                cell?.backgroundColor = UIColor.blackColor()
             }
         }
     }
     
 // MARK: Funções do delegate de scroll das duas collection views
-    
     /* Faz as duas collections moverem em conjunto */
     func scrollViewDidScroll(scrollView: UIScrollView)
     {
@@ -247,32 +237,33 @@ class ScheduleViewController: UIViewController, UICollectionViewDelegate, UIColl
 // MARK: Funões do collection view delegate flow layout
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets
     {
-        if(collectionView == mainCollectionView)
+        switch collectionView
         {
+        case mainCollectionView:
             return UIEdgeInsetsMake(10, 5, 10, 10)
-        }
-        else
-        {
+        case timeCollectionView:
             return UIEdgeInsetsMake(10, 5, 0, 0)
+        case daysCollectionView:
+            return UIEdgeInsetsMake(0, 5, 0, 10)
+        default:
+            return UIEdgeInsetsMake(0, 0, 0, 0)
         }
-        
     }
     
-    /* Retorna o tamanho das células para a collection view */
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize
     {
-        if(collectionView == mainCollectionView)
+        var lado:CGFloat = (mainCollectionView.bounds.width - 60)/5
+        
+        switch collectionView
         {
-            var lado:CGFloat = (mainCollectionView.bounds.width - 60)/5
-            var size:CGSize = CGSizeMake(lado, lado)
-            
+        case daysCollectionView:
+            var size:CGSize = CGSizeMake(lado, daysCollectionView.bounds.height)
             return size
-        }
-        else
-        {
-            var lado:CGFloat = (mainCollectionView.bounds.width - 60)/5
+        case timeCollectionView:
             var size:CGSize = CGSizeMake(lado + 4, lado)
-            
+            return size
+        default:
+            var size:CGSize = CGSizeMake(lado, lado)
             return size
         }
     }

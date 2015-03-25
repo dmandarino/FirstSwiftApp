@@ -11,6 +11,7 @@
 		2465983E1AB9AC6800FC40AC /* find.png in Resources */ = {isa = PBXBuildFile; fileRef = 2465983D1AB9AC6800FC40AC /* find.png */; };
 		246598401AB9ACD800FC40AC /* help.png in Resources */ = {isa = PBXBuildFile; fileRef = 2465983F1AB9ACD800FC40AC /* help.png */; };
 		246598441AB9ADC800FC40AC /* help1.png in Resources */ = {isa = PBXBuildFile; fileRef = 246598431AB9ADC800FC40AC /* help1.png */; };
+		41359C891AC2FC80002066EE /* TimeViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41359C881AC2FC80002066EE /* TimeViewCell.swift */; };
 		4187C4E21AB7020B00251A62 /* ScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4187C4E11AB7020B00251A62 /* ScheduleViewController.swift */; };
 		4F0E5B871AB3789700CB22A9 /* MatchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0E5B861AB3789700CB22A9 /* MatchViewController.swift */; };
 		4FA7843B1AB8BA5C00E0CC44 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FA7843A1AB8BA5C00E0CC44 /* LaunchScreen.xib */; };
@@ -47,6 +48,7 @@
 		2465983D1AB9AC6800FC40AC /* find.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = find.png; sourceTree = "<group>"; };
 		2465983F1AB9ACD800FC40AC /* help.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = help.png; sourceTree = "<group>"; };
 		246598431AB9ADC800FC40AC /* help1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = help1.png; sourceTree = "<group>"; };
+		41359C881AC2FC80002066EE /* TimeViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TimeViewCell.swift; path = model/TimeViewCell.swift; sourceTree = "<group>"; };
 		4187C4E11AB7020B00251A62 /* ScheduleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleViewController.swift; sourceTree = "<group>"; };
 		4F0E5B861AB3789700CB22A9 /* MatchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatchViewController.swift; sourceTree = "<group>"; };
 		4FA7843A1AB8BA5C00E0CC44 /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
@@ -176,6 +178,7 @@
 				5ADE166B1AB62EF100D5392E /* dao */,
 				5A3ADEB81ABB6FFF00853E40 /* controller */,
 				4FB7BCBD1ABA343A00106098 /* ResultTableViewCell.swift */,
+				41359C881AC2FC80002066EE /* TimeViewCell.swift */,
 				C043655C1A626BA0000E0F15 /* Supporting Files */,
 			);
 			path = MPCRevisited;
@@ -260,7 +263,7 @@
 				TargetAttributes = {
 					C04365581A626BA0000E0F15 = {
 						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = N3GG8VLR9P;
+						DevelopmentTeam = 23U2PRENXT;
 					};
 					C043656D1A626BA1000E0F15 = {
 						CreatedOnToolsVersion = 6.1.1;
@@ -331,6 +334,7 @@
 				5ADE166A1AB62EE900D5392E /* JSONService.swift in Sources */,
 				5ADE166F1AB62F8300D5392E /* ScheduleService.swift in Sources */,
 				C043655F1A626BA0000E0F15 /* AppDelegate.swift in Sources */,
+				41359C891AC2FC80002066EE /* TimeViewCell.swift in Sources */,
 				4F0E5B871AB3789700CB22A9 /* MatchViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
