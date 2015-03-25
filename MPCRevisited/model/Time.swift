@@ -12,7 +12,7 @@ class Time : NSObject{
     
     var timeIndex:Int = 0
     var day:String = ""
-    var hour:NSInteger = 0
+    var hour:Int = 0
     var busy:Bool = false
     var optional:Bool = false
     
