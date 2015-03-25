@@ -33,10 +33,10 @@ class ScheduleService {
             
             let dataArray = notification!.object as Array<String>
             
-            let resultData = self.compareSchedules(dataArray)
+//            let resultData = self.compareSchedules(dataArray)
             
             //metodo do luan
-            var result = self.getAllFreeTime(resultData)
+            var result = self.compareSchedules(dataArray)
             if result.count == 0{
                 var resp = Response()
                 resp.dia = "Nenhum Horario Em Comum"
@@ -132,7 +132,7 @@ class ScheduleService {
     }
     
     //compara os horários de todos e retorna um array de Time com o horário em seu estado comum a todos
-    func compareSchedules(receivedDatas:[String]) -> [Time]{
+    func compareSchedules(receivedDatas:[String]) -> [Response]{
         var myFree = getMySchedule()
         
         var received:[Int]
@@ -152,32 +152,25 @@ class ScheduleService {
             }
         }
         let groupTimeState = myFree
-        return createTimeArrayResponse(groupTimeState)
+        let timeArrayResult = createTimeArrayResponse(groupTimeState)
+        return getResponseResult(timeArrayResult)
     }
     
     /* Recebe um vetor com os horarios livres e opcionais dos usuarios
         retornando outro array com dias e horas livres para exibição
     */    
-    func getAllFreeTime( horas:[Time] ) -> [Response] {
-        /* Cria o vetor com os resultados */
+    private func getResponseResult( horas:[Time] ) -> [Response] {
         var resultados = [Response]()
-       
         var flag:Bool = false
-        
         var optional:Bool = false
-       
         var respAux = Response()
         
-        /* Varre as colunas */
+        
         for( var i:Int = 0 ; i<daysOfWeek ; i++) {
-            /* Varre as linhas */
             for( var j:Int = i ; j<horas.count ; j += daysOfWeek ) {
-                /* Se achar um horario livre */
                 if( horas[j].busy == false && flag == false ) {
-                    /* Adiciona o dia na resposta */
                     respAux.dia = horas[j].day
                     
-                    /* Adiciona o horário inicial na resposta */
                     respAux.hora = "\(horas[j].hour):00 - "
                     
                     flag = true
@@ -186,7 +179,6 @@ class ScheduleService {
                         respAux.dia += " (Opcional)"
                         optional = true
                     }
-        
                 }
                 else if( (horas[j].busy == true  && flag == true) || ( j+daysOfWeek >= horas.count )) {
                     if respAux.hora != "" {
@@ -219,8 +211,6 @@ class ScheduleService {
                 }
             }
         }
-        
-        /* Retorna o vetor de resultados */
         return resultados
     }
     
