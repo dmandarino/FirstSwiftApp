@@ -8,8 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		41359C891AC2FC80002066EE /* TimeViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41359C881AC2FC80002066EE /* TimeViewCell.swift */; };
+		4FBEBDC51AC7591D0095D8F8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4FBEBDC41AC7591D0095D8F8 /* Main.storyboard */; };
 		5A307D491AC0B95D0040AC3C /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A307D481AC0B95D0040AC3C /* Response.swift */; };
-		5A5A860D1AB8A35C00ED3BF2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5A5A860B1AB8A35C00ED3BF2 /* Main.storyboard */; };
 		5ACF2D311AC31D0F0035C001 /* MPCManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ACF2D301AC31D0F0035C001 /* MPCManager.swift */; };
 		5ACF2D361AC31D370035C001 /* HelpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ACF2D321AC31D370035C001 /* HelpViewController.swift */; };
 		5ACF2D371AC31D370035C001 /* MatchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ACF2D331AC31D370035C001 /* MatchViewController.swift */; };
@@ -44,8 +44,8 @@
 
 /* Begin PBXFileReference section */
 		41359C881AC2FC80002066EE /* TimeViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TimeViewCell.swift; path = model/TimeViewCell.swift; sourceTree = "<group>"; };
+		4FBEBDC41AC7591D0095D8F8 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		5A307D481AC0B95D0040AC3C /* Response.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Response.swift; path = model/Response.swift; sourceTree = "<group>"; };
-		5A5A860C1AB8A35C00ED3BF2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		5ACF2D301AC31D0F0035C001 /* MPCManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MPCManager.swift; path = service/MPCManager.swift; sourceTree = "<group>"; };
 		5ACF2D321AC31D370035C001 /* HelpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HelpViewController.swift; path = controller/HelpViewController.swift; sourceTree = "<group>"; };
 		5ACF2D331AC31D370035C001 /* MatchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MatchViewController.swift; path = controller/MatchViewController.swift; sourceTree = "<group>"; };
@@ -185,7 +185,7 @@
 				4FB7BCBC1ABA329500106098 /* PLists */,
 				4FB7BCBB1ABA328000106098 /* Images */,
 				5ACF2D3A1AC31DD70035C001 /* LaunchScreen.xib */,
-				5A5A860B1AB8A35C00ED3BF2 /* Main.storyboard */,
+				4FBEBDC41AC7591D0095D8F8 /* Main.storyboard */,
 				5ACF2D3D1AC31F6A0035C001 /* AppDelegate.swift */,
 				C04365651A626BA0000E0F15 /* Images.xcassets */,
 			);
@@ -258,7 +258,7 @@
 				TargetAttributes = {
 					C04365581A626BA0000E0F15 = {
 						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = N3GG8VLR9P;
+						DevelopmentTeam = D4QEWF5RB3;
 					};
 					C043656D1A626BA1000E0F15 = {
 						CreatedOnToolsVersion = 6.1.1;
@@ -297,8 +297,8 @@
 				5ACF2D421AC31F950035C001 /* schedule.plist in Resources */,
 				5ACF2D481AC31FAA0035C001 /* find.png in Resources */,
 				5ACF2D4A1AC31FAA0035C001 /* icone_pronto.png in Resources */,
+				4FBEBDC51AC7591D0095D8F8 /* Main.storyboard in Resources */,
 				5ACF2D3C1AC31DD70035C001 /* LaunchScreen.xib in Resources */,
-				5A5A860D1AB8A35C00ED3BF2 /* Main.storyboard in Resources */,
 				5ACF2D471AC31FAA0035C001 /* calendar.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -352,14 +352,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		5A5A860B1AB8A35C00ED3BF2 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				5A5A860C1AB8A35C00ED3BF2 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		5ACF2D3A1AC31DD70035C001 /* LaunchScreen.xib */ = {
 			isa = PBXVariantGroup;
 			children = (

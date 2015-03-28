@@ -162,7 +162,7 @@ class MatchViewController: UIViewController, MCBrowserViewControllerDelegate, UI
     
     func browserViewControllerDidFinish(browserViewController: MCBrowserViewController!) {
         
-        appDelegate.mpcManager.requestMatchDataFromConnectedPeers()
+        appDelegate.mpcManager.requestScheduleDataFromConnectedPeers()
         
         let resultViewController = self.storyboard!.instantiateViewControllerWithIdentifier(
                                                     "ResultViewController") as UIViewController

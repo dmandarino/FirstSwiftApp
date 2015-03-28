@@ -2,131 +2,165 @@
 //  MPCManager.swift
 //  MPCRevisited
 //
-//  Created by Gabriel Theodoropoulos on 11/1/15.
-//  Copyright (c) 2015 Appcoda. All rights reserved.
+//  Created by Victor Yves Crispim on 03/5/15.
+//  Copyright (c) 2015 BEPiD. All rights reserved.
 //
 
 import UIKit
+
 import MultipeerConnectivity
+
+
 
 //Class responsible for managing the MPC framework
 class MPCManager: NSObject, MCSessionDelegate{
     
     //MARK: Private attributes
+    
     private var matchDataArray = [String]()
     private var receivedDataCount = 0
     let scheduleService = ScheduleService()
     
     //MARK: Public attributes
+    
     var session: MCSession?
-    
     var peer: MCPeerID?
-    
     var browser: MCBrowserViewController?
-    
     var advertiser: MCAdvertiserAssistant?
-    
     var foundPeers = [MCPeerID]()
-    
-    var invitationHandler: ((Bool, MCSession!)->Void)!
-    
+
     
     //MARK: Initialzer method
     
     func setupPeerAndSessionWithDisplayName(displayName: String){
-
+        
         peer = MCPeerID(displayName: displayName)
-    
         session = MCSession(peer: peer)
-    
         session!.delegate = self;
     }
+    
     
     //MARK: MCBrowserViewController methods
     
     func setupMCBrowser(){
+    
         browser = MCBrowserViewController(serviceType: "teste", session: session)
         browser?.title = "Group Finder"
-
-//        OBS: loucura pra tentar editar o viewController programaticamente
-//        let a = browser?.view.subviews[1] as UINavigationBar
-//        a.delegate = self
-//        
-//        println("\(browser?.view.subviews[1].description!)")
     }
     
-    //MARK: MCAdvertiserAssistant methods
     
+    //MARK: MCAdvertiserAssistant methods
+
     func advertiseSelf(shouldAdvertise:Bool){
         
         if shouldAdvertise{
+            
             advertiser = MCAdvertiserAssistant(serviceType: "teste", discoveryInfo: nil, session: session)
             advertiser?.start()
         }
         else{
+            
             advertiser?.stop()
             advertiser = nil
         }
     }
+
     
     //MARK: MCSessionDelegate methods
     
     func session(session: MCSession!, peer peerID: MCPeerID!, didChangeState state: MCSessionState) {
-
-        var peerInfo: [String:NSObject] = ["peerID":peerID, "state":state.rawValue]
         
-        NSNotificationCenter.defaultCenter().postNotificationName(
-            "MCDidChangeStateNotification", object: nil, userInfo: peerInfo)
+        var peerInfo: [String:NSObject] = ["peerID":peerID, "state":state.rawValue]
+    
+        NSNotificationCenter.defaultCenter().postNotificationName("MCDidChangeStateNotification", object: nil, userInfo: peerInfo)
     }
     
     func session(session: MCSession!, didReceiveData data: NSData!, fromPeer peerID: MCPeerID!) {
+  
+        let receivedMessage:AnyObject = NSKeyedUnarchiver.unarchiveObjectWithData(data) as AnyObject!
+        let requestType = receivedMessage["request"] as String
+        
+        if requestType == "ScheduleDataRequest"{
 
-        let receivedMessage = NSKeyedUnarchiver.unarchiveObjectWithData(data) as Dictionary<String,String>
-        
-        let requestType = receivedMessage["request"]
-        
-        if requestType! == "MatchDataRequest"{
+            let scheduleData: [String:AnyObject] =  [    "request":"ScheduleDataSent",
+                                                        "data"   :scheduleService.sendMySchedule()
+                                                    ]
             
-            sendMatchData(toPeer: peerID)
+            //            var host = [MCPeerID]()
+            //            host.append(peerID)
+            var host = [peerID]
+            
+            sendData(scheduleData, toPeers: host)
         }
-        else if requestType! == "SendMatchDataRequest"{
-         
+        else if requestType == "ScheduleDataSent"{
+            
             //decrease the counter
             --receivedDataCount
+        
             //save the received data
-            matchDataArray.append(receivedMessage["data"]!)
+            matchDataArray.append(receivedMessage["data"] as String)
             
             //if data from all requested peers arrived
             if (receivedDataCount == 0){
-                NSNotificationCenter.defaultCenter().postNotificationName("receivedAllData",
-                                                                        object: matchDataArray)
+                
+                var resultSchedule = scheduleService.compareSchedules(matchDataArray)
+                
+                //teste
+                for data in resultSchedule{
+                    
+                    println(data.getDay() + "   " + data.getHour() + "\n")
+                }
+            
+                let encodedSchedule = encodeScheduleForTransfer(schedule: resultSchedule)
+                
+                let data: [String:AnyObject] =  [   "request":"ResultDataProcessed",
+                                                    "data"   :encodedSchedule
+                    
+                                                ]
+                
+                sendData(data, toPeers: session.connectedPeers as [MCPeerID])
+                
+                NSNotificationCenter.defaultCenter().postNotificationName("ResultDataProcessed", object: resultSchedule)
             }
+        }
+        //TODO: aqui é onde os cliente recebem a resposta.
+        //Voltamos ao problema de ter que instanciar o ResultViewController
+        else if requestType == "ResultDataProcessed"{
+      
+            let resultSchedule = receivedMessage["data"] as [Response]
+            
+            //            let storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+            //            let resultViewController = storyboard.instantiateViewControllerWithIdentifier("ResultViewController") as UIViewController
+            //
+            //            storyboard.
+            
+            NSNotificationCenter.defaultCenter().postNotificationName("ResultDataProcessed", object: resultSchedule)
         }
     }
     
     /*Methods to handle file and data stream transfer. Not used, but needed*/
     func session(session: MCSession!, didStartReceivingResourceWithName resourceName: String!, fromPeer peerID:
+        
         MCPeerID!, withProgress progress: NSProgress!) { }
     
     func session(session: MCSession!, didFinishReceivingResourceWithName resourceName: String!, fromPeer peerID: MCPeerID!, atURL localURL: NSURL!, withError error: NSError!) { }
     
     func session(session: MCSession!, didReceiveStream stream: NSInputStream!, withName streamName: String!, fromPeer peerID: MCPeerID!) { }
-    
+
     
     //MARK: Custom methods
-   
-    func requestMatchDataFromConnectedPeers() -> Bool{
-        
-        //envia mensagem requisitando os dados
-        let data: Dictionary<String,String> = ["request":"MatchDataRequest"]
 
+    func requestScheduleDataFromConnectedPeers() -> Bool{
+    
+        var message: Dictionary<String,AnyObject> = ["request":"ScheduleDataRequest"]
+        
         //guarda o numero de peers conectados: ou seja,
         //o numero de respostas que tem que ser recebidas
         receivedDataCount = session!.connectedPeers.count
         
-        let dataToSend = NSKeyedArchiver.archivedDataWithRootObject(data)
+        let dataToSend = NSKeyedArchiver.archivedDataWithRootObject(message)
         var error: NSError?
-        
+    
         //OBS: pode dar problema se connectedPeers estiver vazio. Tratar na interface
         if !session!.sendData(  dataToSend,
                                 toPeers: session!.connectedPeers,
@@ -136,30 +170,45 @@ class MPCManager: NSObject, MCSessionDelegate{
                 println(error?.localizedDescription)
                 return false
         }
+        
         return true
     }
     
-    //envia os dados necessários para match para o peer host
-    private func sendMatchData(toPeer peer: MCPeerID) -> Bool{
+    private func sendData(data: Dictionary<String,AnyObject>, toPeers peers: [MCPeerID!]) -> Bool{
         
-        let data: [String:String] = [   "request":"SendMatchDataRequest",
-                                        "data":scheduleService.sendMySchedule()
-                                    ]
+        var encodedData:[AnyObject] = []
+        var aux: AnyObject = ["request":data["request"]!]
+        var aux2: AnyObject = ["data":data["data"]!]
         
-        //Aqui que vem a string do JSON
+        encodedData.append(aux)
+        encodedData.append(aux2)
+        
         let dataToSend = NSKeyedArchiver.archivedDataWithRootObject(data)
-        let peersArray = NSArray(object: peer)
         var error: NSError?
-        
-        //OBS: pode dar problema se connectedPeers estiver vazio. Tratar na interface
+    
         if !session!.sendData(  dataToSend,
-                                toPeers: peersArray,
+                                toPeers: peers,
                                 withMode: MCSessionSendDataMode.Reliable,
                                 error: &error) {
                 
                 println(error?.localizedDescription)
+                
                 return false
         }
         return true
+    }
+
+    private func encodeScheduleForTransfer(schedule responseArray: [Response]) -> [AnyObject]{
+        
+        var encodedResponseArray:[AnyObject] = []
+        
+        for response in responseArray{
+            
+            let encodedResponse:AnyObject = ["dia":response.getDay(), "hora":response.getHour()]
+            
+            encodedResponseArray.append(encodedResponse)
+            
+        }
+        return encodedResponseArray
     }
 }
