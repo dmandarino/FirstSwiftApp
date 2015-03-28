@@ -20,7 +20,6 @@ class JSONService {
             jsonObject.append(schedule)
         }
         
-        let schedule: AnyObject = [ "schedule" : jsonObject]
         let jsonString = JSONStringify(jsonObject)
         return jsonString
     }
@@ -44,12 +43,11 @@ class JSONService {
         var jsonObject: [AnyObject] = []
     
         for time in timeList {
-            let schedule:AnyObject = ["day": (time.day), "hour": (time.hour), "optional": (time.optional), "busy": (time.busy), "timeIndex": (time.timeIndex)]
+            let schedule:AnyObject = ["day": (time.getDay()), "hour": (time.getHour()), "optional": (time.isOptional()), "busy": (time.isBusy()), "timeIndex": (time.getTimeIndex())]
         
             jsonObject.append(schedule)
         }
         
-        let schedule: AnyObject = [ "schedule" : jsonObject]
         let jsonString = JSONStringify(jsonObject)
         return jsonString
     }
@@ -61,11 +59,11 @@ class JSONService {
         let array = JSONParseArray(jsonString)
         for schedule:AnyObject in array {
             var time = Time()
-            time.day = schedule["day"] as String
-            time.busy = schedule["busy"] as Bool
-            time.hour = schedule["hour"] as Int
-            time.optional = schedule["optional"] as Bool
-            time.timeIndex = schedule["timeIndex"] as Int
+            time.setDay(schedule["day"] as String)
+            time.setBusy(schedule["busy"] as Bool)
+            time.setHour(schedule["hour"] as Int)
+            time.setOptional(schedule["optional"] as Bool)
+            time.setTimeIndex(schedule["timeIndex"] as Int)
             
             timeList.append(time)
         }

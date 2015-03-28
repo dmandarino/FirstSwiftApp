@@ -32,7 +32,7 @@ class ResultViewController: UITableViewController{
                 
                 //teste
                 for data in self.resultData{
-                    println(data.dia + "   " + data.hora + "\n")
+                    println(data.getDay() + "   " + data.getHour() + "\n")
                 }
             }
     }
@@ -57,8 +57,8 @@ class ResultViewController: UITableViewController{
             cell = tableView.dequeueReusableCellWithIdentifier("ResultTableViewCell") as? ResultTableViewCell
         }
         
-        cell?.weekDay.text = resultData[indexPath.row].dia
-        cell?.timeSpan.text = resultData[indexPath.row].hora
+        cell?.weekDay.text = resultData[indexPath.row].getDay()
+        cell?.timeSpan.text = resultData[indexPath.row].getHour()
         
         return cell!
     }
