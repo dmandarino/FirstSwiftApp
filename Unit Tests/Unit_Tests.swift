@@ -1,15 +1,15 @@
 //
-//  MPCRevisitedTests.swift
-//  MPCRevisitedTests
+//  Unit_Tests.swift
+//  Unit Tests
 //
-//  Created by Gabriel Theodoropoulos on 11/1/15.
+//  Created by Douglas Mandarino on 3/29/15.
 //  Copyright (c) 2015 Appcoda. All rights reserved.
 //
 
 import UIKit
 import XCTest
 
-class MPCRevisitedTests: XCTestCase {
+class Unit_Tests: XCTestCase {
     
     override func setUp() {
         super.setUp()
