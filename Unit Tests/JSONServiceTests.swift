@@ -8,10 +8,11 @@
 
 import UIkit
 import XCTest
+import Foundation
 import GroupMatch
 
 class JSONServiceUnitTests: XCTestCase {
-    
+
     override func setUp() {
         super.setUp()
     }
@@ -19,19 +20,19 @@ class JSONServiceUnitTests: XCTestCase {
     override func tearDown() {
         super.tearDown()
     }
-
-//    func testStringfyIntArray() {
+    
+    func testStringfyIntArray() {
 //        let jService = JSONService()
-//
+
 //        let array:[Int] = [1,0,2,0,0,1]
 //        
 //        var result = jService.stringfyIntArray(array)
 //        let string = "[{\"index\":1},{\"index\":0},{\"index\":2},{\"index\":0},{\"index\":0},{\"index\":1}]"
 //        
 //        XCTAssertEqual(result, string)
-//    }
-//
-//    func testConvertStringToIntArray() {
+    }
+
+    func testConvertStringToIntArray() {
 //        let string = "[{\"index\":1},{\"index\":0},{\"index\":2},{\"index\":0},{\"index\":0},{\"index\":1}]"
 //        
 //        let result = jService.convertStringToIntArray(string)
@@ -57,9 +58,9 @@ class JSONServiceUnitTests: XCTestCase {
 //        let string = "[{\"optional\":false,\"timeIndex\":1,\"busy\":false,\"day\":\"Segunda\",\"hour\":1},{\"optional\":false,\"timeIndex\":5,\"busy\":false,\"day\":\"Terca\",\"hour\":2}]"
 //        
 //        XCTAssertEqual(result, string)
-//    }
-//    
-//    func testConvertStringToTimeArray() {
+    }
+
+    func testConvertStringToTimeArray() {
 //        let string = "[{\"optional\":false,\"timeIndex\":1,\"busy\":false,\"day\":\"Segunda\",\"hour\":1}]"
 //        let result = jService.convertStringToTimeArray(string)
 //        let time = result.first!
@@ -69,9 +70,9 @@ class JSONServiceUnitTests: XCTestCase {
 //        XCTAssertEqual(1, time.getHour() )
 //        XCTAssertFalse( time.isOptional() )
 //        XCTAssertFalse( time.isBusy() )
-//    }
-//    
-//    func testFailConvertStringToTimeArray() {
+    }
+
+    func testFailConvertStringToTimeArray() {
 //        let string = "[{\"optional\":false,\"timeIndex\":1,\"busy\":false,\"day\":\"Segunda\",\"hour\":1}]"
 //        let result = jService.convertStringToTimeArray(string)
 //        let time = result.first!
@@ -81,5 +82,5 @@ class JSONServiceUnitTests: XCTestCase {
 //        XCTAssertNotEqual(2, time.getHour() )
 //        XCTAssertTrue( !time.isOptional() )
 //        XCTAssertTrue( !time.isBusy() )
-//    }
+    }
 }

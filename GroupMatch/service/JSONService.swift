@@ -8,7 +8,7 @@
 
 import Foundation
 
-class JSONService {
+public class JSONService {
     
     //Converter array de Int para um String em formato Json
     func stringfyIntArray(timeList:[Int]) -> String{

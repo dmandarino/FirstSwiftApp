@@ -85,6 +85,11 @@
                BlueprintName = "Unit Tests"
                ReferencedContainer = "container:GroupMatch.xcodeproj">
             </BuildableReference>
+            <SkippedTests>
+               <Test
+                  Identifier = "Unit_Tests">
+               </Test>
+            </SkippedTests>
          </TestableReference>
       </Testables>
       <MacroExpansion>

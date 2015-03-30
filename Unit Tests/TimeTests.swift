@@ -11,7 +11,9 @@ import XCTest
 import GroupMatch
 
 class TimeTests: XCTestCase {
-
+    
+//    var teste = Time()
+    
     override func setUp() {
         super.setUp()
     }
@@ -21,7 +23,7 @@ class TimeTests: XCTestCase {
         super.tearDown()
     }
     
-//    func testGetScheduleValues() {
+    func testGetScheduleValues() {
 //        var time = Time()
 //        time.setDay("Terca")
 //        time.setHour(5)
@@ -34,12 +36,12 @@ class TimeTests: XCTestCase {
 //        XCTAssertEqual(time.isBusy(), true)
 //        XCTAssertEqual(time.isOptional(), false)
 //        XCTAssertEqual(time.getTimeIndex(), 3)
-//    }
-//    
-//    func testFailGetScheduleValues() {
+    }
+    
+    func testFailGetScheduleValues() {
 //        var time = Time()
 //        time.setDay("Terca")
 //        
 //        XCTAssertNotEqual(time.getDay(), "Quarta")
-//    }
+    }
 }

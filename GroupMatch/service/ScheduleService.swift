@@ -25,29 +25,6 @@ class ScheduleService {
     
     init() {
         numberOfSchedule = (lastHour - firstHour)*daysOfWeek
-        //TESTE DE TRANSFERENCIA DE DADOS DO MPC
-        NSNotificationCenter.defaultCenter().addObserverForName("receivedAllData",
-        object: nil,
-        queue: NSOperationQueue.mainQueue()){
-            (notification: NSNotification?) -> Void in
-        
-           // navigationController!.pushViewController(/*resultViewController*/, animated: true)
-            
-            let dataArray = notification!.object as Array<String>
-            
-//            let resultData = self.compareSchedules(dataArray)
-            
-            //metodo do luan
-            var result = self.compareSchedules(dataArray)
-            if result.count == 0{
-                var resp = Response()
-                resp.setDay("Nenhum Horario Em Comum")
-                result.append(Response())
-            }
-            
-            NSNotificationCenter.defaultCenter().postNotificationName("ResultDataProcessed",
-                object: result)
-        }
     }
     
     //Salva a minha grade de horário. Recebe um array de Int com o índice com o
@@ -169,7 +146,7 @@ class ScheduleService {
             for( var j:Int = i ; j<times.count ; j += daysOfWeek ) {
                 var isEndDay = (j+daysOfWeek) >= times.count
                 
-                if !times[j].isBusy() && (freeTime != timeType){
+                if !times[j].isBusy() && !times[j].isOptional() && (freeTime != timeType){
                     if isResponseOpen {
                         respAux = endResponse(times[j], response: respAux)
                         responseList.append(respAux)
@@ -178,16 +155,21 @@ class ScheduleService {
                     respAux = createNewResponse(times[j])
                     timeType = freeTime
                     isResponseOpen = true
-                } else if times[j].isOptional() && (optionalTime != timeType) {
+                } else if times[j].isOptional() {
                     if isResponseOpen {
                         respAux = endResponse(times[j], response: respAux)
                         responseList.append(respAux)
                         isResponseOpen = false
                     }
                     respAux = createNewResponse(times[j])
-                    timeType = optionalTime
-                    isResponseOpen = true
                     respAux.setDay(respAux.getDay() + " (opcional)")
+                    
+                    respAux = endResponse(times[j+daysOfWeek], response: respAux)
+                    responseList.append(respAux)
+
+                    timeType = optionalTime
+                    isResponseOpen = false
+
                 } else if times[j].isBusy() || (isEndDay && isResponseOpen){
                     if isResponseOpen {
                         respAux = endResponse(times[j], response: respAux)
@@ -199,6 +181,9 @@ class ScheduleService {
                     timeType = -1
                 }
             }
+        }
+        for r in responseList {
+            println(r.getDay() + " : " + r.getHour())
         }
         return responseList
     }
