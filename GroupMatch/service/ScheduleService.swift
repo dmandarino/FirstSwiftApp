@@ -10,12 +10,12 @@ import Foundation
 
 class ScheduleService {
     
-    private let daysOfWeek = 5
-    private let firstHour = 7
-    private let lastHour = 22
-    private let freeTimeIndex = 0
-    private let busyTimeIndex = 1
-    private let optionalTimeIndex = 2
+    private let daysOfWeek = ConfigValues.sharedInstance.daysOfWeek
+    private let firstHour = ConfigValues.sharedInstance.firstHour
+    private let lastHour = ConfigValues.sharedInstance.lastHour
+    private let freeTimeIndex = ConfigValues.sharedInstance.freeTimeIndex
+    private let busyTimeIndex = ConfigValues.sharedInstance.busyTimeIndex
+    private let optionalTimeIndex = ConfigValues.sharedInstance.optionalTimeIndex
     private let numberOfSchedule:Int?
     private let mySchedule = "schedule"
     private let freeTime = "freetime"
@@ -114,15 +114,15 @@ class ScheduleService {
             
             switch (i%daysOfWeek) {
             case (0):
-                day = "Segunda"
+                day = "Monday"
             case (1):
-                day = "Terça"
+                day = "Tuesday"
             case (2):
-                day = "Quarta"
+                day = "Wednesday"
             case (3):
-                day = "Quinta"
+                day = "Thursday"
             default:
-                day = "Sexta"
+                day = "Friday"
             }
             var hour = (i/(daysOfWeek))+firstHour
             schedule.append(createTime(hour, day: day, id:id))
@@ -162,7 +162,7 @@ class ScheduleService {
                         isResponseOpen = false
                     }
                     respAux = createNewResponse(times[j])
-                    respAux.setDay(respAux.getDay() + " (opcional)")
+                    respAux.setDay(respAux.getDay() + " (optional)")
                     
                     respAux = endResponse(times[j+daysOfWeek], response: respAux)
                     responseList.append(respAux)

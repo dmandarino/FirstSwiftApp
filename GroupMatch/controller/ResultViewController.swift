@@ -17,7 +17,7 @@ class ResultViewController: UITableViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.title = "Horários Disponíveis"
+        self.title = "Available Times"
 
         tableView.delegate = self
         tableView.dataSource = self

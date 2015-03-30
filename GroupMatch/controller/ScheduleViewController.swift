@@ -15,6 +15,10 @@ let scheduleService = ScheduleService()
 
 class ScheduleViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
 {
+    private let daysOfWeek = ConfigValues.sharedInstance.daysOfWeek
+    private let firstHour = ConfigValues.sharedInstance.firstHour
+    private let lastHour = ConfigValues.sharedInstance.lastHour
+    
     /* Salva qual collection view está sendo arrastada */
     var scrollingView: UIScrollView!
     
@@ -85,11 +89,11 @@ class ScheduleViewController: UIViewController, UICollectionViewDelegate, UIColl
         switch collectionView
         {
         case mainCollectionView:
-            return 75
+            return (daysOfWeek * ( lastHour - firstHour ) )
         case timeCollectionView:
-            return 15
+            return ( lastHour - firstHour )
         case daysCollectionView:
-            return 5
+            return daysOfWeek
         default:
             return 0
         }
@@ -126,7 +130,7 @@ class ScheduleViewController: UIViewController, UICollectionViewDelegate, UIColl
             var leftCell: TimeViewCell
             
             leftCell = collectionView.dequeueReusableCellWithReuseIdentifier(reusableIdentifier, forIndexPath: indexPath) as TimeViewCell
-            leftCell.textLabel.text = String(indexPath.item + 7) + ":00"
+            leftCell.textLabel.text = String(indexPath.item + firstHour) + ":00"
            
             return leftCell
     
@@ -136,17 +140,17 @@ class ScheduleViewController: UIViewController, UICollectionViewDelegate, UIColl
             var dayCell: TimeViewCell
             
             dayCell = collectionView.dequeueReusableCellWithReuseIdentifier(reusableIdentifier, forIndexPath: indexPath) as TimeViewCell
-            
-//            dayCell.backgroundColor = UIColor.whiteColor()
-            
+           
             switch indexPath.item
             {
-            case 0,4:
-                dayCell.textLabel.text = "S"
-            case 1:
+            case 0:
+                dayCell.textLabel.text = "M"
+            case 1,3:
                 dayCell.textLabel.text = "T"
-            case 2,3:
-                dayCell.textLabel.text = "Q"
+            case 2:
+                dayCell.textLabel.text = "W"
+            case 4:
+                dayCell.textLabel.text = "F"
             default:
                 dayCell.textLabel.text = "Erro"
             }
@@ -238,9 +242,9 @@ class ScheduleViewController: UIViewController, UICollectionViewDelegate, UIColl
         switch collectionView
         {
         case mainCollectionView:
-            return UIEdgeInsetsMake(10, 5, 10, 10)
+            return UIEdgeInsetsMake(0, 5, 10, 10)
         case timeCollectionView:
-            return UIEdgeInsetsMake(10, 5, 0, 0)
+            return UIEdgeInsetsMake(0, 5, 0, 0)
         case daysCollectionView:
             return UIEdgeInsetsMake(0, 5, 0, 10)
         default:
