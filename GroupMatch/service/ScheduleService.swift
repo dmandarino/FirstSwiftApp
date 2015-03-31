@@ -28,62 +28,34 @@ class ScheduleService {
     
     //Salva a minha grade de horário. Recebe um array de Int com o índice com o
     //estado do horário. 0 == livre, 1==ocupado, 2==opcional
-    func saveMySchedule(grid:[Int]){
-        var timeList = getScheduleFromPlist(mySchedule)
-        
-        if timeList.count == 0 {
-            timeList = createDefaultSchedule()
-        }
-        
-        for var i = 0; i < timeList.count; i++ {
-            if grid[i] == freeTimeIndex {
-                timeList[i].setBusy(false)
-                timeList[i].setOptional(false)
-            } else if grid[i] == busyTimeIndex {
-                timeList[i].setBusy(true)
-                timeList[i].setOptional(false)
-            } else if grid[i] == optionalTimeIndex{
-                timeList[i].setBusy(false)
-                timeList[i].setOptional(true)
-            }
-        }
-        
+    func saveMySchedule(timeList:[Time]){
         let jsonString = jService.strinfyTimeArray(timeList)
         ScheduleDao.saveScheduleData(jsonString, key: mySchedule)
     }
     
     //Pega os horarios salvos e retorna o indice de cada estado em um array de Int
-    func getMySchedule() ->[Int]{
-        let timeList = getScheduleFromPlist(mySchedule)
-        var arrayIndex = [Int]()
+    func getMySchedule() ->[Time]{
+        var timeList = getScheduleFromPlist(mySchedule)
         
         if timeList.count == 0{
-            var list = createDefaultSchedule()
-            for l in list {
-                arrayIndex.append(freeTimeIndex)
-            }
-        } else {
-            for time in timeList{
-                if time.isBusy() {
-                   arrayIndex.append(busyTimeIndex)
-                } else if time.isOptional() {
-                    arrayIndex.append(optionalTimeIndex)
-                } else {
-                    arrayIndex.append(freeTimeIndex)
-                }
-            }
+            timeList = createDefaultSchedule()
         }
-        return arrayIndex
+        
+        return timeList
     }
     
     //Envia meus horários para quem pediu.
     func sendMySchedule()->String{
-        return jService.stringfyIntArray(getMySchedule())
+        var timeList = getMySchedule()
+        var arrayIndex = convertTimeArrayToTimeIndex(timeList)
+        
+        return jService.stringfyIntArray(arrayIndex)
     }
     
     //compara os horários de todos e retorna um array de Time com o horário em seu estado comum a todos
     func compareSchedules(receivedDatas:[String]) -> [AvailableTime]{
-        var commomSchedule = getMySchedule()
+        var mySchedule = getMySchedule()
+        var commomSchedule = convertTimeArrayToTimeIndex(mySchedule)
         
         for data in receivedDatas{
             var received = jService.convertStringToIntArray(data)
@@ -105,7 +77,7 @@ class ScheduleService {
     }
     
     //Cria uma grade padrão e livre em todos os horários
-    private func createDefaultSchedule() ->[Time]{
+    func createDefaultSchedule() ->[Time]{
         var id = 0;
         schedule.removeAll(keepCapacity: false)
         for var i = 0; i<numberOfSchedule; i++ {
@@ -245,5 +217,20 @@ class ScheduleService {
         response.setHour(response.getHour() + "\(time.getHour()):00")
 
         return response
+    }
+    
+    private func convertTimeArrayToTimeIndex(timeList:[Time]) ->[Int] {
+        var arrayIndex = [Int]()
+        
+        for time in timeList{
+            if time.isBusy() {
+                arrayIndex.append(busyTimeIndex)
+            } else if time.isOptional() {
+                arrayIndex.append(optionalTimeIndex)
+            } else {
+                arrayIndex.append(freeTimeIndex)
+            }
+        }
+        return arrayIndex
     }
 }

@@ -15,6 +15,9 @@ let scheduleService = ScheduleService()
 
 class ScheduleViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
 {
+    private let freeTimeIndex = ConfigValues.sharedInstance.freeTimeIndex
+    private let busyTimeIndex = ConfigValues.sharedInstance.busyTimeIndex
+    private let optionalTimeIndex = ConfigValues.sharedInstance.optionalTimeIndex
     private let daysOfWeek = ConfigValues.sharedInstance.daysOfWeek
     private let firstHour = ConfigValues.sharedInstance.firstHour
     private let lastHour = ConfigValues.sharedInstance.lastHour
@@ -52,9 +55,10 @@ class ScheduleViewController: UIViewController, UICollectionViewDelegate, UIColl
         mainCollectionView.bounds = CGRectMake(0, 0, UIScreen.mainScreen().bounds.width*1.8125, timeCollectionView.bounds.height)
         
         var mySchedules = scheduleService.getMySchedule()
-        for schedule in mySchedules
+        var timeList = getMyScheduleIndex(mySchedules)
+        for time in timeList
         {
-            grade.append(schedule)
+            grade.append(time)
         }
     }
 
@@ -75,7 +79,8 @@ class ScheduleViewController: UIViewController, UICollectionViewDelegate, UIColl
         {
             editButton.setTitle("Editar", forState: nil)
             mainCollectionView.allowsSelection = false
-            scheduleService.saveMySchedule(grade)
+            let timeList = prepareScheduleToSave(grade)
+            scheduleService.saveMySchedule(timeList)
         }
         
     }
@@ -280,4 +285,36 @@ class ScheduleViewController: UIViewController, UICollectionViewDelegate, UIColl
         return 10.0
     }
     
+    private func prepareScheduleToSave(grid:[Int]) -> [Time]{
+        var timeList = scheduleService.createDefaultSchedule()
+        
+        for var i = 0; i < timeList.count; i++ {
+            if grid[i] == freeTimeIndex {
+                timeList[i].setBusy(false)
+                timeList[i].setOptional(false)
+            } else if grid[i] == busyTimeIndex {
+                timeList[i].setBusy(true)
+                timeList[i].setOptional(false)
+            } else if grid[i] == optionalTimeIndex{
+                timeList[i].setBusy(false)
+                timeList[i].setOptional(true)
+            }
+        }
+        return timeList
+    }
+    
+    private func getMyScheduleIndex(timeList:[Time]) ->[Int]{
+        var arrayIndex = [Int]()
+        
+        for time in timeList{
+            if time.isBusy() {
+                arrayIndex.append(busyTimeIndex)
+            } else if time.isOptional() {
+                arrayIndex.append(optionalTimeIndex)
+            } else {
+                arrayIndex.append(freeTimeIndex)
+            }
+        }
+        return arrayIndex
+    }
 }
