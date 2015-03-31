@@ -10,7 +10,7 @@ import Foundation
 
 class ScheduleDao{
 
-    func saveScheduleData(jsonString:String, key:String) {
+    class func saveScheduleData(jsonString:String, key:String) {
         let path = getPath(key)
         var dict: NSMutableDictionary = [key: jsonString]
         //saving values
@@ -18,7 +18,7 @@ class ScheduleDao{
         dict.writeToFile(path, atomically: true)
     }
 
-    func loadScheduleData(key:String) -> String{
+    class func loadScheduleData(key:String) -> String{
         // getting path to GameData.plist
         let path = getPath(key)
         let fileManager = NSFileManager.defaultManager()
@@ -31,12 +31,10 @@ class ScheduleDao{
             }
         }
         let resultDictionary = NSMutableDictionary(contentsOfFile: path)
-//        println("Loaded GameData.plist file is --> \(resultDictionary?.description)")
         
        var myDict = NSDictionary(contentsOfFile: path)
         if let dict = myDict {
             var schedules: AnyObject? = dict[key]
-//            println(schedules!.description)
             if schedules?.description != nil{
                 return schedules!.description
             }
@@ -46,7 +44,7 @@ class ScheduleDao{
         return ""
     }
 
-    private func getPath(key:String) -> String{
+    private class func getPath(key:String) -> String{
         let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true) as NSArray
         let documentsDirectory = paths.objectAtIndex(0) as NSString
         let path = documentsDirectory.stringByAppendingPathComponent(key+".plist")

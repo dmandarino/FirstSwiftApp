@@ -12,7 +12,7 @@ class ResultViewController: UITableViewController{
 
     private let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
 
-    private var resultData = [Response]()
+    private var resultData = [AvailableTime]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,7 +27,7 @@ class ResultViewController: UITableViewController{
             queue: NSOperationQueue.mainQueue())
             { (notification: NSNotification?) -> Void in
                 
-                self.resultData = notification?.object as [Response]
+                self.resultData = notification?.object as [AvailableTime]
                 self.tableView.reloadData()
                 
                 //teste

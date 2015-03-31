@@ -19,7 +19,6 @@ class ScheduleService {
     private let numberOfSchedule:Int?
     private let mySchedule = "schedule"
     private let freeTime = "freetime"
-    private let scheduleDao = ScheduleDao()
     private let jService = JSONService()
     private var schedule = [Time]()
     
@@ -50,7 +49,7 @@ class ScheduleService {
         }
         
         let jsonString = jService.strinfyTimeArray(timeList)
-        scheduleDao.saveScheduleData(jsonString, key: mySchedule)
+        ScheduleDao.saveScheduleData(jsonString, key: mySchedule)
     }
     
     //Pega os horarios salvos e retorna o indice de cada estado em um array de Int
@@ -83,7 +82,7 @@ class ScheduleService {
     }
     
     //compara os horários de todos e retorna um array de Time com o horário em seu estado comum a todos
-    func compareSchedules(receivedDatas:[String]) -> [Response]{
+    func compareSchedules(receivedDatas:[String]) -> [AvailableTime]{
         var commomSchedule = getMySchedule()
         
         for data in receivedDatas{
@@ -133,9 +132,9 @@ class ScheduleService {
     
     // Recebe um vetor com os horarios livres e opcionais dos usuarios
     // retornando outro array com dias e horas livres para exibição
-    private func getResponseResult( times:[Time] ) -> [Response] {
-        var responseList = [Response]()
-        var respAux = Response()
+    private func getResponseResult( times:[Time] ) -> [AvailableTime] {
+        var responseList = [AvailableTime]()
+        var respAux = AvailableTime(day:"", hour:"")
         var isResponseOpen = false
         var timeType = -1
         var freeTime = 0
@@ -190,7 +189,7 @@ class ScheduleService {
     
     //Pega o hor;ario do usuário salvo na plist
     private func getScheduleFromPlist(key:String) ->[Time]{
-        let string = scheduleDao.loadScheduleData(key)
+        let string = ScheduleDao.loadScheduleData(key)
         var savedArray = [Time]()
         if string != "[]" {
             var savedArray = jService.convertStringToTimeArray(string)
@@ -201,7 +200,7 @@ class ScheduleService {
     
     //Cria uma entidade Time
     private func createTime(hour:Int, day:String, id:Int) -> Time{
-        var time = Time();
+        var time = Time(timeIndex:id, day:day, hour:hour);
         time.setTimeIndex(id)
         time.setHour(hour)
         time.setOptional(false)
@@ -224,9 +223,9 @@ class ScheduleService {
         return timeList
     }
     
-    private func closeResponse(time:Time, response:Response, responseList:[Response]) -> ([Response], Bool){
-        var resp = endResponse(time, response: response)
-        var newList = responseList
+    private func closeResponse(time:Time, availableTime:AvailableTime, availableTimeList:[AvailableTime]) -> ([AvailableTime], Bool){
+        var resp = endResponse(time, response: availableTime)
+        var newList = availableTimeList
         
         newList.append(resp)
         var isResponseOpen = false
@@ -234,15 +233,15 @@ class ScheduleService {
         return (newList, isResponseOpen)
     }
     
-    private func createNewResponse(time:Time) -> Response {
-        var response = Response()
-        response.setDay(time.getDay())
-        response.setHour("\(time.getHour()):00 - ")
+    private func createNewResponse(time:Time) -> AvailableTime {
+        var day = time.getDay()
+        var hour = "\(time.getHour()):00 - "
+        var vailableTime = AvailableTime(day: day, hour:hour)
         
-        return response
+        return vailableTime
     }
 
-    private func endResponse(time:Time, response:Response) -> Response {
+    private func endResponse(time:Time, response:AvailableTime) -> AvailableTime {
         response.setHour(response.getHour() + "\(time.getHour()):00")
 
         return response

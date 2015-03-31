@@ -48,6 +48,20 @@
                ReferencedContainer = "container:GroupMatch.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "5A308CFF1AC9BD6A00885AF2"
+               BuildableName = "MyTests.xctest"
+               BlueprintName = "MyTests"
+               ReferencedContainer = "container:GroupMatch.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
@@ -90,6 +104,16 @@
                   Identifier = "Unit_Tests">
                </Test>
             </SkippedTests>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "5A308CFF1AC9BD6A00885AF2"
+               BuildableName = "MyTests.xctest"
+               BlueprintName = "MyTests"
+               ReferencedContainer = "container:GroupMatch.xcodeproj">
+            </BuildableReference>
          </TestableReference>
       </Testables>
       <MacroExpansion>

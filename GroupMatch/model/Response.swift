@@ -8,13 +8,13 @@
 
 import Foundation
 
-class Response {
+class AvailableTime {
     private var day: String!
     private var hour: String!
     
-    init(){
-        self.day = ""
-        self.hour = ""
+    init(day:String, hour:String){
+        self.day = day
+        self.hour = hour
     }
     
     func getDay() ->String {

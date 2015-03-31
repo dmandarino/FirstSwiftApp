@@ -46,6 +46,7 @@ class MPCManager: NSObject, MCSessionDelegate{
     
         browser = MCBrowserViewController(serviceType: "teste", session: session)
         browser?.title = "Group Finder"
+        
     }
     
     
@@ -127,7 +128,7 @@ class MPCManager: NSObject, MCSessionDelegate{
         //Voltamos ao problema de ter que instanciar o ResultViewController
         else if requestType == "ResultDataProcessed"{
       
-            let resultSchedule = receivedMessage["data"] as [Response]
+            let resultSchedule = receivedMessage["data"] as [AvailableTime]
             
             //            let storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
             //            let resultViewController = storyboard.instantiateViewControllerWithIdentifier("ResultViewController") as UIViewController
@@ -198,7 +199,7 @@ class MPCManager: NSObject, MCSessionDelegate{
         return true
     }
 
-    private func encodeScheduleForTransfer(schedule responseArray: [Response]) -> [AnyObject]{
+    private func encodeScheduleForTransfer(schedule responseArray: [AvailableTime]) -> [AnyObject]{
         
         var encodedResponseArray:[AnyObject] = []
         

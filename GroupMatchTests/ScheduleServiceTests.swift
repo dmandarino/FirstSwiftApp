@@ -2,17 +2,16 @@
 //  ScheduleServiceTests.swift
 //  GroupMatch
 //
-//  Created by Douglas Mandarino on 3/29/15.
+//  Created by Douglas Mandarino on 3/30/15.
 //  Copyright (c) 2015 Appcoda. All rights reserved.
 //
 
-import UIKit
+import Foundation
 import XCTest
-import GroupMatch
 
-class ScheduleServiceTests: XCTestCase {
-
-//    let scheduleService = ScheduleService()
+class ScheduleServiceTests : XCTestCase{
+    
+    let scheduleService = ScheduleService()
     
     override func setUp() {
         super.setUp()
@@ -24,8 +23,12 @@ class ScheduleServiceTests: XCTestCase {
     
     //    func saveMySchedule(grid:[Int]){
     
-    //    func getMySchedule() ->[Int]{
-    
+    func testGetMySchedule(){
+//        var result:[Int] = []
+//
+//        result = scheduleService.getMySchedule()
+//        println(result.description)
+    }
     //    func sendMySchedule()->String{
     
     //    func compareSchedules(receivedDatas:[String]) -> [Response]{
@@ -41,11 +44,12 @@ class ScheduleServiceTests: XCTestCase {
     func testCreateTime() {
 //        let time = scheduleService.createTime(hour:7, day:"Quarta", id:2)
     }
-
-//private func createTimeArrayResponse(state:[Int]) ->[Time]{
-
-//private func createNewResponse(time:Time) -> Response {
-
-//private func endResponse(time:Time, response:Response) -> Response {
+    
+    //private func createTimeArrayResponse(state:[Int]) ->[Time]{
+    
+    //private func createNewResponse(time:Time) -> Response {
+    
+    //private func endResponse(time:Time, response:Response) -> Response {
+    
 
 }
