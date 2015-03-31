@@ -27,8 +27,6 @@ class MatchViewController: UIViewController, MCBrowserViewControllerDelegate, UI
     
     override func viewDidLoad() {
         
-        self.title = "Match Options"
-        
         //TableView configuration
         tableView.delegate = self
         tableView.dataSource = self

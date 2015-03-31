@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1510" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1514" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
     </dependencies>
@@ -10,28 +10,39 @@
             <rect key="frame" x="0.0" y="0.0" width="480" height="480"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="icone_pronto.png" translatesAutoresizingMaskIntoConstraints="NO" id="0aj-iq-WxG">
-                    <rect key="frame" x="0.0" y="0.0" width="480" height="480"/>
-                </imageView>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="  Copyright (c) 2015 BEPiD. All rights reserved." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="8ie-xW-0ye">
                     <rect key="frame" x="20" y="457" width="441" height="21"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="21" id="BJQ-AL-dbr"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icone_pronto.png" translatesAutoresizingMaskIntoConstraints="NO" id="0aj-iq-WxG">
+                    <rect key="frame" x="0.0" y="-6" width="480" height="480"/>
+                </imageView>
             </subviews>
             <color key="backgroundColor" red="0.88808001893939392" green="0.86896490916009173" blue="0.17460880019961564" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstItem="8ie-xW-0ye" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="1AO-mL-Xsr"/>
                 <constraint firstAttribute="bottom" secondItem="8ie-xW-0ye" secondAttribute="bottom" constant="2" id="HBu-O9-On9"/>
                 <constraint firstItem="8ie-xW-0ye" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="Hc8-0b-1pw"/>
+                <constraint firstAttribute="trailing" secondItem="0aj-iq-WxG" secondAttribute="trailing" id="QLU-vy-KRN"/>
+                <constraint firstItem="0aj-iq-WxG" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="W9w-hN-96o"/>
+                <constraint firstItem="0aj-iq-WxG" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="-6" id="aJp-Bb-QOV"/>
+                <constraint firstAttribute="bottom" secondItem="0aj-iq-WxG" secondAttribute="bottom" id="mux-Y0-P52"/>
                 <constraint firstItem="8ie-xW-0ye" firstAttribute="centerX" secondItem="0aj-iq-WxG" secondAttribute="centerX" id="wCH-Ht-9pS"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="QLU-vy-KRN"/>
+                    <exclude reference="W9w-hN-96o"/>
+                    <exclude reference="mux-Y0-P52"/>
+                </mask>
+            </variation>
             <point key="canvasLocation" x="548" y="455"/>
         </view>
     </objects>

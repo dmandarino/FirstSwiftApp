@@ -15,6 +15,13 @@ let scheduleService = ScheduleService()
 
 class ScheduleViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
 {
+    private let freeTimeIndex = ConfigValues.sharedInstance.freeTimeIndex
+    private let busyTimeIndex = ConfigValues.sharedInstance.busyTimeIndex
+    private let optionalTimeIndex = ConfigValues.sharedInstance.optionalTimeIndex
+    private let daysOfWeek = ConfigValues.sharedInstance.daysOfWeek
+    private let firstHour = ConfigValues.sharedInstance.firstHour
+    private let lastHour = ConfigValues.sharedInstance.lastHour
+    
     /* Salva qual collection view está sendo arrastada */
     var scrollingView: UIScrollView!
     
@@ -48,9 +55,10 @@ class ScheduleViewController: UIViewController, UICollectionViewDelegate, UIColl
         mainCollectionView.bounds = CGRectMake(0, 0, UIScreen.mainScreen().bounds.width*1.8125, timeCollectionView.bounds.height)
         
         var mySchedules = scheduleService.getMySchedule()
-        for schedule in mySchedules
+        var timeList = getMyScheduleIndex(mySchedules)
+        for time in timeList
         {
-            grade.append(schedule)
+            grade.append(time)
         }
     }
 
@@ -71,7 +79,8 @@ class ScheduleViewController: UIViewController, UICollectionViewDelegate, UIColl
         {
             editButton.setTitle("Editar", forState: nil)
             mainCollectionView.allowsSelection = false
-            scheduleService.saveMySchedule(grade)
+            let timeList = prepareScheduleToSave(grade)
+            scheduleService.saveMySchedule(timeList)
         }
         
     }
@@ -85,11 +94,11 @@ class ScheduleViewController: UIViewController, UICollectionViewDelegate, UIColl
         switch collectionView
         {
         case mainCollectionView:
-            return 75
+            return (daysOfWeek * ( lastHour - firstHour ) )
         case timeCollectionView:
-            return 15
+            return ( lastHour - firstHour )
         case daysCollectionView:
-            return 5
+            return daysOfWeek
         default:
             return 0
         }
@@ -126,7 +135,7 @@ class ScheduleViewController: UIViewController, UICollectionViewDelegate, UIColl
             var leftCell: TimeViewCell
             
             leftCell = collectionView.dequeueReusableCellWithReuseIdentifier(reusableIdentifier, forIndexPath: indexPath) as TimeViewCell
-            leftCell.textLabel.text = String(indexPath.item + 7) + ":00"
+            leftCell.textLabel.text = String(indexPath.item + firstHour) + ":00"
            
             return leftCell
     
@@ -136,17 +145,17 @@ class ScheduleViewController: UIViewController, UICollectionViewDelegate, UIColl
             var dayCell: TimeViewCell
             
             dayCell = collectionView.dequeueReusableCellWithReuseIdentifier(reusableIdentifier, forIndexPath: indexPath) as TimeViewCell
-            
-//            dayCell.backgroundColor = UIColor.whiteColor()
-            
+           
             switch indexPath.item
             {
-            case 0,4:
-                dayCell.textLabel.text = "S"
-            case 1:
+            case 0:
+                dayCell.textLabel.text = "M"
+            case 1,3:
                 dayCell.textLabel.text = "T"
-            case 2,3:
-                dayCell.textLabel.text = "Q"
+            case 2:
+                dayCell.textLabel.text = "W"
+            case 4:
+                dayCell.textLabel.text = "F"
             default:
                 dayCell.textLabel.text = "Erro"
             }
@@ -238,9 +247,9 @@ class ScheduleViewController: UIViewController, UICollectionViewDelegate, UIColl
         switch collectionView
         {
         case mainCollectionView:
-            return UIEdgeInsetsMake(10, 5, 10, 10)
+            return UIEdgeInsetsMake(0, 5, 10, 10)
         case timeCollectionView:
-            return UIEdgeInsetsMake(10, 5, 0, 0)
+            return UIEdgeInsetsMake(0, 5, 0, 0)
         case daysCollectionView:
             return UIEdgeInsetsMake(0, 5, 0, 10)
         default:
@@ -276,4 +285,36 @@ class ScheduleViewController: UIViewController, UICollectionViewDelegate, UIColl
         return 10.0
     }
     
+    private func prepareScheduleToSave(grid:[Int]) -> [Time]{
+        var timeList = scheduleService.createDefaultSchedule()
+        
+        for var i = 0; i < timeList.count; i++ {
+            if grid[i] == freeTimeIndex {
+                timeList[i].setBusy(false)
+                timeList[i].setOptional(false)
+            } else if grid[i] == busyTimeIndex {
+                timeList[i].setBusy(true)
+                timeList[i].setOptional(false)
+            } else if grid[i] == optionalTimeIndex{
+                timeList[i].setBusy(false)
+                timeList[i].setOptional(true)
+            }
+        }
+        return timeList
+    }
+    
+    private func getMyScheduleIndex(timeList:[Time]) ->[Int]{
+        var arrayIndex = [Int]()
+        
+        for time in timeList{
+            if time.isBusy() {
+                arrayIndex.append(busyTimeIndex)
+            } else if time.isOptional() {
+                arrayIndex.append(optionalTimeIndex)
+            } else {
+                arrayIndex.append(freeTimeIndex)
+            }
+        }
+        return arrayIndex
+    }
 }

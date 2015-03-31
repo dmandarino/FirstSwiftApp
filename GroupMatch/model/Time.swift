@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Time:NSObject {
+class Time {
     
     private var timeIndex:Int!
     private var day:String!
@@ -16,10 +16,10 @@ class Time:NSObject {
     private var busy:Bool!
     private var optional:Bool!
     
-    override init(){
-        timeIndex = 0
-        day = ""
-        hour = 0
+    init(timeIndex:Int, day:String, hour:Int){
+        self.timeIndex = timeIndex
+        self.day = day
+        self.hour = hour
         busy = false
         optional = false
     }

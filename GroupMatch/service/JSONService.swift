@@ -8,7 +8,43 @@
 
 import Foundation
 
-class JSONService {
+public class JSONService {
+    
+    init(){
+        
+    }
+    
+    //Converter array de AvailablaTime para um String em formato Json
+    func stringfyAvailableTimeArray(availableTimeList:[AvailableTime]) -> String{
+        var jsonObject: [AnyObject] = []
+        
+        for availableTime in availableTimeList {
+            let time:AnyObject = [ "day" : availableTime.getDay(), "hour" : availableTime.getHour() ]
+            
+            jsonObject.append(time)
+        }
+        
+        let jsonString = JSONStringify(jsonObject)
+        return jsonString
+    }
+    
+    //Converter String em formato Json par um array de AvailablaTime
+    func convertStringToAvailableTimeArray(jsonString:String) -> [AvailableTime]{
+        var timeList = [AvailableTime]()
+        
+        let array = JSONParseArray(jsonString)
+        for obj:AnyObject in array {
+            
+            let day = obj["day"]! as String
+            let hour = obj["hour"]! as String
+            
+            let availableTime = AvailableTime(day:day, hour:hour)
+            
+            timeList.append(availableTime)
+        }
+        return timeList
+    }
+
     
     //Converter array de Int para um String em formato Json
     func stringfyIntArray(timeList:[Int]) -> String{
@@ -58,12 +94,13 @@ class JSONService {
         
         let array = JSONParseArray(jsonString)
         for schedule:AnyObject in array {
-            var time = Time()
-            time.setDay(schedule["day"] as String)
+            let timeIndex = schedule["timeIndex"] as Int
+            let day = schedule["day"] as String
+            let hour = schedule["hour"] as Int
+            
+            var time = Time(timeIndex: timeIndex, day: day, hour: hour)
             time.setBusy(schedule["busy"] as Bool)
-            time.setHour(schedule["hour"] as Int)
             time.setOptional(schedule["optional"] as Bool)
-            time.setTimeIndex(schedule["timeIndex"] as Int)
             
             timeList.append(time)
         }

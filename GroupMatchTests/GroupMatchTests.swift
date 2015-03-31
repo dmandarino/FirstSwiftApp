@@ -1,15 +1,15 @@
 //
-//  Unit_Tests.swift
-//  Unit Tests
+//  GroupMatchTests.swift
+//  GroupMatchTests
 //
-//  Created by Douglas Mandarino on 3/29/15.
+//  Created by Douglas Mandarino on 3/30/15.
 //  Copyright (c) 2015 Appcoda. All rights reserved.
 //
 
 import UIKit
 import XCTest
 
-class Unit_Tests: XCTestCase {
+class GroupMatchTests: XCTestCase {
     
     override func setUp() {
         super.setUp()

@@ -10,104 +10,52 @@ import Foundation
 
 class ScheduleService {
     
-    private let daysOfWeek = 5
-    private let firstHour = 7
-    private let lastHour = 22
-    private let freeTimeIndex = 0
-    private let busyTimeIndex = 1
-    private let optionalTimeIndex = 2
+    private let daysOfWeek = ConfigValues.sharedInstance.daysOfWeek
+    private let firstHour = ConfigValues.sharedInstance.firstHour
+    private let lastHour = ConfigValues.sharedInstance.lastHour
+    private let freeTimeIndex = ConfigValues.sharedInstance.freeTimeIndex
+    private let busyTimeIndex = ConfigValues.sharedInstance.busyTimeIndex
+    private let optionalTimeIndex = ConfigValues.sharedInstance.optionalTimeIndex
     private let numberOfSchedule:Int?
     private let mySchedule = "schedule"
     private let freeTime = "freetime"
-    private let scheduleDao = ScheduleDao()
     private let jService = JSONService()
     private var schedule = [Time]()
     
     init() {
         numberOfSchedule = (lastHour - firstHour)*daysOfWeek
-        //TESTE DE TRANSFERENCIA DE DADOS DO MPC
-        NSNotificationCenter.defaultCenter().addObserverForName("receivedAllData",
-        object: nil,
-        queue: NSOperationQueue.mainQueue()){
-            (notification: NSNotification?) -> Void in
-        
-           // navigationController!.pushViewController(/*resultViewController*/, animated: true)
-            
-            let dataArray = notification!.object as Array<String>
-            
-//            let resultData = self.compareSchedules(dataArray)
-            
-            //metodo do luan
-            var result = self.compareSchedules(dataArray)
-            if result.count == 0{
-                var resp = Response()
-                resp.setDay("Nenhum Horario Em Comum")
-                result.append(Response())
-            }
-            
-            NSNotificationCenter.defaultCenter().postNotificationName("ResultDataProcessed",
-                object: result)
-        }
     }
     
     //Salva a minha grade de horário. Recebe um array de Int com o índice com o
     //estado do horário. 0 == livre, 1==ocupado, 2==opcional
-    func saveMySchedule(grid:[Int]){
-        var timeList = getScheduleFromPlist(mySchedule)
-        
-        if timeList.count == 0 {
-            timeList = createDefaultSchedule()
-        }
-        
-        for var i = 0; i < timeList.count; i++ {
-            if grid[i] == freeTimeIndex {
-                timeList[i].setBusy(false)
-                timeList[i].setOptional(false)
-            } else if grid[i] == busyTimeIndex {
-                timeList[i].setBusy(true)
-                timeList[i].setOptional(false)
-            } else if grid[i] == optionalTimeIndex{
-                timeList[i].setBusy(false)
-                timeList[i].setOptional(true)
-            }
-        }
-        
+    func saveMySchedule(timeList:[Time]){
         let jsonString = jService.strinfyTimeArray(timeList)
-        scheduleDao.saveScheduleData(jsonString, key: mySchedule)
+        ScheduleDao.saveScheduleData(jsonString, key: mySchedule)
     }
     
     //Pega os horarios salvos e retorna o indice de cada estado em um array de Int
-    func getMySchedule() ->[Int]{
-        let timeList = getScheduleFromPlist(mySchedule)
-        var arrayIndex = [Int]()
+    func getMySchedule() ->[Time]{
+        var timeList = getScheduleFromPlist(mySchedule)
         
         if timeList.count == 0{
-            var list = createDefaultSchedule()
-            for l in list {
-                arrayIndex.append(freeTimeIndex)
-            }
-        } else {
-            for time in timeList{
-                if time.isBusy() {
-                   arrayIndex.append(busyTimeIndex)
-                } else if time.isOptional() {
-                    arrayIndex.append(optionalTimeIndex)
-                } else {
-                    arrayIndex.append(freeTimeIndex)
-                }
-            }
+            timeList = createDefaultSchedule()
         }
-        return arrayIndex
+        
+        return timeList
     }
     
     //Envia meus horários para quem pediu.
     func sendMySchedule()->String{
-        return jService.stringfyIntArray(getMySchedule())
+        var timeList = getMySchedule()
+        var arrayIndex = convertTimeArrayToTimeIndex(timeList)
+        
+        return jService.stringfyIntArray(arrayIndex)
     }
     
     //compara os horários de todos e retorna um array de Time com o horário em seu estado comum a todos
-    func compareSchedules(receivedDatas:[String]) -> [Response]{
-        var commomSchedule = getMySchedule()
+    func compareSchedules(receivedDatas:[String]) -> [AvailableTime]{
+        var mySchedule = getMySchedule()
+        var commomSchedule = convertTimeArrayToTimeIndex(mySchedule)
         
         for data in receivedDatas{
             var received = jService.convertStringToIntArray(data)
@@ -129,7 +77,7 @@ class ScheduleService {
     }
     
     //Cria uma grade padrão e livre em todos os horários
-    private func createDefaultSchedule() ->[Time]{
+    func createDefaultSchedule() ->[Time]{
         var id = 0;
         schedule.removeAll(keepCapacity: false)
         for var i = 0; i<numberOfSchedule; i++ {
@@ -137,15 +85,15 @@ class ScheduleService {
             
             switch (i%daysOfWeek) {
             case (0):
-                day = "Segunda"
+                day = "Monday"
             case (1):
-                day = "Terça"
+                day = "Tuesday"
             case (2):
-                day = "Quarta"
+                day = "Wednesday"
             case (3):
-                day = "Quinta"
+                day = "Thursday"
             default:
-                day = "Sexta"
+                day = "Friday"
             }
             var hour = (i/(daysOfWeek))+firstHour
             schedule.append(createTime(hour, day: day, id:id))
@@ -156,9 +104,9 @@ class ScheduleService {
     
     // Recebe um vetor com os horarios livres e opcionais dos usuarios
     // retornando outro array com dias e horas livres para exibição
-    private func getResponseResult( times:[Time] ) -> [Response] {
-        var responseList = [Response]()
-        var respAux = Response()
+    private func getResponseResult( times:[Time] ) -> [AvailableTime] {
+        var responseList = [AvailableTime]()
+        var respAux = AvailableTime(day:"", hour:"")
         var isResponseOpen = false
         var timeType = -1
         var freeTime = 0
@@ -169,7 +117,7 @@ class ScheduleService {
             for( var j:Int = i ; j<times.count ; j += daysOfWeek ) {
                 var isEndDay = (j+daysOfWeek) >= times.count
                 
-                if !times[j].isBusy() && (freeTime != timeType){
+                if !times[j].isBusy() && !times[j].isOptional() && (freeTime != timeType){
                     if isResponseOpen {
                         respAux = endResponse(times[j], response: respAux)
                         responseList.append(respAux)
@@ -178,16 +126,21 @@ class ScheduleService {
                     respAux = createNewResponse(times[j])
                     timeType = freeTime
                     isResponseOpen = true
-                } else if times[j].isOptional() && (optionalTime != timeType) {
+                } else if times[j].isOptional() {
                     if isResponseOpen {
                         respAux = endResponse(times[j], response: respAux)
                         responseList.append(respAux)
                         isResponseOpen = false
                     }
                     respAux = createNewResponse(times[j])
+                    respAux.setDay(respAux.getDay() + " (optional)")
+                    
+                    respAux = endResponse(times[j+daysOfWeek], response: respAux)
+                    responseList.append(respAux)
+
                     timeType = optionalTime
-                    isResponseOpen = true
-                    respAux.setDay(respAux.getDay() + " (opcional)")
+                    isResponseOpen = false
+
                 } else if times[j].isBusy() || (isEndDay && isResponseOpen){
                     if isResponseOpen {
                         respAux = endResponse(times[j], response: respAux)
@@ -200,12 +153,15 @@ class ScheduleService {
                 }
             }
         }
+        for r in responseList {
+            println(r.getDay() + " : " + r.getHour())
+        }
         return responseList
     }
     
     //Pega o hor;ario do usuário salvo na plist
     private func getScheduleFromPlist(key:String) ->[Time]{
-        let string = scheduleDao.loadScheduleData(key)
+        let string = ScheduleDao.loadScheduleData(key)
         var savedArray = [Time]()
         if string != "[]" {
             var savedArray = jService.convertStringToTimeArray(string)
@@ -216,7 +172,7 @@ class ScheduleService {
     
     //Cria uma entidade Time
     private func createTime(hour:Int, day:String, id:Int) -> Time{
-        var time = Time();
+        var time = Time(timeIndex:id, day:day, hour:hour);
         time.setTimeIndex(id)
         time.setHour(hour)
         time.setOptional(false)
@@ -239,9 +195,9 @@ class ScheduleService {
         return timeList
     }
     
-    private func closeResponse(time:Time, response:Response, responseList:[Response]) -> ([Response], Bool){
-        var resp = endResponse(time, response: response)
-        var newList = responseList
+    private func closeResponse(time:Time, availableTime:AvailableTime, availableTimeList:[AvailableTime]) -> ([AvailableTime], Bool){
+        var resp = endResponse(time, response: availableTime)
+        var newList = availableTimeList
         
         newList.append(resp)
         var isResponseOpen = false
@@ -249,17 +205,32 @@ class ScheduleService {
         return (newList, isResponseOpen)
     }
     
-    private func createNewResponse(time:Time) -> Response {
-        var response = Response()
-        response.setDay(time.getDay())
-        response.setHour("\(time.getHour()):00 - ")
+    private func createNewResponse(time:Time) -> AvailableTime {
+        var day = time.getDay()
+        var hour = "\(time.getHour()):00 - "
+        var vailableTime = AvailableTime(day: day, hour:hour)
         
-        return response
+        return vailableTime
     }
 
-    private func endResponse(time:Time, response:Response) -> Response {
+    private func endResponse(time:Time, response:AvailableTime) -> AvailableTime {
         response.setHour(response.getHour() + "\(time.getHour()):00")
 
         return response
+    }
+    
+    private func convertTimeArrayToTimeIndex(timeList:[Time]) ->[Int] {
+        var arrayIndex = [Int]()
+        
+        for time in timeList{
+            if time.isBusy() {
+                arrayIndex.append(busyTimeIndex)
+            } else if time.isOptional() {
+                arrayIndex.append(optionalTimeIndex)
+            } else {
+                arrayIndex.append(freeTimeIndex)
+            }
+        }
+        return arrayIndex
     }
 }
