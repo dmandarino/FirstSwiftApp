@@ -20,12 +20,8 @@ class TimeUnitTests : XCTestCase {
     }
     
     func testGetScheduleValues() {
-        var time = Time()
-        time.setDay("Terca")
-        time.setHour(5)
+        var time = Time(timeIndex: 3, day: "Terca", hour: 5)
         time.setBusy(true)
-        time.setOptional(false)
-        time.setTimeIndex(3)
         
         XCTAssertEqual(time.getDay(), "Terca")
         XCTAssertEqual(time.getHour(), 5)
@@ -35,8 +31,7 @@ class TimeUnitTests : XCTestCase {
     }
     
     func testFailGetScheduleValues() {
-        var time = Time()
-        time.setDay("Terca")
+        var time = Time(timeIndex: 2, day: "Terca", hour: 4)
         
         XCTAssertNotEqual(time.getDay(), "Quarta")
     }

@@ -41,15 +41,9 @@ class JSONServiceTests : XCTestCase{
     }
     
     func testStringfyTimeArray() {
-        var time = Time()
-        time.setTimeIndex(1)
-        time.setHour(1)
-        time.setDay("Segunda")
+        var time = Time(timeIndex: 1, day: "Segunda", hour: 1)
         
-        var time2 = Time()
-        time2.setTimeIndex(5)
-        time2.setHour(2)
-        time2.setDay("Terca")
+        var time2 = Time(timeIndex: 5, day: "Terca", hour: 2)
         
         let array:[Time] = [time,time2]
         
@@ -81,6 +75,30 @@ class JSONServiceTests : XCTestCase{
         XCTAssertNotEqual(2, time.getHour() )
         XCTAssertTrue( !time.isOptional() )
         XCTAssertTrue( !time.isBusy() )
+    }
+    
+    func testStringfyAvailableTimeArray() {
+        let a1 = AvailableTime(day: "Segunda", hour: "07:00 - 08:00")
+        let a2 = AvailableTime(day: "Segunda", hour: "10:00 - 20:00")
+        
+        let array:[AvailableTime] = [a1,a2]
+        
+        var result = jService.stringfyAvailableTimeArray(array)
+        let string = "[{\"hour\":\"07:00 - 08:00\",\"day\":\"Segunda\"},{\"hour\":\"10:00 - 20:00\",\"day\":\"Segunda\"}]"
+        
+        XCTAssertEqual(result, string)
+    }
+    
+    func testConvertStringToAvailableTimeArray() {
+        let string = "[{\"hour\":\"07:00 - 08:00\",\"day\":\"Segunda\"},{\"hour\":\"10:00 - 20:00\",\"day\":\"Segunda\"}]"
+        let result = jService.convertStringToAvailableTimeArray(string)
+        let time = result.first!
+        let time2 = result.last!
+        
+        XCTAssertEqual("Segunda", time.getDay())
+        XCTAssertEqual("07:00 - 08:00", time.getHour())
+        XCTAssertEqual("Segunda", time2.getDay())
+        XCTAssertEqual("10:00 - 20:00", time2.getHour())
     }
 
 }

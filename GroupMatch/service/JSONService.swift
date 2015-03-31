@@ -15,13 +15,13 @@ public class JSONService {
     }
     
     //Converter array de AvailablaTime para um String em formato Json
-    func stringfyAvailableTimeArray(timeList:[AvailableTime]) -> String{
+    func stringfyAvailableTimeArray(availableTimeList:[AvailableTime]) -> String{
         var jsonObject: [AnyObject] = []
         
-        for time in timeList {
-            let schedule:AnyObject = [ "day" : "" ]
+        for availableTime in availableTimeList {
+            let time:AnyObject = [ "day" : availableTime.getDay(), "hour" : availableTime.getHour() ]
             
-            jsonObject.append(schedule)
+            jsonObject.append(time)
         }
         
         let jsonString = JSONStringify(jsonObject)
@@ -31,14 +31,17 @@ public class JSONService {
     //Converter String em formato Json par um array de AvailablaTime
     func convertStringToAvailableTimeArray(jsonString:String) -> [AvailableTime]{
         var timeList = [AvailableTime]()
-//        
-//        let array = JSONParseArray(jsonString)
-//        for schedule:AnyObject in array {
-//            var hr:Int!
-//            hr = schedule["index"] as Int
-//            
-//            timeList.append(hr)
-//        }
+        
+        let array = JSONParseArray(jsonString)
+        for obj:AnyObject in array {
+            
+            let day = obj["day"]! as String
+            let hour = obj["hour"]! as String
+            
+            let availableTime = AvailableTime(day:day, hour:hour)
+            
+            timeList.append(availableTime)
+        }
         return timeList
     }
 
