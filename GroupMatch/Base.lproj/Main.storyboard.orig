@@ -356,7 +356,11 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PQS-eO-qrE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
+<<<<<<< Updated upstream
             <point key="canvasLocation" x="575" y="2189"/>
+=======
+            <point key="canvasLocation" x="789" y="2188.5"/>
+>>>>>>> Stashed changes
         </scene>
         <!--Match View Controller-->
         <scene sceneID="Hga-BD-q2Q">
@@ -652,11 +656,19 @@
             </objects>
             <point key="canvasLocation" x="3108" y="1327.5"/>
         </scene>
+<<<<<<< Updated upstream
         <!--Match-->
         <scene sceneID="4uS-Tm-Btv">
             <objects>
-                <navigationController id="QsQ-uc-tHE" customClass="NavigationViewController" customModule="GroupMatch" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController id="QsQ-uc-tHE" customClass="MatchNavigationController" customModule="GroupMatch" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Match" image="Search" id="s9M-yS-oGG"/>
+=======
+        <!--Navigation View Controller Scene-->
+        <scene sceneID="4uS-Tm-Btv">
+            <objects>
+                <navigationController id="QsQ-uc-tHE" userLabel="Navigation View Controller Scene" customClass="NavigationViewController" customModule="GroupMatch" customModuleProvider="target" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Match Options" image="find.png" id="s9M-yS-oGG"/>
+>>>>>>> Stashed changes
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="mDH-Bg-S3b">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>

@@ -45,8 +45,14 @@ class MPCManager: NSObject, MCSessionDelegate{
     
     func setupMCBrowser(){
     
+<<<<<<< Updated upstream
+        browser = MCBrowserViewController(serviceType: "teste", session: session)
+        browser?.title = "Group Finder"
+        
+=======
         browserViewController = MCBrowserViewController(serviceType: "GroupMatch", session: session)
-        browserViewController?.title = "Search"
+        browserViewController?.title = "Group Finder"
+>>>>>>> Stashed changes
     }
     
     
@@ -101,28 +107,41 @@ class MPCManager: NSObject, MCSessionDelegate{
             if (receivedDataCount == 0){
                 
                 var resultSchedule = scheduleService.compareSchedules(matchDataArray)
+                let dataToSend = NSKeyedArchiver.archivedDataWithRootObject(data)
                 
-                //scheduleService.stringfyResponseArray()
+                //teste
+//                for data in resultSchedule{
+//                    
+//                    println(data.getDay() + "   " + data.getHour() + "\n")
+//                }
+            
+                //let encodedSchedule = encodeScheduleForTransfer(schedule: resultSchedule)
                 
-                let json = JSONService()
+                scheduleService.stringfyResponseArray(
                 
-                var encodedSchedule = json.stringfyAvailableTimeArray(resultSchedule)
                 
-                let dataToSend: [String:AnyObject] =    [   "request":"ResultDataProcessed",
-                                                            "data"   :encodedSchedule
-                                                        ]
+                let data: [String:NSObject] =   [   "request":"ResultDataProcessed",
+                                                    "data"   :resultSchedule
+                                                ]
                 
-                sendData(dataToSend, toPeers: session.connectedPeers as [MCPeerID])
+                sendData(data, toPeers: session.connectedPeers as [MCPeerID])
                 
                 delegate?.mpcManagerPresentResultScheduleWithData(resultSchedule)
             }
         }
+        //TODO: aqui é onde os cliente recebem a resposta.
+        //Voltamos ao problema de ter que instanciar o ResultViewController
         else if requestType == "ResultDataProcessed"{
       
-            let json = JSONService()
+            let resultSchedule = receivedMessage["data"] as [AvailableTime]
             
-            let decodedSchedule = json.convertStringToAvailableTimeArray(receivedMessage["data"] as String)
-            delegate?.mpcManagerPresentResultScheduleWithData(decodedSchedule)
+            for (var i=0; i<resultSchedule.count; i++){
+
+                let data = resultSchedule[i]
+                println(data.getDay() + "   " + data.getHour() + "\n")
+            }
+            
+            delegate?.mpcManagerPresentResultScheduleWithData(resultSchedule)
         }
     }
     
@@ -186,6 +205,13 @@ class MPCManager: NSObject, MCSessionDelegate{
     
     private func sendData(data: Dictionary<String,AnyObject>, toPeers peers: [MCPeerID!]) -> Bool{
         
+//        var encodedData:[NSObject] = []
+//        var aux: NSObject = ["request":data["request"]!]
+//        var aux2: NSObject = ["data":data["data"]!]
+//        
+//        encodedData.append(aux)
+//        encodedData.append(aux2)
+        
         let dataToSend = NSKeyedArchiver.archivedDataWithRootObject(data)
         var error: NSError?
     
@@ -201,4 +227,34 @@ class MPCManager: NSObject, MCSessionDelegate{
         
         return true
     }
+
+<<<<<<< Updated upstream
+    private func encodeScheduleForTransfer(schedule responseArray: [AvailableTime]) -> [AnyObject]{
+        
+        var encodedResponseArray:[AnyObject] = []
+        
+        for response in responseArray{
+            
+            let encodedResponse:AnyObject = ["dia":response.getDay(), "hora":response.getHour()]
+            
+            encodedResponseArray.append(encodedResponse)
+            
+        }
+        return encodedResponseArray
+    }
+=======
+//    private func encodeScheduleForTransfer(schedule responseArray: [Response]) -> [NSObject]{
+//        
+//        var encodedResponseArray:[NSObject] = []
+//        
+//        for response in responseArray{
+//            
+//            let encodedResponse:NSObject = ["dia":response.getDay(), "hora":response.getHour()]
+//            
+//            encodedResponseArray.append(encodedResponse)
+//            
+//        }
+//        return encodedResponseArray
+//    }
+>>>>>>> Stashed changes
 }

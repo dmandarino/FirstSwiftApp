@@ -9,12 +9,12 @@
 import UIKit
 import MultipeerConnectivity
 
-class MatchViewController: UIViewController, MCBrowserViewControllerDelegate, UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate {
+class MatchViewController: UIViewController, UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate {
     
     //MARK: private variables
     
     private var connectedDevices: [String] = []
-    private let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+    private var navigationViewController: NavigationViewController?
     
     //MARK: public variables
     
@@ -37,45 +37,22 @@ class MatchViewController: UIViewController, MCBrowserViewControllerDelegate, UI
         nameTextField.delegate = self
         nameTextField.enabled = false
         
-        //MPC configuration
-        appDelegate.mpcManager.setupPeerAndSessionWithDisplayName(UIDevice.currentDevice().name)
-        appDelegate.mpcManager.advertiseSelf(visibleSwitch.on)
+        //let teste = navigationController!
         
-        //Register as an observer of peer status' changes
-        NSNotificationCenter.defaultCenter().addObserverForName("MCDidChangeStateNotification",
-                                                                object: nil,
-                                                                queue: NSOperationQueue.mainQueue())
-        { (notification: NSNotification?) -> Void in
-            
-            self.peerDidChangeStateWithNotification(notification!)
-        }
-        
-        //TESTE DE TRANSFERENCIA DE DADOS DO MPC
-        NSNotificationCenter.defaultCenter().addObserverForName("receivedAllData",
-            object: nil,
-            queue: NSOperationQueue.mainQueue())
-            { (notification: NSNotification?) -> Void in
-
-//              navigationController!.pushViewController(/*resultViewController*/, animated: true)
-                
-                let dataArray = notification!.object as Array<String>
-                
-//                for data in dataArray{
-//                    println(data)
-//                }
-            }
+        navigationViewController = (navigationController! as NavigationViewController)
     }
 
     //MARK: IBAction Methods
     
     @IBAction func toggleVisibility(sender: UISwitch) {
-        appDelegate.mpcManager.advertiseSelf(sender.on)
+    
+        navigationViewController?.startAdvertising()
         nameTextField.enabled = !sender.on
     }
    
-    @IBAction func disconnect(sender: UIButton){
+    @IBAction func disconnectFromSession(sender: UIButton){
 
-        appDelegate.mpcManager.session?.disconnect()
+        navigationViewController?.disconnectFromSession()
         
         nameTextField.enabled = true
         
@@ -84,45 +61,19 @@ class MatchViewController: UIViewController, MCBrowserViewControllerDelegate, UI
     }
     
     @IBAction func searchForPeers(sender: UIBarButtonItem){
-
-        appDelegate.mpcManager.setupMCBrowser()
-        appDelegate.mpcManager.browser!.delegate = self
         
-        
-        navigationController!.pushViewController(appDelegate.mpcManager.browser!,
-                                                    animated: true)
+        navigationViewController?.startBrowsingForPeers()
     }
+    
     
     //MARK: TextFieldDelegate Methods
     
+    //Troca o nome do device exibido pelo advertiser
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         
-        //some com o teclado
         nameTextField.resignFirstResponder()
         
-        /*Destroi todos os objetos do MPC*/
-        appDelegate.mpcManager.peer = nil
-        appDelegate.mpcManager.session = nil
-        appDelegate.mpcManager.browser = nil
-        
-        if visibleSwitch.on{
-            appDelegate.mpcManager.advertiser?.stop()
-        }
-        
-        appDelegate.mpcManager.advertiser = nil
-        
-        /*Cria todos os objetos do MPC com novo nome*/
-        
-        //if the textField is empty, use default display name
-        if nameTextField.text != ""{
-            appDelegate.mpcManager.setupPeerAndSessionWithDisplayName(nameTextField.text)
-        }
-        else{
-            appDelegate.mpcManager.setupPeerAndSessionWithDisplayName(UIDevice.currentDevice().name)
-        }
-
-        appDelegate.mpcManager.setupMCBrowser()
-        appDelegate.mpcManager.advertiseSelf(visibleSwitch.on)
+        navigationViewController?.resetDisplayNameTo(textField.text)
         
         return true
     }
@@ -156,34 +107,16 @@ class MatchViewController: UIViewController, MCBrowserViewControllerDelegate, UI
         return 60.0
     }
     
-    //MARK: MCBrowserViewControllerMethods
     
-    func browserViewControllerDidFinish(browserViewController: MCBrowserViewController!) {
-        
-        appDelegate.mpcManager.requestScheduleDataFromConnectedPeers()
-        
-        let resultViewController = self.storyboard!.instantiateViewControllerWithIdentifier(
-                                                    "ResultViewController") as UIViewController
-        
-        navigationController!.pushViewController(resultViewController, animated: true)
-    }
+    //MARK: Custom Methods
     
-    func browserViewControllerWasCancelled(browserViewController: MCBrowserViewController!) {
+    //Called whenever a peer status changes
+    func updatePeerInformation(peerInfo: Dictionary<String, NSObject>){
         
-        navigationController!.popViewControllerAnimated(true)
-    }
-
-    //MARK: Private Functions
-    
-    //manages the connectedDevices array, the tableView Data Source
-    private func peerDidChangeStateWithNotification(notification: NSNotification){
-     
-        //retrieves the peer display name
-        let peerID = notification.userInfo!["peerID"] as MCPeerID
+        let peerID = peerInfo["peerID"] as MCPeerID
         let peerDisplayName = peerID.displayName
         
-        //retrieves the peer state
-        let state = MCSessionState(rawValue: notification.userInfo!["state"] as Int)
+        let state = MCSessionState(rawValue: peerInfo["state"] as Int)
         
         //if peer is not connecting
         if state != MCSessionState.Connecting {
@@ -202,14 +135,12 @@ class MatchViewController: UIViewController, MCBrowserViewControllerDelegate, UI
                 }
             }
             
-            //if the peer has been connected or disconnected, reload the table
             tableView.reloadData()
             
-            //if there are any peers
-            let peersExist: Bool = appDelegate.mpcManager.session?.connectedPeers.count == 0
-
-            disconnectButton.enabled = !peersExist
-            nameTextField.enabled = peersExist
+            let thereAreNoConnectedPeers: Bool = navigationViewController?.getNumberOfConnectedPeers() == 0
+            
+            disconnectButton.enabled = !thereAreNoConnectedPeers
+            nameTextField.enabled = thereAreNoConnectedPeers
         }
     }
 }
