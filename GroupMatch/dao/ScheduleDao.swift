@@ -1,9 +1,9 @@
 //
-//  File.swift
+//  ScheduleDao.swift
 //  MPCRevisited
 //
 //  Created by Douglas Mandarino on 3/12/15.
-//  Copyright (c) 2015 Appcoda. All rights reserved.
+//  Copyright (c) 2015 BEPiD. All rights reserved.
 //
 
 import Foundation
