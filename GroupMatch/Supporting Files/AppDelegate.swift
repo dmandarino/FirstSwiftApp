@@ -1,9 +1,9 @@
 //
 //  AppDelegate.swift
-//  MPCRevisited
+//  GroupMatch
 //
-//  Created by Gabriel Theodoropoulos on 11/1/15.
-//  Copyright (c) 2015 Appcoda. All rights reserved.
+//  Created by Victor Yves Crispim on 11/1/15.
+//  Copyright (c) 2015 BEPiD. All rights reserved.
 //
 
 import UIKit

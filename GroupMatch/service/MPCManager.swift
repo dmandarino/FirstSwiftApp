@@ -45,7 +45,7 @@ class MPCManager: NSObject, MCSessionDelegate{
     
     func setupMCBrowser(){
     
-        browserViewController = MCBrowserViewController(serviceType: "GroupMatch", session: session)
+        browserViewController = MCBrowserViewController(serviceType: "Match", session: session)
         browserViewController?.title = "Search"
     }
     
@@ -56,7 +56,7 @@ class MPCManager: NSObject, MCSessionDelegate{
         
         if shouldAdvertise{
             
-            advertiser = MCAdvertiserAssistant(serviceType: "GroupMatch", discoveryInfo: nil, session: session)
+            advertiser = MCAdvertiserAssistant(serviceType: "Match", discoveryInfo: nil, session: session)
             advertiser?.start()
         }
         else{

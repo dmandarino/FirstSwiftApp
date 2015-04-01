@@ -41,9 +41,13 @@ class NavigationViewController: UINavigationController, MPCManagerDelegate, MCBr
         let resultViewController = self.storyboard!.instantiateViewControllerWithIdentifier(
                                                     "ResultViewController") as ResultViewController
         
-        pushViewController(resultViewController, animated: true)
-        
-        resultViewController.loadScheduleData(scheduleData)
+        dispatch_async(dispatch_get_main_queue(), {
+
+            self.pushViewController(resultViewController, animated: true)
+            
+            resultViewController.loadScheduleData(scheduleData)
+            
+            });
     }
     
     

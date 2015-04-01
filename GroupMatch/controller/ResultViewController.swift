@@ -14,20 +14,15 @@ class ResultViewController: UITableViewController{
 
     private var resultData = [AvailableTime]()
     
+    @IBOutlet var resultTableView: UITableView!
     
     //MARK: UIViewController Methods
     
-    override func viewDidLoad() {
-
-        super.viewDidLoad()
+    override func viewDidLoad(){
 
         self.title = "Available Times"
-
-        tableView.delegate = self
-        tableView.dataSource = self
+        resultTableView.reloadData()
     }
-
-    
     //MARK: TableView DataSource Methods
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -40,12 +35,12 @@ class ResultViewController: UITableViewController{
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        var cell = tableView.dequeueReusableCellWithIdentifier("ResultTableViewCell") as? ResultTableViewCell
+        var cell = resultTableView.dequeueReusableCellWithIdentifier("ResultTableViewCell") as? ResultTableViewCell
         
         if cell == nil{
             let nib = UINib(nibName: "ResultCustomCell", bundle: NSBundle.mainBundle())
-            tableView.registerNib(nib, forCellReuseIdentifier: "ResultTableViewCell")
-            cell = tableView.dequeueReusableCellWithIdentifier("ResultTableViewCell") as? ResultTableViewCell
+            resultTableView.registerNib(nib, forCellReuseIdentifier: "ResultTableViewCell")
+            cell = resultTableView.dequeueReusableCellWithIdentifier("ResultTableViewCell") as? ResultTableViewCell
         }
         
         cell?.weekDay.text = resultData[indexPath.row].getDay()
@@ -72,7 +67,5 @@ class ResultViewController: UITableViewController{
         for data in resultData{
             println(data.getDay() + "   " + data.getHour() + "\n")
         }
-        
-        tableView.reloadData()
     }
 }

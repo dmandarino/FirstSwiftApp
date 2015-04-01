@@ -647,10 +647,13 @@
                             <outlet property="delegate" destination="8RX-IL-XP7" id="yOg-Cc-LYE"/>
                         </connections>
                     </tableView>
+                    <connections>
+                        <outlet property="resultTableView" destination="w6i-W8-gCN" id="HqS-CU-zbE"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6ff-Te-XPn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3108" y="1327.5"/>
+            <point key="canvasLocation" x="2718" y="1378.5"/>
         </scene>
         <!--Match-->
         <scene sceneID="4uS-Tm-Btv">

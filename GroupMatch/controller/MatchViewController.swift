@@ -135,12 +135,11 @@ class MatchViewController: UIViewController, UITextFieldDelegate, UITableViewDat
                 }
             }
             
-            tableView.reloadData()
-            
             let thereAreNoConnectedPeers: Bool = navigationViewController?.getNumberOfConnectedPeers() == 0
             
             disconnectButton.enabled = !thereAreNoConnectedPeers
             nameTextField.enabled = thereAreNoConnectedPeers
         }
+        tableView.reloadData()
     }
 }
