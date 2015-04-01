@@ -49,14 +49,15 @@ class HelpViewController: UIViewController, UIPageViewControllerDataSource {
         
     }
     
-    /*private func setUpPageControl()
+    private func setUpPageControl()
     {
     
         let appearance = UIPageControl.appearance()
         appearance.pageIndicatorTintColor = UIColor.grayColor()
         appearance.currentPageIndicatorTintColor = UIColor.whiteColor()
-        
-    }*/
+        appearance.backgroundColor = UIColor.darkGrayColor()
+        appearance.bounds = CGRectMake(0, 0, 200, 200)
+    }
     
     func pageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController?
     {
