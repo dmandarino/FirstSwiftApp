@@ -96,7 +96,7 @@ class MatchViewController: UIViewController, UITextFieldDelegate, UITableViewDat
             cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "CellIdentifier")
         }
         
-        cell!.textLabel.text = connectedDevices[indexPath.row]
+        cell!.textLabel!.text = connectedDevices[indexPath.row]
         
         return cell!
     }
