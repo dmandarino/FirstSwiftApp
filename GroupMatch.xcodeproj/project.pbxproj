@@ -309,7 +309,7 @@
 					};
 					C04365581A626BA0000E0F15 = {
 						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = AMPNANC693;
+						DevelopmentTeam = N3GG8VLR9P;
 					};
 				};
 			};
