@@ -30,7 +30,7 @@ class NavigationViewController: UINavigationController, MPCManagerDelegate, MCBr
     
     func mpcManagerPeerDidChangedState(peerInfo: Dictionary<String, NSObject>) {
         
-        let matchViewController = self.viewControllers![0] as MatchViewController
+        let matchViewController = self.viewControllers![0] as! MatchViewController
         
         matchViewController.updatePeerInformation(peerInfo)
         
@@ -39,7 +39,7 @@ class NavigationViewController: UINavigationController, MPCManagerDelegate, MCBr
     func mpcManagerPresentResultScheduleWithData(scheduleData: [AvailableTime]) {
         
         let resultViewController = self.storyboard!.instantiateViewControllerWithIdentifier(
-                                                    "ResultViewController") as ResultViewController
+                                                    "ResultViewController") as! ResultViewController
         
         dispatch_async(dispatch_get_main_queue(), {
 

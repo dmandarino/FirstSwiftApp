@@ -114,7 +114,7 @@ class ScheduleViewController: UIViewController, UICollectionViewDelegate, UIColl
     {
         if( collectionView == mainCollectionView)
         {
-            var mainCell = collectionView.dequeueReusableCellWithReuseIdentifier(reusableIdentifier, forIndexPath: indexPath) as UICollectionViewCell
+            var mainCell = collectionView.dequeueReusableCellWithReuseIdentifier(reusableIdentifier, forIndexPath: indexPath) as! UICollectionViewCell
             
             switch grade[indexPath.item]
             {
@@ -134,7 +134,7 @@ class ScheduleViewController: UIViewController, UICollectionViewDelegate, UIColl
         {
             var leftCell: TimeViewCell
             
-            leftCell = collectionView.dequeueReusableCellWithReuseIdentifier(reusableIdentifier, forIndexPath: indexPath) as TimeViewCell
+            leftCell = collectionView.dequeueReusableCellWithReuseIdentifier(reusableIdentifier, forIndexPath: indexPath) as! TimeViewCell
             leftCell.textLabel.text = String(indexPath.item + firstHour) + ":00"
            
             return leftCell
@@ -144,7 +144,7 @@ class ScheduleViewController: UIViewController, UICollectionViewDelegate, UIColl
         {
             var dayCell: TimeViewCell
             
-            dayCell = collectionView.dequeueReusableCellWithReuseIdentifier(reusableIdentifier, forIndexPath: indexPath) as TimeViewCell
+            dayCell = collectionView.dequeueReusableCellWithReuseIdentifier(reusableIdentifier, forIndexPath: indexPath) as! TimeViewCell
            
             switch indexPath.item
             {

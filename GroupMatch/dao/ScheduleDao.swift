@@ -46,7 +46,7 @@ class ScheduleDao{
 
     private class func getPath(key:String) -> String{
         let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true) as NSArray
-        let documentsDirectory = paths.objectAtIndex(0) as NSString
+        let documentsDirectory = paths.objectAtIndex(0) as! NSString
         let path = documentsDirectory.stringByAppendingPathComponent(key+".plist")
         return path
     }

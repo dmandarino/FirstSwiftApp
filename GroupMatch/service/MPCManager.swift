@@ -79,7 +79,7 @@ class MPCManager: NSObject, MCSessionDelegate{
     func session(session: MCSession!, didReceiveData data: NSData!, fromPeer peerID: MCPeerID!) {
   
         let receivedMessage:AnyObject = NSKeyedUnarchiver.unarchiveObjectWithData(data) as AnyObject!
-        let requestType = receivedMessage["request"] as String
+        let requestType = receivedMessage["request"] as! String
         
         if requestType == "ScheduleDataRequest"{
 
@@ -95,7 +95,7 @@ class MPCManager: NSObject, MCSessionDelegate{
             --receivedDataCount
         
             //save the received data
-            matchDataArray.append(receivedMessage["data"] as String)
+            matchDataArray.append(receivedMessage["data"] as! String)
             
             //if data from all requested peers arrived
             if (receivedDataCount == 0){
@@ -112,7 +112,7 @@ class MPCManager: NSObject, MCSessionDelegate{
                                                             "data"   :encodedSchedule
                                                         ]
                 
-                sendData(dataToSend, toPeers: session.connectedPeers as [MCPeerID])
+                sendData(dataToSend, toPeers: session.connectedPeers as! [MCPeerID])
                 
                 delegate?.mpcManagerPresentResultScheduleWithData(resultSchedule)
             }
@@ -121,7 +121,7 @@ class MPCManager: NSObject, MCSessionDelegate{
       
             let json = JSONService()
             
-            let decodedSchedule = json.convertStringToAvailableTimeArray(receivedMessage["data"] as String)
+            let decodedSchedule = json.convertStringToAvailableTimeArray(receivedMessage["data"] as! String)
             delegate?.mpcManagerPresentResultScheduleWithData(decodedSchedule)
         }
     }

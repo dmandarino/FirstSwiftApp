@@ -35,8 +35,8 @@ public class JSONService {
         let array = JSONParseArray(jsonString)
         for obj:AnyObject in array {
             
-            let day = obj["day"]! as String
-            let hour = obj["hour"]! as String
+            let day = obj["day"]! as! String
+            let hour = obj["hour"] as! String
             
             let availableTime = AvailableTime(day:day, hour:hour)
             
@@ -67,7 +67,7 @@ public class JSONService {
         let array = JSONParseArray(jsonString)
         for schedule:AnyObject in array {
             var hr:Int!
-            hr = schedule["index"] as Int
+            hr = schedule["index"] as! Int
             
             timeList.append(hr)
         }
@@ -94,13 +94,13 @@ public class JSONService {
         
         let array = JSONParseArray(jsonString)
         for schedule:AnyObject in array {
-            let timeIndex = schedule["timeIndex"] as Int
-            let day = schedule["day"] as String
-            let hour = schedule["hour"] as Int
+            let timeIndex = schedule["timeIndex"] as! Int
+            let day = schedule["day"] as! String
+            let hour = schedule["hour"] as! Int
             
             var time = Time(timeIndex: timeIndex, day: day, hour: hour)
-            time.setBusy(schedule["busy"] as Bool)
-            time.setOptional(schedule["optional"] as Bool)
+            time.setBusy(schedule["busy"] as! Bool)
+            time.setOptional(schedule["optional"] as! Bool)
             
             timeList.append(time)
         }
@@ -112,7 +112,7 @@ public class JSONService {
         if NSJSONSerialization.isValidJSONObject(value) {
             if let data = NSJSONSerialization.dataWithJSONObject(value, options: options, error: nil) {
                 if let string = NSString(data: data, encoding: NSUTF8StringEncoding) {
-                    return string
+                    return string as String
                 }
             }
         }

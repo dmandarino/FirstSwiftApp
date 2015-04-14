@@ -33,13 +33,13 @@ class HelpViewController: UIViewController, UIPageViewControllerDataSource {
     
     private func createPageViewController()
     {
-        let pageController = self.storyboard!.instantiateViewControllerWithIdentifier("PageController") as UIPageViewController
+        let pageController = self.storyboard!.instantiateViewControllerWithIdentifier("PageController") as! UIPageViewController
         pageController.dataSource = self
         
         if contentImages.count > 0{
             let firstController = getItemController(0)!
             let startingViewControllers: NSArray = [firstController]
-           pageController.setViewControllers(startingViewControllers, direction: UIPageViewControllerNavigationDirection.Forward, animated: false, completion: nil)
+           pageController.setViewControllers(startingViewControllers as [AnyObject], direction: UIPageViewControllerNavigationDirection.Forward, animated: false, completion: nil)
             
         }
         pageViewController = pageController
@@ -49,18 +49,19 @@ class HelpViewController: UIViewController, UIPageViewControllerDataSource {
         
     }
     
-    /*private func setUpPageControl()
+    private func setUpPageControl()
     {
     
         let appearance = UIPageControl.appearance()
         appearance.pageIndicatorTintColor = UIColor.grayColor()
         appearance.currentPageIndicatorTintColor = UIColor.whiteColor()
-        
-    }*/
+        appearance.backgroundColor = UIColor.darkGrayColor()
+        appearance.bounds = CGRectMake(0, 0, 200, 200)
+    }
     
     func pageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController?
     {
-     let itemController = viewController as PageItemController
+     let itemController = viewController as! PageItemController
         if itemController.itemIndex > 0
         {
             return getItemController(itemController.itemIndex-1)
@@ -70,7 +71,7 @@ class HelpViewController: UIViewController, UIPageViewControllerDataSource {
     
      func pageViewController(pageViewController: UIPageViewController, viewControllerAfterViewController viewController: UIViewController) -> UIViewController?
      {
-      let itemController = viewController as PageItemController
+      let itemController = viewController as! PageItemController
         
         if itemController.itemIndex+1 < contentImages.count
         {
@@ -84,7 +85,7 @@ class HelpViewController: UIViewController, UIPageViewControllerDataSource {
     {
         if itemIndex < contentImages.count
         {
-            let pageItemController = self.storyboard!.instantiateViewControllerWithIdentifier("ItemController") as PageItemController
+            let pageItemController = self.storyboard!.instantiateViewControllerWithIdentifier("ItemController") as! PageItemController
             pageItemController.itemIndex = itemIndex
             pageItemController.imageName = contentImages[itemIndex]
             return pageItemController

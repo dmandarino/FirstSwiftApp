@@ -39,7 +39,7 @@ class MatchViewController: UIViewController, UITextFieldDelegate, UITableViewDat
         
         //let teste = navigationController!
         
-        navigationViewController = (navigationController! as NavigationViewController)
+        navigationViewController = (navigationController! as! NavigationViewController)
     }
 
     //MARK: IBAction Methods
@@ -113,10 +113,10 @@ class MatchViewController: UIViewController, UITextFieldDelegate, UITableViewDat
     //Called whenever a peer status changes
     func updatePeerInformation(peerInfo: Dictionary<String, NSObject>){
         
-        let peerID = peerInfo["peerID"] as MCPeerID
+        let peerID = peerInfo["peerID"] as! MCPeerID
         let peerDisplayName = peerID.displayName
         
-        let state = MCSessionState(rawValue: peerInfo["state"] as Int)
+        let state = MCSessionState(rawValue: peerInfo["state"] as! Int)
         
         //if peer is not connecting
         if state != MCSessionState.Connecting {
