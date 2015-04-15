@@ -44,7 +44,6 @@
 		5A589E1D1AC87D9000ABB712 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A589E051AC87D9000ABB712 /* AppDelegate.swift */; };
 		5A589E211AC87D9000ABB712 /* icone_pronto.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A589E0A1AC87D9000ABB712 /* icone_pronto.png */; };
 		5A589E221AC87D9000ABB712 /* schedule.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5A589E0C1AC87D9000ABB712 /* schedule.plist */; };
-		5AB84E691AC8B98F000E8C5E /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5AB84E681AC8B98F000E8C5E /* Info.plist */; };
 		5AB84E6E1AC8B9C6000E8C5E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5AB84E6C1AC8B9C6000E8C5E /* Main.storyboard */; };
 /* End PBXBuildFile section */
 
@@ -299,7 +298,7 @@
 		C04365511A626BA0000E0F15 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0620;
+				LastUpgradeCheck = 0630;
 				ORGANIZATIONNAME = BEPiD;
 				TargetAttributes = {
 					5A308D101AC9C0E100885AF2 = {
@@ -351,7 +350,6 @@
 				5AB84E6E1AC8B9C6000E8C5E /* Main.storyboard in Resources */,
 				2422277B1ACC47BA00C4135B /* page4.png in Resources */,
 				2422277A1ACC47BA00C4135B /* page3.png in Resources */,
-				5AB84E691AC8B98F000E8C5E /* Info.plist in Resources */,
 				242227781ACC47BA00C4135B /* page1.png in Resources */,
 				5A589E0D1AC87D9000ABB712 /* LaunchScreen.xib in Resources */,
 				2422277C1ACC47BA00C4135B /* page5.png in Resources */,

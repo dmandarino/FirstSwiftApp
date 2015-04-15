@@ -77,7 +77,7 @@ class ScheduleViewController: UIViewController, UICollectionViewDelegate, UIColl
         }
         else
         {
-            editButton.setTitle("Editar", forState: nil)
+            editButton.setTitle("Edit", forState: nil)
             mainCollectionView.allowsSelection = false
             let timeList = prepareScheduleToSave(grade)
             scheduleService.saveMySchedule(timeList)
@@ -157,7 +157,7 @@ class ScheduleViewController: UIViewController, UICollectionViewDelegate, UIColl
             case 4:
                 dayCell.textLabel.text = "F"
             default:
-                dayCell.textLabel.text = "Erro"
+                dayCell.textLabel.text = "Error"
             }
             
             return dayCell
