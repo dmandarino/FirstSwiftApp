@@ -1,0 +1,44 @@
+/* 
+  Localizable.strings
+  GroupMatch
+
+  Created by Luan Barbalho Kalume on 05/05/15.
+  Copyright (c) 2015 BEPiD. All rights reserved.
+*/
+
+/* TabBarItem */
+"ScheduleBarItem"="Schedule";
+"MatchBarItem"="Match";
+"HelpBarItem"="Help";
+
+/* MatchViewController */
+"MatchViewPlaceholder"="The device name displayed to others...";
+"VisibilityText"="Visible to others?";
+"MatchDisconnect"="Disconnect";
+"MatchSearchButton"="Search";
+"SearchViewTitle"="Search";
+
+/* ScheduleService */
+"Monday"="Monday";
+"Tuesday"="Tuesday";
+"Wednesday"="Wednesday";
+"Thursday"="Thursday";
+"Friday"="Friday";
+"Saturday"="Saturday";
+"Sunday"="Sunday";
+"Optional"=" (Optional)";
+
+/* ScheduleViewController */
+"ScheduleTitle"="Schedule";
+"OK"="OK";
+"Edit"="Edit";
+"MondaySmall"="M";
+"TuesdaySmall"="T";
+"WednesdaySmall"="W";
+"ThursdaySmall"="T";
+"FridaySmall"="F";
+"SaturdaySmall"="S";
+"SundaySmall"="S";
+
+/* ResultViewController */
+"AvailableTimes"="Available Times";

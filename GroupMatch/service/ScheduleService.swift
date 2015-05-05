@@ -85,15 +85,15 @@ class ScheduleService {
             
             switch (i%daysOfWeek) {
             case (0):
-                day = "Monday"
+                day = NSLocalizedString("Monday", comment: "Monday")
             case (1):
-                day = "Tuesday"
+                day = NSLocalizedString("Tuesday", comment: "Tuesday")
             case (2):
-                day = "Wednesday"
+                day = NSLocalizedString("Wednesday", comment: "Wednesday")
             case (3):
-                day = "Thursday"
+                day = NSLocalizedString("Thursday", comment: "Thursday")
             default:
-                day = "Friday"
+                day = NSLocalizedString("Friday", comment: "Friday")
             }
             var hour = (i/(daysOfWeek))+firstHour
             schedule.append(createTime(hour, day: day, id:id))
@@ -133,7 +133,7 @@ class ScheduleService {
                         isResponseOpen = false
                     }
                     respAux = createNewResponse(times[j])
-                    respAux.setDay(respAux.getDay() + " (optional)")
+                    respAux.setDay(respAux.getDay() + NSLocalizedString("Optional", comment: "Optional"))
                     
                     respAux = endResponse(times[j+daysOfWeek], response: respAux)
                     responseList.append(respAux)

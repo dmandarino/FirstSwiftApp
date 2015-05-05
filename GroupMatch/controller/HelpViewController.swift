@@ -19,10 +19,8 @@ class HelpViewController: UIViewController, UIPageViewControllerDataSource {
     {
         super.viewDidLoad()
 
-        self.title = "Help"
-        // Do any additional setup after loading the view.
         createPageViewController()
-        //setUpPageControl()
+        
     }
 
     override func didReceiveMemoryWarning()

@@ -22,10 +22,20 @@ class MatchViewController: UIViewController, UITextFieldDelegate, UITableViewDat
     @IBOutlet weak var visibleSwitch: UISwitch!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var disconnectButton: UIButton!
+    @IBOutlet weak var visibilityText: UILabel!
+    @IBOutlet weak var searchButton: UIBarButtonItem!
     
     //MARK: ViewController Methods
     
     override func viewDidLoad() {
+        
+        //Text localization
+        nameTextField.placeholder = NSLocalizedString("MatchViewPlaceholder", comment: "textbox placeholder")
+        visibilityText.text = NSLocalizedString("VisibilityText", comment: "\"visible to others?\" text")
+        disconnectButton.setTitle(NSLocalizedString("MatchDisconnect", comment: "disconnect button"), forState: nil)
+        searchButton.title = NSLocalizedString("MatchSearchButton", comment: "MatchSearchButton")
+        
+        
         
         //TableView configuration
         tableView.delegate = self

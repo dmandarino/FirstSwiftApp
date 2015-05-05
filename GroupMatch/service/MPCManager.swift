@@ -46,7 +46,7 @@ class MPCManager: NSObject, MCSessionDelegate{
     func setupMCBrowser(){
     
         browserViewController = MCBrowserViewController(serviceType: "Match", session: session)
-        browserViewController?.title = "Search"
+        browserViewController?.title = NSLocalizedString("SearchViewTitle", comment: "SearchViewTitle")
     }
     
     

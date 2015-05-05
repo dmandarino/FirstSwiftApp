@@ -203,9 +203,7 @@
                     <connections>
                         <outlet property="disconnectButton" destination="NcR-Jf-o43" id="M7D-ue-h2b"/>
                         <outlet property="nameTextField" destination="5A8-om-eLy" id="3Tg-tH-Ppu"/>
-                        <outlet property="searchButton" destination="owo-7h-Wts" id="ehz-rL-dDo"/>
                         <outlet property="tableView" destination="CbB-D5-T3x" id="yv4-hd-yMm"/>
-                        <outlet property="visibilityText" destination="D4p-ts-QTz" id="Yfn-bm-S1W"/>
                         <outlet property="visibleSwitch" destination="Kav-Ax-cql" id="O6s-Na-GBT"/>
                     </connections>
                 </viewController>
@@ -641,17 +639,16 @@
                         <outlet property="editButton" destination="4Mn-MN-Alq" id="5a4-NZ-0JM"/>
                         <outlet property="mainCollectionView" destination="9v8-65-wbC" id="QfF-vE-QTc"/>
                         <outlet property="timeCollectionView" destination="3lI-o1-xNQ" id="8EC-8T-wRI"/>
-                        <outlet property="viewTitle" destination="zCG-VT-Urf" id="ZhT-zb-8vi"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="y7W-bd-vxE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="696" y="580"/>
         </scene>
-        <!--Tab Bar View Controller-->
+        <!--Tab Bar Controller-->
         <scene sceneID="TSI-Lx-Kky">
             <objects>
-                <tabBarController id="C9X-8M-846" customClass="TabBarViewController" customModule="GroupMatch" customModuleProvider="target" sceneMemberID="viewController">
+                <tabBarController id="C9X-8M-846" sceneMemberID="viewController">
                     <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="d0V-xN-u5q">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>

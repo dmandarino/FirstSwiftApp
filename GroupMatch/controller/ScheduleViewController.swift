@@ -27,6 +27,7 @@ class ScheduleViewController: UIViewController, UICollectionViewDelegate, UIColl
     
     /* Referência ao botão de editar */
     @IBOutlet weak var editButton: UIButton!
+    @IBOutlet weak var viewTitle: UILabel!
     
     /* Referência às collection views da tela */
     @IBOutlet weak var mainCollectionView: UICollectionView!
@@ -36,6 +37,9 @@ class ScheduleViewController: UIViewController, UICollectionViewDelegate, UIColl
     override func viewDidLoad()
     {
         super.viewDidLoad()
+        
+        viewTitle.text = NSLocalizedString("ScheduleTitle", comment: "Título da view")
+        editButton.setTitle(NSLocalizedString("Edit", comment: "Botão de editar"), forState: nil)
         
         mainCollectionView.delegate = self
         mainCollectionView.dataSource = self
@@ -72,12 +76,12 @@ class ScheduleViewController: UIViewController, UICollectionViewDelegate, UIColl
         /* Apenas alterna entre editar ou não, trocando o texto do botão no processo */
         if (!mainCollectionView.allowsSelection)
         {
-            editButton.setTitle("OK", forState: nil)
+            editButton.setTitle(NSLocalizedString("OK", comment: "Botão de OK"), forState: nil)
             mainCollectionView.allowsSelection = true
         }
         else
         {
-            editButton.setTitle("Edit", forState: nil)
+            editButton.setTitle(NSLocalizedString("Edit", comment: "Botão de editar"), forState: nil)
             mainCollectionView.allowsSelection = false
             let timeList = prepareScheduleToSave(grade)
             scheduleService.saveMySchedule(timeList)
@@ -149,13 +153,15 @@ class ScheduleViewController: UIViewController, UICollectionViewDelegate, UIColl
             switch indexPath.item
             {
             case 0:
-                dayCell.textLabel.text = "M"
-            case 1,3:
-                dayCell.textLabel.text = "T"
+                dayCell.textLabel.text = NSLocalizedString("MondaySmall", comment: "Monday")
+            case 1:
+                dayCell.textLabel.text = NSLocalizedString("TuesdaySmall", comment: "Tuesday")
             case 2:
-                dayCell.textLabel.text = "W"
+                dayCell.textLabel.text = NSLocalizedString("WednesdaySmall", comment: "Wednesday")
+            case 3:
+                dayCell.textLabel.text = NSLocalizedString("ThursdaySmall", comment: "Thursday")
             case 4:
-                dayCell.textLabel.text = "F"
+                dayCell.textLabel.text = NSLocalizedString("FridaySmall", comment: "Friday")
             default:
                 dayCell.textLabel.text = "Error"
             }

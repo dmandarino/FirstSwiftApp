@@ -14,6 +14,8 @@
 		2422277B1ACC47BA00C4135B /* page4.png in Resources */ = {isa = PBXBuildFile; fileRef = 242227751ACC47BA00C4135B /* page4.png */; };
 		2422277C1ACC47BA00C4135B /* page5.png in Resources */ = {isa = PBXBuildFile; fileRef = 242227761ACC47BA00C4135B /* page5.png */; };
 		2422277D1ACC47BA00C4135B /* page6.png in Resources */ = {isa = PBXBuildFile; fileRef = 242227771ACC47BA00C4135B /* page6.png */; };
+		410220FF1AF9027700F792C6 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 410221011AF9027700F792C6 /* Localizable.strings */; };
+		41D1DABF1AF9307E003522AF /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41D1DABE1AF9307E003522AF /* TabBarViewController.swift */; };
 		41DBE2671AC9A8ED00CB710E /* ConfigValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41DBE2661AC9A8ED00CB710E /* ConfigValues.swift */; };
 		4FC4ECBC1AC98253009FFAC9 /* NavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC4ECBB1AC98253009FFAC9 /* NavigationViewController.swift */; };
 		4FC4ECBE1AC98505009FFAC9 /* MPCManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC4ECBD1AC98505009FFAC9 /* MPCManagerDelegate.swift */; };
@@ -65,6 +67,9 @@
 		242227751ACC47BA00C4135B /* page4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = page4.png; sourceTree = "<group>"; };
 		242227761ACC47BA00C4135B /* page5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = page5.png; sourceTree = "<group>"; };
 		242227771ACC47BA00C4135B /* page6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = page6.png; sourceTree = "<group>"; };
+		410221001AF9027700F792C6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		410221021AF9028A00F792C6 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/Localizable.strings; sourceTree = "<group>"; };
+		41D1DABE1AF9307E003522AF /* TabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TabBarViewController.swift; path = GroupMatch/controller/TabBarViewController.swift; sourceTree = SOURCE_ROOT; };
 		41DBE2661AC9A8ED00CB710E /* ConfigValues.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ConfigValues.swift; path = "GroupMatch/Supporting Files/ConfigValues.swift"; sourceTree = SOURCE_ROOT; };
 		4FC4ECBB1AC98253009FFAC9 /* NavigationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationViewController.swift; sourceTree = "<group>"; };
 		4FC4ECBD1AC98505009FFAC9 /* MPCManagerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MPCManagerDelegate.swift; sourceTree = "<group>"; };
@@ -150,6 +155,7 @@
 		5A589DF11AC87D9000ABB712 /* controller */ = {
 			isa = PBXGroup;
 			children = (
+				41D1DABE1AF9307E003522AF /* TabBarViewController.swift */,
 				4FC4ECBB1AC98253009FFAC9 /* NavigationViewController.swift */,
 				242227681ACC20EC00C4135B /* PageItemController.swift */,
 				5A589DF21AC87D9000ABB712 /* HelpViewController.swift */,
@@ -195,6 +201,7 @@
 			children = (
 				5A589DF81AC87D9000ABB712 /* Images.xcassets */,
 				5A589E051AC87D9000ABB712 /* AppDelegate.swift */,
+				410221011AF9027700F792C6 /* Localizable.strings */,
 				5A589E061AC87D9000ABB712 /* images */,
 				5A589E0B1AC87D9000ABB712 /* plist */,
 			);
@@ -319,6 +326,7 @@
 			knownRegions = (
 				en,
 				Base,
+				pt,
 			);
 			mainGroup = C04365501A626BA0000E0F15;
 			productRefGroup = C043655A1A626BA0000E0F15 /* Products */;
@@ -344,6 +352,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5A589E211AC87D9000ABB712 /* icone_pronto.png in Resources */,
+				410220FF1AF9027700F792C6 /* Localizable.strings in Resources */,
 				5A589E221AC87D9000ABB712 /* schedule.plist in Resources */,
 				5A589E131AC87D9000ABB712 /* Images.xcassets in Resources */,
 				242227791ACC47BA00C4135B /* page2.png in Resources */,
@@ -385,6 +394,7 @@
 				5A589E1B1AC87D9000ABB712 /* MPCManager.swift in Sources */,
 				5A589E181AC87D9000ABB712 /* Time.swift in Sources */,
 				5A589E111AC87D9000ABB712 /* ScheduleViewController.swift in Sources */,
+				41D1DABF1AF9307E003522AF /* TabBarViewController.swift in Sources */,
 				5A589E1C1AC87D9000ABB712 /* ScheduleService.swift in Sources */,
 				4FC4ECBE1AC98505009FFAC9 /* MPCManagerDelegate.swift in Sources */,
 				5A589E161AC87D9000ABB712 /* Response.swift in Sources */,
@@ -412,6 +422,15 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		410221011AF9027700F792C6 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				410221001AF9027700F792C6 /* en */,
+				410221021AF9028A00F792C6 /* pt */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		5A589DEF1AC87D9000ABB712 /* LaunchScreen.xib */ = {
 			isa = PBXVariantGroup;
 			children = (

@@ -1,0 +1,44 @@
+/* 
+  Localizable.strings
+  GroupMatch
+
+  Created by Luan Barbalho Kalume on 05/05/15.
+  Copyright (c) 2015 BEPiD. All rights reserved.
+*/
+
+/* TabBarItem */
+"ScheduleBarItem"="Horário";
+"MatchBarItem"="Match";
+"HelpBarItem"="Ajuda";
+
+/* MatchViewController */
+"MatchViewPlaceholder"="O nome do seu aparelho...";
+"VisibilityText"="Visível para outros?";
+"MatchDisconnect"="Desconectar";
+"MatchSearchButton"="Buscar";
+"SearchViewTitle"="Buscar";
+
+/* ScheduleService */
+"Monday"="Segunda";
+"Tuesday"="Terça";
+"Wednesday"="Quarta";
+"Thursday"="Quinta";
+"Friday"="Sexta";
+"Saturday"="Sábado";
+"Sunday"="Domingo";
+"Optional"=" (Opcional)";
+
+/* ScheduleViewController */
+"ScheduleTitle"="Horário";
+"OK"="OK";
+"Edit"="Editar";
+"MondaySmall"="S";
+"TuesdaySmall"="T";
+"WednesdaySmall"="Q";
+"ThursdaySmall"="Q";
+"FridaySmall"="S";
+"SaturdaySmall"="S";
+"SundaySmall"="D";
+
+/* ResultViewController */
+"AvailableTimes"="Horários Disponíveis";
